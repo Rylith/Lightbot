@@ -10,8 +10,11 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
+import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
+
+import lightbot.Button;
 
 public class jsfmltesto {
  
@@ -25,7 +28,7 @@ public class jsfmltesto {
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
         while (fenetre.isOpen()) {
  
-            fenetre.clear(Color.BLACK); // On remplit la fenêtre avec la couleur
+            fenetre.clear(Color.CYAN); // On remplit la fenêtre avec la couleur
                                         // noire
             try {
                 //Try to load the texture from file "jsfml.png"
@@ -43,11 +46,19 @@ public class jsfmltesto {
 
             //Set its origin to its center and put it at the center of the screen
             tile1.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
-            tile1.setPosition(320, 240);
-            tile2.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
-            tile2.setPosition(320+130/2,235+75/2);
+            tile1.setPosition(400, 40);
             fenetre.draw(tile1);
-            fenetre.draw(tile2);
+        	tile2.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
+        	tile2.setPosition(tile1.getPosition().x-64,tile1.getPosition().y+32);
+        	fenetre.draw(tile2);
+            for (int i = 0; i < 3; i++) {
+            	tile2.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
+            	tile2.setPosition(tile2.getPosition().x-64,tile2.getPosition().y+32);
+            	fenetre.draw(tile2);
+			}
+            Button buttest = new Button("buttest.png",50,399);
+            fenetre.draw(buttest.getSprite());
+            
             fenetre.display();// On affiche notre fenetre et ce qu'on doit
                                 // dessiner dessus (la couleur noire )
  
@@ -57,6 +68,14 @@ public class jsfmltesto {
                     // Si l'utilisateur clique sur la croix rouge alors on ferme
                     // la fenêtre
                     fenetre.close();
+                }
+                if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+                    // Si l'utilisateur clique sur la croix rouge alors on ferme
+                    // la fenêtre
+                	Vector2i mouse_pos = Mouse.getPosition(fenetre);
+                	if (buttest.clicked(mouse_pos)) {
+                		System.out.println("J'ai cliqué sur test");
+					}
                 }
             }
         }
