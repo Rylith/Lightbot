@@ -126,6 +126,11 @@ public class Case {
 	public void setColor(Color color){
 		m_color = color;
 	}
+	
+	/** Retourne le Sprite de l'objet */
+	public Sprite getSprite(){
+        return new Sprite(m_Texture);
+	}
 
 	
 }
