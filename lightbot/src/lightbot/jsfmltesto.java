@@ -43,7 +43,7 @@ public class jsfmltesto {
           //Create a sprite and make it use the logo texture
             Sprite tile1 = new Sprite(textureTile);
             Sprite tile2 = new Sprite(textureTile);
-
+            
             //Set its origin to its center and put it at the center of the screen
             tile1.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
             tile1.setPosition(400, 40);

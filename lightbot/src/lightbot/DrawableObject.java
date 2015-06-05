@@ -1,17 +1,13 @@
 package lightbot;
-import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.Sprite;
 
 
-public class DrawableObject {
+public abstract class DrawableObject {
 
-
-	public void draw(RenderWindow window){
-		/*TODO*/
-	}
-	
-	public void update(RenderWindow window){
-		/*TODO*/
-	}
+	/** Retourne le Sprite du DrawableObjet */
+	public abstract Sprite getSprite();
 	
 	
+
+
 }

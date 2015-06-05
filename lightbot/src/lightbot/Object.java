@@ -1,14 +1,16 @@
 package lightbot;
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Sprite;
 
 
-public class Object extends DrawableObject {
+public abstract class Object extends DrawableObject {
 	
 	
 /** --------------- ATTRIBUTES --------------- */	
 	
 	private int m_height;
 	private Color m_color;
+
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -16,5 +18,7 @@ public class Object extends DrawableObject {
 	
 	
 /** ---------------- METHODS ----------------- */
+	
+	public abstract Sprite getSprite();
 	
 }
