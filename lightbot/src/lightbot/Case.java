@@ -6,131 +6,56 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 
-public class Case {
+public class Case extends DrawableObject {
 
 /** --------------- ATTRIBUTES --------------- */
 
-	private int m_height;
-	private Color m_color;
-	private Vector2f m_position;
-	private int m_number;
-	private String sourceTexture /* = chemin */;
-	private Texture m_Texture;
+	
+	private int m_value; //valeur affichée sur la case
+
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	/** Constructeur de la class case : color + number*/
 	
-	public Case(float x, float y, int height, Color color, int number){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = color;
-		m_number = number;
-		m_Texture = new Texture();
-		try {
-			m_Texture.loadFromFile(Paths.get(sourceTexture));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	/** Constructeur de la class Case avec value */
+	
+	public Case(Vector2f position, int height, Color color, String tilePath, int value){
+		super(position, height, color, tilePath);
+		m_value = value;
+		//TODO : initialise m_sprite en fonction de color & height
 	}
 	
-	/** Constructeur de la class case : color */
+	/** Constructeur de la class Case sans value */
 	
-	public Case(float x, float y, int height, Color color){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = color;
-		m_number = 1;
-		m_Texture = new Texture();
-		try {
-			m_Texture.loadFromFile(Paths.get(sourceTexture));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/** Constructeur de la class case : number */
-	
-	public Case(float x, float y, int height, int number){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = Color.WHITE;
-		m_number = number;
-		m_Texture = new Texture();
-		try {
-			m_Texture.loadFromFile(Paths.get(sourceTexture));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/** Constructeur de la class case default */
-	
-	public Case(float x, float y, int height){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = Color.WHITE;
-		m_number = 1;
-		m_Texture = new Texture();
-		try {
-			m_Texture.loadFromFile(Paths.get(sourceTexture));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public Case(Vector2f position, int height, Color color, String tilePath){
+		super(position, height, color, tilePath);
+		m_value = 1;
+		//TODO : initialise m_sprite en fonction de color & height
 	}
 
 	
 /** ---------------- METHODS ----------------- */	
 
-	/** Donne la position du centre de la case a partir d'une position en haut a gauche */
-	private Vector2f centerPosition(Vector2f position){
-		Sprite tile = new Sprite(m_Texture);
-		m_position = new Vector2f(position.x + (tile.getScale().x /2), position.y + (tile.getScale().y / 2));
-		return m_position;
-	}
-	
-	/** Retourne les coordonnees de la case */
-	public Vector2f getPosition(){
-		return m_position;
-	}
-	
-	/** Centre les coordonnees et les assigne les coordonnees de la case */
-	public void setPosition(Vector2f position){
-		m_position = centerPosition(position);
-	}
-	
-	/** Retourne la hauteur de la case */
-	public int getHeight(){
-		return m_height;
-	}
-	
+
 	/** Retourne le nombre de la case */
-	public int getNumber(){
-		return m_number;
+	public int getValue(){
+		return m_value;
 	}
 	
 	/** Assigne le nombre a la case */
-	public void setNumber(int number){
-		m_number = number;
+	public void setValue(int value){
+		m_value = value;
 	}
 	
-	/** Retourne la couleur de la case */
-	public Color getColor(){
-		return m_color;
+	/** Retourne true si la position est contenue dans la case (false sinon) */
+	public boolean isContain(Vector2f position){
+		return getSprite().getLocalBounds().contains(position);
 	}
-	
-	/** Assigne la couleur a la case */
-	public void setColor(Color color){
-		m_color = color;
-	}
-	
-	/** Retourne le Sprite de l'objet */
-	public Sprite getSprite(){
-        return new Sprite(m_Texture);
-	}
+
 
 	
 }
