@@ -1,8 +1,13 @@
 package lightbot;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Vector;
 
+import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 
 public class Character extends DrawableObject{
@@ -17,12 +22,18 @@ public class Character extends DrawableObject{
 		Down,
 	}
 	
-	private Vector<Ordre> ListOrder;
-	private Vector2f m_position;
 	private Orientation m_orientation;
+	
 	private String tilePath;
 	private Texture tileTexture;
 	
+	private boolean m_fall; //indique si le personnage chute
+	private boolean m_death; //indique si le personnage est mort
+	
+	private Vector<Vector<Order>> m_listOrder;
+	private Vector<int> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
+	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
+
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
@@ -33,19 +44,20 @@ public class Character extends DrawableObject{
 		m_orientation = o;
 		tilePath = //chemin;
 		tileTexture = //chemin;
+		
+	/** Constructeur de la class Character 
+	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
+	public Character(Vector2f position, int height, Color color, String tilePath){
+		super(position, 1, color, tilePath);
 	}
 
 	
 /** ---------------- METHODS ----------------- */	
 
-	/** Retourne les coordonnees du personnage */
-	public Vector2f getPosition(){
-		return m_position;
-	}
-	
-	/** Assigne les coordonnees au personnage */
-	public void setPosition(Vector2f position){
-		m_position = position;
+
+	/** Retourne m_listOrder */
+	public Vector<Vector<Order>> getListOrder(){
+		return m_listOrder;
 	}
 	
 	/** Retourne l'orientation du personnage */
@@ -53,47 +65,70 @@ public class Character extends DrawableObject{
 		return m_orientation;
 	}
 	
-	/** Assigne l'orientation du personnage */
+	/** Assigne l'orientation du personnage & met le Sprite
+	 * @param orientation du personnage : Right Left Up Down
+	 * @return void (mise a jour de m_orientation & m_Texture
+	 */
 	public void setOrientation(Orientation orientation){
 		m_orientation = orientation;
+		switch (m_orientation)
+		{
+            case Right:
+            	// mise à jours de m_sprite par décalage de m_tileSet
+            break;
+            case Left:
+            	// mise à jours de m_sprite par décalage de m_tileSet
+        		
+            break;
+            case Up:
+            	// mise à jours de m_sprite par décalage de m_tileSet
+            break;
+            case Down:
+            	// mise à jours de m_sprite par décalage de m_tileSet
+            break;
+        }
 	}
 	
-	/** Ajout d'un ordre a la fin de la liste d'ordre */
-	public void addOrder (Ordre odr){
-    	ListOrder.addElement(odr);
+	/** Ajout d'un ordre a la fin de la liste d'ordre passe en parametre
+	 * @param int : Numero de procedure (1:main 2:Proc1 3:Proc3)
+	 * @param Order : Ordre a ajouter
+	 * */
+	public void addOrder (int numprocedure, Order odr){
+		m_listOrder.elementAt(numprocedure-1).addElement(odr);
     }
     
-    /** Supprime l'ordre a la fin de la liste d'ordre */
-	public void delOrder (Ordre odr){
+    /** Supprime l'ordre a la fin de la liste d'ordre 
+     * @param int : Numero de procedure (1:main 2:Proc1 3:Proc3)
+     * */
+	public void delOrder (int numprocedure){
 		int lastElem;
-		lastElem = ListOrder.size() - 1;
-		ListOrder.removeElementAt(lastElem);
+		lastElem = m_listOrder.size() - 1;
+		m_listOrder.elementAt(numprocedure-1).removeElementAt(lastElem);
 	}
 	
-	/** Retourne le n ieme ordre de la liste d'ordres du personnage
-	 * @parametre : int n
-	 * @return element d'indice n de ListOrder
-	 * @careful : premier element n = 0 !*/
-	public Ordre getOrder(int n){
-		return ListOrder.elementAt(n);
-	}
-	 
-	/** Retourne le nombre d'ordres dans la liste d'ordre */
-	public void nbrOrder (){
-    	ListOrder.size();
+	/** Retourne le pointeur correspondant a la couleur fournit en parametre */
+	public Pointeur getPointeur(Color color){
+    	m_listOrder.
+    	//size() : renvoie le nombre d'éléments 
+    	//indexOf(Object) : renvoie l'indice de l'objet
+    	//insertElementAt(Object, int) : insère l'objet à l'indice indiqué 
     }
-    
 	
-	/** Retourne la case sur laquelle se trouve le personnage */
-	public Case getCurrentCase(){
-		return /*TODO*/
-		
+	/** Assigne le pointeur correspondant a la couleur au vecteur de Pointeur fournit en parametre */
+	public void setPointeur(Color color, Vector2f position){
+    	m_listOrder.;
+    }
+	
+
+	/*
+	public void draw(RenderWindow window){
+		TODO 
 	}
 	
-	/** Ajout du personnage dans la fenetre */
-	public void draw(){
-		/*TODO*/
+	public void update(RenderWindow){
+		TODO
 	}
+	*/
 	
 
 }
