@@ -5,8 +5,6 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 
-import Character.Orientation;
-
 
 public class Case {
 

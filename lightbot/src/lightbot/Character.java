@@ -20,8 +20,8 @@ public class Character extends DrawableObject{
 	private Vector<Ordre> ListOrder;
 	private Vector2f m_position;
 	private Orientation m_orientation;
-	private String tillePath;
-	private Texture tilleTexture;
+	private String tilePath;
+	private Texture tileTexture;
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -31,8 +31,8 @@ public class Character extends DrawableObject{
 		ListOrder = new Vector();
 		m_position = new Vector2f(x,y);
 		m_orientation = o;
-		titlePath = //chemin;
-		titleTexture = //chemin;
+		tilePath = //chemin;
+		tileTexture = //chemin;
 	}
 
 	
