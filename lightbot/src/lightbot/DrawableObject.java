@@ -39,6 +39,7 @@ public abstract class DrawableObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		m_sprite = new Sprite(m_tileSet);
 	}
 	
 	

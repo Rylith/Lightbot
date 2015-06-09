@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 import java.util.Vector;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
@@ -14,6 +15,9 @@ public class Character extends DrawableObject{
 
 
 /** --------------- ATTRIBUTES --------------- */
+	
+	private final static int SIZESPRITEX = 80;
+	private final static int SIZESPRITEY = 100;
 	
 	public enum Orientation{
 		Right,
@@ -27,7 +31,7 @@ public class Character extends DrawableObject{
 	private boolean m_death; //indique si le personnage est mort
 	
 	private Vector<Vector<Order>> m_listOrder;
-	private Vector<int> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
+	private Vector m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
 
 	
@@ -53,7 +57,7 @@ public class Character extends DrawableObject{
 		return m_orientation;
 	}
 	
-	/** Assigne l'orientation du personnage & met le Sprite
+	/** Assigne l'orientation du personnage & assigne le bon le Sprite en consequence
 	 * @param orientation du personnage : Right Left Up Down
 	 * @return void (mise a jour de m_orientation & m_Texture
 	 */
@@ -61,18 +65,17 @@ public class Character extends DrawableObject{
 		m_orientation = orientation;
 		switch (m_orientation)
 		{
-            case Right:
-            	// mise à jours de m_sprite par décalage de m_tileSet
-            break;
-            case Left:
-            	// mise à jours de m_sprite par décalage de m_tileSet
-        		
-            break;
             case Up:
-            	// mise à jours de m_sprite par décalage de m_tileSet
+            	getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
             break;
             case Down:
-            	// mise à jours de m_sprite par décalage de m_tileSet
+            	getSprite().setTextureRect(new IntRect(0, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
+            break;
+            case Left:
+            	getSprite().setTextureRect(new IntRect(0, 2*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
+            break;
+            case Right:
+            	getSprite().setTextureRect(new IntRect(0, 3*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
             break;
         }
 	}
@@ -94,18 +97,26 @@ public class Character extends DrawableObject{
 		m_listOrder.elementAt(numprocedure-1).removeElementAt(lastElem);
 	}
 	
-	/** Retourne le pointeur correspondant a la couleur fournit en parametre */
-	public Pointeur getPointeur(Color color){
-    	m_listOrder.
-    	//size() : renvoie le nombre d'éléments 
-    	//indexOf(Object) : renvoie l'indice de l'objet
-    	//insertElementAt(Object, int) : insère l'objet à l'indice indiqué 
-    }
-	
-	/** Assigne le pointeur correspondant a la couleur au vecteur de Pointeur fournit en parametre */
+	/** Retourne le pointeur correspondant a la couleur fournit en parametre 
+	 * @throws Exception */
+	public Pointeur getPointeur(Color color) throws Exception{
+    	for (int i = m_listPointeur.size(); i > 0; i--){
+    		if (m_listPointeur.elementAt(i).getColor() == color){
+    			return m_listPointeur.elementAt(i);
+    		}
+    	}
+    	throw new Exception("Aucun pointeur de cette couleur n'a ete trouve");
+	}
+    	
+	/** Assigne la position au pointeur correspondant a la couleur fournit en parametre */
 	public void setPointeur(Color color, Vector2f position){
-    	m_listOrder.;
-    }
+    	for (int i = m_listPointeur.size(); i > 0; i--){
+    		if (m_listPointeur.elementAt(i).getColor() == color){
+    			m_listPointeur.elementAt(i).setPosition(position);
+    			break;
+    		}
+    	}
+	}
 	
 
 	/*
