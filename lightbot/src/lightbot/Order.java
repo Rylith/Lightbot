@@ -1,15 +1,15 @@
 package lightbot;
 
 import lightbot.Engine;
-import lightbot.Personnage;
+
 
 public abstract class Order  {
 	
-	//public int pas; // pas de deplacement
+	/** --------------- ATTRIBUTES --------------- */
 	
-	protected Personnage personne;
-	//protected Engine engine;
+	protected Character personne;
 	
+	/** ------------------METHODS------------------*/
 
 	protected abstract boolean executer(Engine engine);
 

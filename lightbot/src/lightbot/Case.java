@@ -120,6 +120,4 @@ public class Case extends DrawableObject {
 		return getSprite().getLocalBounds().contains(position);
 	}
 
-
-	
 }

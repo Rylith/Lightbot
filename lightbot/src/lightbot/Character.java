@@ -27,6 +27,10 @@ public class Character extends DrawableObject{
 	}
 	
 	private Orientation m_orientation;
+	
+	private String tilePath;
+	private Texture tileTexture;
+	
 	private boolean m_fall; //indique si le personnage chute
 	private boolean m_death; //indique si le personnage est mort
 	
@@ -37,6 +41,14 @@ public class Character extends DrawableObject{
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
+	/** Constructeur de la class Character */
+	public Character(float x, float y, Orientation o){
+		ListOrder = new Vector();
+		m_position = new Vector2f(x,y);
+		m_orientation = o;
+		tilePath = //chemin;
+		tileTexture = //chemin;
+		
 	/** Constructeur de la class Character 
 	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
 	public Character(Vector2f position, int height, Color color, String tilePath){
