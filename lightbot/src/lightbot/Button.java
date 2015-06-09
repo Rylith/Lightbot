@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
 public class Button {
