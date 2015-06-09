@@ -41,13 +41,6 @@ public class Character extends DrawableObject{
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	/** Constructeur de la class Character */
-	public Character(float x, float y, Orientation o){
-		ListOrder = new Vector();
-		m_position = new Vector2f(x,y);
-		m_orientation = o;
-		tilePath = //chemin;
-		tileTexture = //chemin;
 		
 	/** Constructeur de la class Character 
 	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
