@@ -7,9 +7,9 @@ public class Engine {
 	//private Personnage personne;
 	
 	private static final int encadrement = 5;
-	private static final int l = 12;
+	private static final int l = 41;
 	
-	/** t
+	/** 
 	 * 
 	 * @param clone: le clone deplace a la case de destination, hauteur inchangée
 	 * @return true si pas d'obstacles, false sinon
@@ -28,7 +28,13 @@ public class Engine {
 		
 	}
 	
-	
+	/** 
+	 * permet de savoir si les coordonnees (x et y) se trouvent dans l'encadrement
+	 * @param x: la coordonnee en x
+	 * @param y: la coordonnee en y
+	 * @return true si coordonnees dans l'encadrement(carré) false sinon
+	 * 
+	 */
 	
 	private boolean encadrementOK(float x, float y, Character p){
 		
@@ -41,6 +47,7 @@ public class Engine {
 			
 		
 	}
+	
 	/**
 	 * 
 	 * @param p: le personnage sur la case
@@ -63,6 +70,12 @@ public class Engine {
 		
 	}
 	
+	/**
+	 * deplace le clone dans la case de destination (prochaine case)
+	 * @param p le personnage
+	 * @param clone: le clone qu'on deplace
+	 * 
+	 */
 	
 	private void DeplacerClone(Character p, Character clone){
 		
@@ -88,6 +101,11 @@ public class Engine {
 		
 	}
 	
+	/**
+	 * deplace le clone jusqu'au dernier étage
+	 * @param clone: le personnage a move
+	 * @return void
+	 */
 	private void MoveCloneToThePeek(Character clone) {
 		// TODO Auto-generated method stub
 		
@@ -121,7 +139,11 @@ public class Engine {
 		
 	}
 	
-	
+	/**
+	 * fait jumper le personnage d'une case vers le haut ou d'une case vers le bas
+	 * @param p: le personnage a fair jumper
+	 * @return true si le jump s'est bien passé false sinon
+	 */
 		
 	public boolean ExecJump(Character p){
 			

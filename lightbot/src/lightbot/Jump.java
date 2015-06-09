@@ -5,9 +5,18 @@ public class Jump extends Order {
 	
 	
 	@Override
-	protected boolean executer(Engine engine) {
+	protected void executer() {
 		// TODO Auto-generated method stub
-		return engine.ExecJump(personne);
+		if(!engine.ExecJump(personne)){
+			try {
+				throw new Exception("Pas possible de jump");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		}
+				
 	
 	}
 

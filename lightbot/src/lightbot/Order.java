@@ -8,9 +8,16 @@ public abstract class Order  {
 	/** --------------- ATTRIBUTES --------------- */
 	
 	protected Character personne;
+	protected Engine engine;
+	//protected Color color;
 	
 	/** ------------------METHODS------------------*/
 
-	protected abstract boolean executer(Engine engine);
+	protected abstract void executer();
+	
+	/*public Order(Character char){
+		
+	
+	} */
 
 }
