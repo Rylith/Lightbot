@@ -39,6 +39,9 @@ public abstract class DrawableObject {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		m_sprite = new Sprite(m_tileSet);
+		m_sprite.setOrigin(Vector2f.div(new Vector2f(m_tileSet.getSize()), 2));
+		m_sprite.setPosition(position);
 	}
 	
 	

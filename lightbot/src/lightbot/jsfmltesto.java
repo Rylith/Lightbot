@@ -19,6 +19,16 @@ import lightbot.Button;
 
 public class jsfmltesto {
  
+	public static void drawCases(RenderWindow fenetre){
+		/*----------------------------------------Génération de cases----------------------------------------*/                        
+        Case case1 = new Case(new Vector2f(125,175), 1, Color.CYAN, "tile.png");
+        Case case2 = new Case(new Vector2f(125+64,175-32), 1, Color.CYAN, "tile.png");
+        Case case3 = new Case(new Vector2f(125+64+64,175-32-32), 1, Color.CYAN, "tile.png");
+        fenetre.draw(case3.getSprite());
+        fenetre.draw(case2.getSprite());
+        fenetre.draw(case1.getSprite());
+/*----------------------------------------Génération de cases----------------------------------------*/ 
+	}
     public static void main(String[] args) {
  
         RenderWindow fenetre = new RenderWindow();
@@ -34,7 +44,8 @@ public class jsfmltesto {
         }
         
         Sprite robot = new Sprite(walkingRight);
-        robot.setTextureRect(new IntRect(7*80, 0, 80, 100));
+        //robot.setTextureRect(new IntRect(7*80, 0, 80, 100));
+        robot.setTextureRect(new IntRect(0, 0, 80, 100));
         int frame = 3;
         Clock animClock = new Clock();
         
@@ -42,9 +53,7 @@ public class jsfmltesto {
         
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
         while (fenetre.isOpen()) {
- 
-            fenetre.clear(Color.CYAN); // On remplit la fenêtre avec la couleur
-                                        // noire
+
             try {
                 //Try to load the texture from file "jsfml.png"
             	textureTile.loadFromFile(Paths.get("tile.png"));
@@ -56,28 +65,10 @@ public class jsfmltesto {
                 ex.printStackTrace();
             }
            
-/*----------------------------------------Génération de cases----------------------------------------*/            
-          //Create a sprite and make it use the logo texture
-            Sprite tile1 = new Sprite(textureTile);
-            Sprite tile2 = new Sprite(textureTile);
-            
-            //Set its origin to its center and put it at the center of the screen
-            tile1.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
-            tile1.setPosition(400, 40);
-            fenetre.draw(tile1);
-        	tile2.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
-        	tile2.setPosition(tile1.getPosition().x-64,tile1.getPosition().y+32);
-        	fenetre.draw(tile2);
-            for (int i = 0; i < 3; i++) {
-            	tile2.setOrigin(Vector2f.div(new Vector2f(textureTile.getSize()), 2));
-            	tile2.setPosition(tile2.getPosition().x-64,tile2.getPosition().y+32);
-            	fenetre.draw(tile2);
-			}
-/*----------------------------------------Génération de cases----------------------------------------*/  
+            drawCases(fenetre);
             Button buttest = new Button("buttest.png",50,399);
             fenetre.draw(buttest.getSprite());
             fenetre.draw(robot);
-            fenetre.display();
             
             // On gère les événements
             for (Event event : fenetre.pollEvents()) {
@@ -89,24 +80,33 @@ public class jsfmltesto {
                 if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
                 	if (buttest.clicked(mouse_pos)) {
-                		robot.move(new Vector2f(16*4,16*-2));
+                		//robot.move(new Vector2f(16*4,16*-2));
+                		int animCount = 0;
+                		while (animCount < 17) {
+                			if (animClock.getElapsedTime().asMilliseconds() >= 150) {
+                           	 //Restart the clock
+                               animClock.restart();
+
+                               //Increase the frame counter by one
+                               frame--;
+
+                               if(frame == 0){
+                               	frame = 3;
+                               }
+                               robot.move(new Vector2f(4,-2));
+                               robot.setTextureRect(new IntRect(frame * 80, 0, 80, 100));
+                               animCount++;
+                               drawCases(fenetre);
+                               fenetre.draw(robot);
+                               fenetre.display();
+                               fenetre.clear(Color.CYAN);
+                           }        
+						}
 					}
                 }
-            }
-            
-            if (animClock.getElapsedTime().asMilliseconds() >= 100) {
-            	 //Restart the clock
-                animClock.restart();
-
-                //Increase the frame counter by one
-                frame--;
-
-                if(frame == 0){
-                	frame = 3;
-                }
-                robot.move(new Vector2f(4,-2));
-                robot.setTextureRect(new IntRect(frame * 80, 0, 80, 100));
-            }            
+            } 
+            fenetre.display();
+            fenetre.clear(Color.CYAN);
         }
     }
 }
