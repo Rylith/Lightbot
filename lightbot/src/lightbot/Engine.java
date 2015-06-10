@@ -180,11 +180,11 @@ public class Engine {
 				
 				if(source_height < destination_height)   //JUMP VERS LE HAUT 
 					
-					return (destination_height - source_height >= 1 || destination_height - source_height <= 2  );
+					return (destination_height - source_height == 1 || destination_height - source_height == 2  );
 				
 				else if ( source_height > destination_height ) //JUMP VERS LE BAS
 						
-					return (source_height - destination_height >= 1 || source_height - destination_height <=2 );
+					return (source_height - destination_height == 1 || source_height - destination_height ==2 );
 				
 				else //JUMP VERS UNE CASE DE MM HAUTEUR
 					
