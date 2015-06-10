@@ -1,16 +1,10 @@
 package lightbot;
-import org.jsfml.system.Vector2f;
-import org.jsfml.system.Vector2i;
 
 
 public class Engine {
 	
-	//private Personnage personne;
 	
-	private static final int encadrement = 5;
-	private static final int l = 41;
-	Map monde;
-	
+	private Map monde;
 	/** 
 	 * 
 	 * @param clone: le clone deplace a la case de destination, hauteur inchangée
@@ -134,13 +128,72 @@ public class Engine {
 			return false;
 		}
 		else
-			
 			p.updatePostion(); //on place le clone a la case au sommet
 			return true;
 		
 	}
-	
-	
+
+	public boolean ExecDoubleJump(Character p) {
+		// TODO Auto-generated method stub
+		
+		if(!isAbleToDoubleJump(p)){
+			
+			return false;
+		}
+		else
+			p.updatePostion(); //on place le clone a la case au sommet
+			return true;
+	}
+
+	private boolean isAbleToDoubleJump(Character p) {
+		// TODO Auto-generated method stub
+
+		Case [][] mat;
+		mat= monde.get_m_mat();
+		
+		int x = p.getPosition().x;
+		int y =p.getPosition().y;
+			
+			switch (p.getOrientation())
+				{
+	           case Up:
+	        	   x = x-1;
+	           break;
+	           case Down:
+	        	   x = x+1;
+	           break;
+	           case Left:
+	        	   y = y-1;
+	           break;
+	           case Right:
+	        	   y = y+1;
+	           break;
+				}
+			
+			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
+				
+				//teste la difference de hauteur :
+				
+				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight(); 
+				
+				int destination_height =  mat[x][y].getHeight();
+				
+				if(source_height < destination_height)   //JUMP VERS LE HAUT 
+					
+					return (destination_height - source_height >= 1 || destination_height - source_height <= 2  );
+				
+				else if ( source_height > destination_height ) //JUMP VERS LE BAS
+						
+					return (source_height - destination_height >= 1 || source_height - destination_height <=2 );
+				
+				else //JUMP VERS UNE CASE DE MM HAUTEUR
+					
+					return false;
+				
+			}
+			
+			else return false;
+	}
 	
 	
 }

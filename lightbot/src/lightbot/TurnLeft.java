@@ -8,6 +8,10 @@ public class TurnLeft extends Order {
 	
 
 
+	public TurnLeft (Character p){
+		
+		
+	}
 	protected void executer(){
 		
 		switch(personne.getOrientation())

@@ -15,9 +15,5 @@ public abstract class Order  {
 
 	protected abstract void executer();
 	
-	/*public Order(Character char){
-		
 	
-	} */
-
 }

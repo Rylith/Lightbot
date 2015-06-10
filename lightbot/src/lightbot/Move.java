@@ -4,8 +4,9 @@ import lightbot.Order;
 
 public class Move extends Order {
 	
-	public Move(){
+	public Move(Character p){	
 		
+		personne=p;	
 	}
 
 	@Override
