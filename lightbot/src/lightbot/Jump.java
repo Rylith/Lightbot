@@ -5,6 +5,7 @@ public class Jump extends Order {
 	
 	public Jump(Character p){
 		
+		personne=p;
 		
 	}
 	@Override

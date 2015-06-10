@@ -6,9 +6,9 @@ import lightbot.Character.Orientation;
 public class TurnRight extends Order {
 
 
-	public TurnRight(){
+	public TurnRight(Character p){
 		
-		
+		p=personne;
 	}
 	protected void executer(){
 		
