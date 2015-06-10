@@ -22,6 +22,7 @@ public class Button {
             ex.printStackTrace();
         }
 		this.button_sprite = new Sprite(textureButton);
+		this.button_sprite.scale(0.5f, 0.5f);
 		this.button_sprite.setPosition(x, y);
 	}
 	

@@ -7,6 +7,7 @@ import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 
 public abstract class DrawableObject {
@@ -14,12 +15,12 @@ public abstract class DrawableObject {
 
 /** --------------- ATTRIBUTES --------------- */
 	
-	private Vector2f m_position;
+	private Vector2i m_position;
 	private int m_height;
 	private Color m_color;
 	private String m_tilePath; //chemin vers la texture de l'objet
 	private Texture m_tileSet; //texture de l'objet
-	private Sprite m_sprite; //sprite de l'objet parmis tous les sprites de la texture
+	protected Sprite m_sprite; //sprite de l'objet parmis tous les sprites de la texture
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -28,7 +29,7 @@ public abstract class DrawableObject {
 	/** Constructeur de la class DrawableObject
 	 * @param Vector2f position, int height, Color color, String tilePath */
 	
-	public DrawableObject(Vector2f position, int height, Color color, String tilePath){
+	public DrawableObject(Vector2i position, int height, Color color, String tilePath){
 		m_position = position;
 		m_height = height;
 		m_color = color;
@@ -40,8 +41,7 @@ public abstract class DrawableObject {
 			e.printStackTrace();
 		}
 		m_sprite = new Sprite(m_tileSet);
-		m_sprite.setOrigin(Vector2f.div(new Vector2f(m_tileSet.getSize()), 2));
-		m_sprite.setPosition(position);
+		//m_sprite.setPosition(position);
 	}
 	
 	
@@ -49,13 +49,13 @@ public abstract class DrawableObject {
 	
 	
 	/** Retourne la position de l'objet */
-	public Vector2f getPosition(){
+	public Vector2i getPosition(){
 		return m_position;
 	}
 	
 	/** Assigne une position a l'objet
 	 * @param Vector2f position */
-	public void setPosition(Vector2f position){
+	public void setPosition(Vector2i position){
 		m_position = position;
 	}
 	
@@ -91,14 +91,13 @@ public abstract class DrawableObject {
 	}
 	
 	
-	/*
-	public void draw(RenderWindow window){
-		TODO 
+	public void draw(RenderWindow window, float x, float y){
+		this.getSprite().setPosition(x,y);
+		window.draw(this.getSprite());
 	}
 	
-	public void update(RenderWindow){
-		TODO
+	public void update(RenderWindow window, Vector2f dep){
+		this.getSprite().move(dep);
 	}
-	*/
 	
 }
