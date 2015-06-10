@@ -1,13 +1,12 @@
 package lightbot;
 
-import lightbot.Engine;
 import lightbot.Order;
 import lightbot.Character.Orientation;
 
 public class TurnRight extends Order {
 
 
-protected boolean executer(Engine engine){
+protected void executer(){
 	
 	switch(personne.getOrientation())
 	{
@@ -18,7 +17,7 @@ protected boolean executer(Engine engine){
 		default:
 	
 	}
-	return true;
+	//return true;
 	
 	//return engine.ExecLeft(personne);
 

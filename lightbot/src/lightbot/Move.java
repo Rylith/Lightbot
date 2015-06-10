@@ -1,6 +1,5 @@
 package lightbot;
 
-import lightbot.Engine;
 import lightbot.Order;
 
 public class Move extends Order {
@@ -10,10 +9,17 @@ public class Move extends Order {
 	}
 
 	@Override
-	protected boolean executer(Engine engine) {
+	protected void executer() {
 		
-		return engine.ExecMove(personne);
-		
+		if(!engine.ExecMove(personne)) {
+			try {
+				throw new Exception("Pas possible d'avancer");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		}
 		
 	}
 	

@@ -6,9 +6,10 @@ public class Engine {
 	
 	//private Personnage personne;
 	
-	private static final int encadrement;
+	private static final int encadrement = 5;
+	private static final int l = 41;
 	
-	/** t
+	/** 
 	 * 
 	 * @param clone: le clone deplace a la case de destination, hauteur inchangée
 	 * @return true si pas d'obstacles, false sinon
@@ -18,7 +19,7 @@ public class Engine {
 		
 		//il avance pas si la hauteur de la case dest est differente de celle de depart
 		
-		if(clone.getHeight() != getCurrentCase(clone).getHeight())
+		if(clone.getHeight() == getCurrentCase(clone).getHeight())
 			
 			return true;
 		
@@ -26,18 +27,14 @@ public class Engine {
 			return false;	
 		
 	}
-	/** t
-	 * 
-	 * @param clone: le clone deplace a la case de destination, hauteur inchangée
-	 * @return true si pas d'obstacles au jump, false sinon
-	 * @obstacle1: si les cases de depart et d'arrivee sont de meme hauteur
-	 * @obstacle2 : 
-	 */
 	
-	private boolean isAbleToJump(Character clone){
-		
-		
-	}
+	/** 
+	 * permet de savoir si les coordonnees (x et y) se trouvent dans l'encadrement
+	 * @param x: la coordonnee en x
+	 * @param y: la coordonnee en y
+	 * @return true si coordonnees dans l'encadrement(carré) false sinon
+	 * 
+	 */
 	
 	private boolean encadrementOK(float x, float y, Character p){
 		
@@ -50,6 +47,7 @@ public class Engine {
 			
 		
 	}
+	
 	/**
 	 * 
 	 * @param p: le personnage sur la case
@@ -73,14 +71,14 @@ public class Engine {
 	}
 	
 	/**
-	 * fait avancer le personnage d'une case en fonction de la direction
-	 * @param p: le personnage a faire avancer
-	 * @return un booleen : true si le move s'est bien passe, false sinon
+	 * deplace le clone dans la case de destination (prochaine case)
+	 * @param p le personnage
+	 * @param clone: le clone qu'on deplace
+	 * 
 	 */
-
-	public boolean ExecMove(Character p){
+	
+	private void DeplacerClone(Character p, Character clone){
 		
-		Character clone;
 		Vector2f temp;
 		
 		clone=p;
@@ -101,6 +99,36 @@ public class Engine {
 		
 		}
 		
+	}
+	
+	/**
+	 * deplace le clone jusqu'au dernier étage
+	 * @param clone: le personnage a move
+	 * @return void
+	 */
+	private void MoveCloneToThePeek(Character clone) {
+		// TODO Auto-generated method stub
+		
+		while(getCurrentCase(clone).nextCase()!= null) //faire une fonction qui donne la prochaine case empilee sur une coordonnee x et null sinon
+		{
+		clone.setPosition(new Vector2f(clone.getPosition().x,(clone.getPosition().y - l)));
+		
+		} 
+		
+	
+	}
+	
+	/**
+	 * fait avancer le personnage d'une case en fonction de la direction
+	 * @param p: le personnage a faire avancer
+	 * @return un booleen : true si le move s'est bien passe, false sinon
+	 */
+
+	public boolean ExecMove(Character p){
+		
+		Character clone = null;
+		DeplacerClone(p,clone);
+		
 		if(isAbleToMove(clone)){
 			
 			p=clone;
@@ -110,37 +138,66 @@ public class Engine {
 			return false;
 		
 	}
-		
-
 	
-	/*
-	public boolean ExecLeft( Character p){
-
-		p.setDirection(p.getDirectionFromLeft(p.getOrientation()));
+	/**
+	 * fait jumper le personnage d'une case vers le haut ou d'une case vers le bas
+	 * @param p: le personnage a fair jumper
+	 * @return true si le jump s'est bien passé false sinon
+	 */
 		
-			return true;
+	public boolean ExecJump(Character p){
 			
-		// TODO Auto-generated method stub	
+		Character clone = null;
 		
-	}
-	public boolean ExecRight( Character p){
-
-		p.setDirection(p.getDirectionFromRight(p.getDirection()));
+		DeplacerClone(p,clone);
 		
-			return true;
+		if(isAbleToMove(clone)){
 			
-		// TODO Auto-generated method stub	
-		
+			return false;
+		}
+		else
+		{
+			//JUMP vers le haut
+			//clone.setHeight(clone.getHeight()+ 1); //maj de l'attribut height
+			
+			int h= getCurrentCase(p).getHeight();
+			
+			MoveCloneToThePeek(clone); //on place le clone a la case au sommet
+			
+			//clone.setPosition(new Vector2f( clone.getPosition().x,(clone.getPosition().y - l)));//on place le clone a la case au sommet
+			
+			//JUMP VERS LE HAUT
+			
+			if(h < getCurrentCase(clone).getHeight()){
+			
+				if(getCurrentCase(clone).getHeight() - h != 1)
+					
+					return false;
+				
+				else{
+					p=clone;
+					return true;
+				}
+			}
+			//JUMP VERS LE BAS 
+			else 
+				
+			{
+				if(h - getCurrentCase(clone).getHeight()!= 1)
+					
+					return false;
+				
+				else {
+					p=clone;
+					return true;
+				}
+			
+			}
+		}
+			
 	}
-
-	public Map getMonde() {
-		return monde;
-	}
-
-	public void setMonde(Map monde) {
-		this.monde = monde;
-		*/
-	}
-
-
+	
+	
+	
+	
 }
