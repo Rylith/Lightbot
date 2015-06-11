@@ -146,25 +146,4 @@ public class Character extends DrawableObject{
 		window.draw(this.getSprite());
 	}
 	
-	public void updatePostion(){
-		int new_x = this.getPosition().x;
-		int new_y =this.getPosition().y;
-		
-		switch (this.getOrientation())
-		{
-	       case Up:
-	    	   new_x = new_x-1;
-	       break;
-	       case Down:
-	    	   new_x = new_x+1;
-	       break;
-	       case Left:
-	    	   new_y = new_y-1;
-	       break;
-	       case Right:
-	    	   new_y = new_y+1;
-	       break;
-		}
-		this.setPosition(new Vector2i(new_x,new_y));
-	}
 }

@@ -28,7 +28,7 @@ public class Jump extends Order {
 			
 			if(!engine.ExecJump(personne)){
 				try {
-					throw new Exception("Pas possible de jump");
+					throw new Exception("Impossible de jump");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
