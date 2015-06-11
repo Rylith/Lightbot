@@ -4,18 +4,15 @@ import org.jsfml.graphics.Color;
 
 public class RemoveColor extends Order {
 
-	public RemoveColor(Character p, Engine e){	
+	public RemoveColor(Character p){	
 		
 		personne=p;
-		engine=e;
-		
 		color=Color.WHITE;
 	}
 	
-	public RemoveColor(Character p, Engine e, Color c){
+	public RemoveColor(Character p, Color c){
 		
 		personne=p;
-		engine = e;
 		color=c;
 		
 	}
