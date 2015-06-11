@@ -1,121 +1,170 @@
 package lightbot;
-import org.jsfml.system.Vector2f;
+
+import org.jsfml.graphics.Color;
+import org.jsfml.system.Vector2i;
 
 
 public class Engine {
 	
-	//private Personnage personne;
 	
-	private static final int encadrement = 5;
-	private static final int l = 41;
+	private Map monde;
 	
+	
+	public Engine (Map m){
+		
+		monde = m;
+		
+	}
 	/** 
 	 * 
-	 * @param clone: le clone deplace a la case de destination, hauteur inchangée
+	 * @param clone: le clone deplace a la case de destination, hauteur inchangï¿½e
 	 * @return true si pas d'obstacles, false sinon
 	 * @obstacle1: si les cases de depart et d'arrivee ont des hauteurs differentes
+	 * @obstacle2: 
 	 */
-	private boolean isAbleToMove(Character clone){
+	private boolean isAbleToMove(Character p){
 		
-		//il avance pas si la hauteur de la case dest est differente de celle de depart
+		Case [][] mat;
+		mat= monde.get_m_mat();
 		
-		if(clone.getHeight() == getCurrentCase(clone).getHeight())
+		int x = p.getPosition().x;
+		int y =p.getPosition().y;
 			
-			return true;
-		
-		else 
-			return false;	
-		
-	}
-	
-	/** 
-	 * permet de savoir si les coordonnees (x et y) se trouvent dans l'encadrement
-	 * @param x: la coordonnee en x
-	 * @param y: la coordonnee en y
-	 * @return true si coordonnees dans l'encadrement(carré) false sinon
-	 * 
-	 */
-	
-	private boolean encadrementOK(float x, float y, Character p){
-		
-		return  (
-				
-				p.getPosition().x >= x- encadrement &&
-				p.getPosition().x <= x+ encadrement &&
-				p.getPosition().y >= y- encadrement &&
-				p.getPosition().y <= y+ encadrement );
+			switch (p.getOrientation())
+				{
+	           case Up:
+	        	   x = x-1;
+	           break;
+	           case Down:
+	        	   x = x+1;
+	           break;
+	           case Left:
+	        	   y = y-1;
+	           break;
+	           case Right:
+	        	   y = y+1;
+	           break;
+				}
 			
-		
-	}
-	
-	/**
-	 * 
-	 * @param p: le personnage sur la case
-	 * @return la case ou est le personnage
-	 */
-	private Case getCurrentCase(Character p) {
-		// TODO Auto-generated method stub
-		float ideal_x, ideal_y;
-		
-		//for i allant de 1 a la fin de toutes les cases
-		
-			if(t[i].isContain(p.getPosition()))
+			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
 				
-				if(encadrementOK(ideal_x, ideal_y,p))
-					return t[i];
-				else
-					return null;
-			else
-				return null;
-		
+				//teste la difference de hauteur
+				
+				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
+				int destination_height =  mat[x][y].getHeight();
+				
+				return (source_height == destination_height);
+			}
+			else return false;
 	}
-	
 	/**
-	 * deplace le clone dans la case de destination (prochaine case)
+	 * teste si le personnage peut jumper vers la prochaine case
 	 * @param p le personnage
-	 * @param clone: le clone qu'on deplace
-	 * 
+	 * @return true si jump ok, false sinon
 	 */
-	
-	private void DeplacerClone(Character p, Character clone){
+	private boolean isAbleToJump(Character p){
 		
-		Vector2f temp;
+		Case [][] mat;
+		mat= monde.get_m_mat();
 		
-		clone=p;
-		float a,b,c,d;
-		
-		a = p.getPosition().x - getCurrentCase(p).getSprite().getTexture().getSize().x; 
-		b =  p.getPosition().x + getCurrentCase(p).getSprite().getTexture().getSize().x;
-		c =  p.getPosition().y - getCurrentCase(p).getSprite().getTexture().getSize().y;
-		d = p.getPosition().y + getCurrentCase(p).getSprite().getTexture().getSize().y;
-		
-		switch(clone.getOrientation()){
-		
-		case Up: temp = new Vector2f(a,c); clone.setPosition(temp); break;
-		case Down: temp = new Vector2f(b,d); clone.setPosition(temp); break;
-		case Right: temp = new Vector2f(b,c); clone.setPosition(temp); break;
-		case Left: temp = new Vector2f(a,c); clone.setPosition(temp); break;
-		default: 
-		
-		}
-		
+		int x = p.getPosition().x;
+		int y =p.getPosition().y;
+			
+			switch (p.getOrientation())
+				{
+	           case Up:
+	        	   x = x-1;
+	           break;
+	           case Down:
+	        	   x = x+1;
+	           break;
+	           case Left:
+	        	   y = y-1;
+	           break;
+	           case Right:
+	        	   y = y+1;
+	           break;
+				}
+			
+			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
+				
+				//teste la difference de hauteur :
+				
+				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
+				
+				int destination_height =  mat[x][y].getHeight();
+				
+				if(source_height < destination_height)   //JUMP VERS LE HAUT 
+					
+					return (destination_height - source_height == 1);
+				
+				else if (source_height > destination_height) //JUMP VERS LE BAS
+						
+					return (source_height - destination_height == 1);
+				
+				else //JUMP VERS UNE CASE DE MM HAUTEUR
+					
+					return false;
+				
+			}
+			
+			else return false;
 	}
-	
 	/**
-	 * deplace le clone jusqu'au dernier étage
-	 * @param clone: le personnage a move
-	 * @return void
+	 * teste si le personnage pourra double jumper vers la prochaine case
+	 * @param p: le personnage
+	 * @return true si double jump possible, false sinon
+	 * @details double jump ok si difference de hauteur = 1 (jump normal)
 	 */
-	private void MoveCloneToThePeek(Character clone) {
-		// TODO Auto-generated method stub
-		
-		while(getCurrentCase(clone).nextCase()!= null) //faire une fonction qui donne la prochaine case empilee sur une coordonnee x et null sinon
-		{
-		clone.setPosition(new Vector2f(clone.getPosition().x,(clone.getPosition().y - l)));
-		
-		} 
-		
 	
+	private boolean isAbleToDoubleJump(Character p) {
+		// TODO Auto-generated method stub
+
+		Case [][] mat;
+		mat= monde.get_m_mat();
+		
+		int x = p.getPosition().x;
+		int y =p.getPosition().y;
+			
+			switch (p.getOrientation())
+				{
+	           case Up:
+	        	   x = x-1;
+	           break;
+	           case Down:
+	        	   x = x+1;
+	           break;
+	           case Left:
+	        	   y = y-1;
+	           break;
+	           case Right:
+	        	   y = y+1;
+	           break;
+				}
+			
+			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
+				
+				//teste la difference de hauteur :
+				
+				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight(); 
+				
+				int destination_height =  mat[x][y].getHeight();
+				
+				if(source_height < destination_height)   //JUMP VERS LE HAUT 
+					
+					return (destination_height - source_height == 1 || destination_height - source_height == 2  );
+				
+				else if ( source_height > destination_height ) //JUMP VERS LE BAS
+						
+					return (source_height - destination_height == 1 || source_height - destination_height ==2 );
+				
+				else //JUMP VERS UNE CASE DE MM HAUTEUR
+					
+					return false;
+				
+			}
+			
+			else return false;
 	}
 	
 	/**
@@ -126,12 +175,9 @@ public class Engine {
 
 	public boolean ExecMove(Character p){
 		
-		Character clone = null;
-		DeplacerClone(p,clone);
-		
-		if(isAbleToMove(clone)){
+		if(isAbleToMove(p)){
 			
-			p=clone;
+			updatePostion(p);
 			return true;
 		}
 		else 
@@ -142,62 +188,84 @@ public class Engine {
 	/**
 	 * fait jumper le personnage d'une case vers le haut ou d'une case vers le bas
 	 * @param p: le personnage a fair jumper
-	 * @return true si le jump s'est bien passé false sinon
+	 * @return true si le jump s'est bien passÃ© false sinon
 	 */
 		
 	public boolean ExecJump(Character p){
-			
-		Character clone = null;
 		
-		DeplacerClone(p,clone);
-		
-		if(isAbleToMove(clone)){
+		if(!isAbleToJump(p)){
 			
 			return false;
 		}
-		else
-		{
-			//JUMP vers le haut
-			//clone.setHeight(clone.getHeight()+ 1); //maj de l'attribut height
-			
-			int h= getCurrentCase(p).getHeight();
-			
-			MoveCloneToThePeek(clone); //on place le clone a la case au sommet
-			
-			//clone.setPosition(new Vector2f( clone.getPosition().x,(clone.getPosition().y - l)));//on place le clone a la case au sommet
-			
-			//JUMP VERS LE HAUT
-			
-			if(h < getCurrentCase(clone).getHeight()){
-			
-				if(getCurrentCase(clone).getHeight() - h != 1)
-					
-					return false;
-				
-				else{
-					p=clone;
-					return true;
-				}
-			}
-			//JUMP VERS LE BAS 
-			else 
-				
-			{
-				if(h - getCurrentCase(clone).getHeight()!= 1)
-					
-					return false;
-				
-				else {
-					p=clone;
-					return true;
-				}
-			
-			}
+		else{
+			updatePostion(p); //on place le clone a la case au sommet
+			p.setHeight(getCurrentCase(p).getHeight());
+			return true;
 		}
+	}
+	/**
+	 * fait jumper le personnage d'une case ou de deux au max vers le haut ou vers le bas
+	 * @param p: le personnage a fair jumper
+	 * @return true si le jump s'est bien passï¿½ false sinon
+	 */	
+
+	public boolean ExecDoubleJump(Character p) {
+		// TODO Auto-generated method stub
+		
+		if(!isAbleToDoubleJump(p)){
 			
+			return false;
+		}
+		else{
+			updatePostion(p); //on place le clone a la case au sommet
+			p.setHeight(getCurrentCase(p).getHeight());
+			return true;
+		}
 	}
 	
+	/*public boolean ExecLight(Character personne) {
+		
+		// TODO Auto-generated method stub
+		Case [][] mat;
+		mat= monde.get_m_mat();
+		Lampadaire l;
+		
+		int x = personne.getPosition().x;
+		int y =personne.getPosition().y;
+		
+		//if (mat[x][y].getColor() == Color.BLUE )
+		return (allumerLampadaire (!mat[x][y].object_list.get(l).isOn()));
+			
+	}*/
 	
 	
+
+	public void updatePostion(Character p){
+		int new_x = p.getPosition().x;
+		int new_y =p.getPosition().y;
+		
+		switch (p.getOrientation())
+		{
+	       case Up:
+	    	   new_x = new_x-1;
+	       break;
+	       case Down:
+	    	   new_x = new_x+1;
+	       break;
+	       case Left:
+	    	   new_y = new_y-1;
+	       break;
+	       case Right:
+	    	   new_y = new_y+1;
+	       break;
+		}
+		p.setPosition(new Vector2i(new_x,new_y));
+	}
 	
+	public Case getCurrentCase(Character p){
+		int x = p.getPosition().x;
+		int y = p.getPosition().y;
+		
+		return monde.get_m_mat()[x][y];
+	}
 }

@@ -1,5 +1,7 @@
 package lightbot;
 
+import org.jsfml.graphics.Color;
+
 import lightbot.Engine;
 
 
@@ -9,15 +11,11 @@ public abstract class Order  {
 	
 	protected Character personne;
 	protected Engine engine;
-	//protected Color color;
+	protected Color color;
 	
 	/** ------------------METHODS------------------*/
 
 	protected abstract void executer();
 	
-	/*public Order(Character char){
-		
 	
-	} */
-
 }

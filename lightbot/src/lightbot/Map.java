@@ -102,4 +102,9 @@ public class Map {
 			}
 			else return false;
 	}
+	
+	public Case [][] get_m_mat(){
+		
+		return this.get_m_mat();
+	}
 }
