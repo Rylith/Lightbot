@@ -38,6 +38,7 @@ public class Character extends DrawableObject{
 	private Vector<Vector<Order>> m_listOrder;
 	private Vector m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
+	private Color color;
 
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -146,25 +147,5 @@ public class Character extends DrawableObject{
 		window.draw(this.getSprite());
 	}
 	
-	public void updatePostion(){
-		int new_x = this.getPosition().x;
-		int new_y =this.getPosition().y;
-		
-		switch (this.getOrientation())
-		{
-	       case Up:
-	    	   new_x = new_x-1;
-	       break;
-	       case Down:
-	    	   new_x = new_x+1;
-	       break;
-	       case Left:
-	    	   new_y = new_y-1;
-	       break;
-	       case Right:
-	    	   new_y = new_y+1;
-	       break;
-		}
-		this.setPosition(new Vector2i(new_x,new_y));
-	}
+	
 }
