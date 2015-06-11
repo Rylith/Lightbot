@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -41,7 +42,10 @@ public abstract class DrawableObject {
 			e.printStackTrace();
 		}
 		m_sprite = new Sprite(m_tileSet);
-		//m_sprite.setPosition(position);
+		//robot.getSprite().setTextureRect(new IntRect(frame * 80, robot.getSprite().getTextureRect().top, 80, 100));
+		if (tilePath == "lampadaire.png") {
+			this.getSprite().setTextureRect(new IntRect(95,0 ,95 ,200));
+		}
 	}
 	
 	

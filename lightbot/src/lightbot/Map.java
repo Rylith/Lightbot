@@ -5,8 +5,13 @@ import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
+import java.util.List;
+import org.jdom2.*;
+import org.jdom2.input.*;
+import org.jdom2.filter.*;
 
 import lightbot.Case;
+import lightbot.MapLoader;
 
 public class Map {
 
@@ -14,28 +19,46 @@ public class Map {
 	public Case m_map[][];
 	
 /** -------------- CONSTRUCTORS -------------- */
-	public Map(int taille){
-		m_map = new Case[taille][taille];
-		createMap();
+	public Map(){
+		MapLoader ml = new MapLoader();
+		Vector2i size = MapLoader.mapSize();
+		m_map = new Case[size.x][size.y];
+		createMap(ml);
 	}
 /** ---------------- METHODS ----------------- */
-	
-	public void createMap(){
+	public void createMap(MapLoader ml){
+		List listCases = ml.getCases();
+		int l = 0;
 		for (int i = 0; i < this.m_map.length; i++) {
 			for (int j = 0; j < this.m_map[i].length; j++) {
-				this.m_map[i][j] = new Case(new Vector2i(i,j), 1, Color.WHITE, "case.png");
+				Element caseElement = (Element) listCases.get(l);
+				System.out.println("Before switch");
+				switch (caseElement.getAttributeValue("type"))
+				{
+		           case "White":
+		        	   System.out.println("White");
+		        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "casetest.png");
+		           break;
+		           case "Basic":
+		        	   System.out.println("Basic");
+		        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "casetest.png");
+		           break;
+		           case "Lampe":
+		        	   System.out.println("Lampe");
+		        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "lampadaire.png");
+		           break;
+				}
+				l++;
 			}
 		}
 	}
 	
-	public void drawMap(RenderWindow fenetre){
+	public void drawMap(RenderWindow fenetre, Character robot){
 		for (int i = 0; i < this.m_map.length; i++) {
 			for (int j = 0; j < this.m_map[i].length; j++) {
-				if (this.m_map[i][j] != null) {
-					this.m_map[i][j].drawCase(fenetre);
-				}
-				else {
-				System.out.println("Fuck");
+				this.m_map[i][j].drawCase(fenetre);
+				if (robot.getPosition().x == i && robot.getPosition().y == j) {
+					robot.update(fenetre,new Vector2f(0, 0));
 				}
 			}
 		}
@@ -56,7 +79,7 @@ public class Map {
 		int new_y =pos.y;
 			
 			switch (orient)
-				{
+			{
 	           case Up:
 	        	   new_x = new_x-1;
 	           break;
@@ -69,7 +92,7 @@ public class Map {
 	           case Right:
 	        	   new_y = new_y+1;
 	           break;
-				}
+			}
 			System.out.println("New_x: " + new_x + "New_y: " + new_y);
 			System.out.println("Length: " + this.m_map.length + "	Length colonne: " + this.m_map[0].length); 
 			if(this.m_map.length > new_x && this.m_map[0].length > new_y && new_x >=0 && new_y >=0) {
