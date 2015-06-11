@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
 public class Button {
@@ -23,6 +22,7 @@ public class Button {
             ex.printStackTrace();
         }
 		this.button_sprite = new Sprite(textureButton);
+		this.button_sprite.scale(0.5f, 0.5f);
 		this.button_sprite.setPosition(x, y);
 	}
 	

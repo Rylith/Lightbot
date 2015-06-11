@@ -1,125 +1,137 @@
 package lightbot;
-import java.util.Vector;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
+import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
-import Character.Orientation;
 
-
-public class Case {
+public class Case extends DrawableObject {
 
 /** --------------- ATTRIBUTES --------------- */
 
-	private int m_height;
-	private Color m_color;
-	private Vector2f m_position;
-	private int m_number;
-	private String tilePath;
-	private Texture tileTexture;
+	private final static int SIZESPRITEX = 130;
+	private final static int SIZESPRITEY = 75;
+	
+	private int m_value; //valeur affichée sur la case
+
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	/** Constructeur de la class case : color + number*/
 	
-	public Case(float x, float y, int height, Color color, int number){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = color;
-		m_number = number;
-		titlePath = //chemin;
-		titleTexture = //chemin;
-	}
+	/** Constructeur de la class Case avec value */
 	
-	/** Constructeur de la class case : color */
+	public Case(Vector2i position, int height, Color color, String tilePath, int value){
+		super(position, height, color, tilePath);
+		m_value = value;
+		if (m_value == 4 && getHeight() == 4) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 4 && getHeight() == 3) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 4 && getHeight() == 2) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 4 && getHeight() == 1) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 3 && getHeight() == 4) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 3 && getHeight() == 3) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 3 && getHeight() == 2) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 3 && getHeight() == 1) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 2 && getHeight() == 4) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 2 && getHeight() == 3) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 2 && getHeight() == 2) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 2 && getHeight() == 1) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 1 && getHeight() == 4) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 1 && getHeight() == 3) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 1 && getHeight() == 2) {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else /*(m_value == 1 && getHeight() == 1)*/ {
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+}
 	
-	public Case(float x, float y, int height, Color color){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = color;
-		m_number = 1;
-		titlePath = //chemin;
-		titleTexture = //chemin;
-	}
+	/** Constructeur de la class Case sans value */
 	
-	/** Constructeur de la class case : number */
-	
-	public Case(float x, float y, int height, int number){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = Color.WHITE;
-		m_number = number;
-		titlePath = //chemin;
-		titleTexture = //chemin;
-	}
-	
-	/** Constructeur de la class case default */
-	
-	public Case(float x, float y, int height){
-		m_position = new Vector2f(x,y);
-		m_height = height;
-		m_color = Color.WHITE;
-		m_number = 1;
-		titlePath = //chemin;
-		titleTexture = //chemin;
+	public Case(Vector2i position, int height, Color color, String tilePath){
+		super(position, height, color, tilePath);
+		m_value = 1;
+		/*switch (getHeight())
+		{
+            case 4:
+            	getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+            break;
+            case 3:
+            	getSprite().setTextureRect(new IntRect(0, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
+            break;
+            case 2:
+            	getSprite().setTextureRect(new IntRect(0, 2*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
+            break;
+            case 1:
+            	getSprite().setTextureRect(new IntRect(0, 3*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
+            break;
+        }*/
 	}
 
 	
 /** ---------------- METHODS ----------------- */	
 
-	/** Retourne les coordonnees de la case */
-	public Vector2f getPosition(){
-		return m_position;
-	}
-	
-	/** Assigne les coordonnees de la case */
-	public void setPosition(Vector2f position){
-		m_position = position;
-	}
-	
-	/** Retourne la hauteur de la case */
-	public int getHeight(){
-		return m_height;
-	}
-	
+
 	/** Retourne le nombre de la case */
-	public int getHeight(){
-		return m_height;
+	public int getValue(){
+		return m_value;
 	}
 	
-	/** Retourne le nombre de la case */
-	public int getNumber(){
-		return m_number;
+	/** Assigne le nombre a la case */
+	public void setValue(int value){
+		m_value = value;
 	}
 	
-	/** Retourne la couleur de la case */
-	public Color getColor(){
-		return m_color;
+	/** Retourne true si la position est contenue dans la case (false sinon) */
+	public boolean isContain(Vector2f position){
+		return getSprite().getLocalBounds().contains(position);
 	}
 	
-	/** Assigne la couleur a la case */
-	public void setColor(Color color){
-		m_color = color;
+	public void drawCase(RenderWindow fenetre){
+		float empile_y = -20.5f;
+		float decaleLine = this.getPosition().x * -41;
+		float pos_x_graph = 250 + decaleLine + this.getPosition().y*41 ;
+		float pos_y_graph = 100 + this.getPosition().y * 20.5f + this.getPosition().x *20.5f;
+		super.draw(fenetre, pos_x_graph, pos_y_graph);
+		for(int i = 2; i <= this.getHeight();++i){
+			//pos_y_graph = pos_y_graph + i*empile_y;
+			super.draw(fenetre, pos_x_graph, (pos_y_graph + i*empile_y));
+			/*System.out.println("Val du i: " + i);
+			System.out.println("pos_x: " + pos_x_graph + " Pos y: " + (pos_y_graph + i*empile_y));*/
+		}
 	}
-	
-
-	
-	 
-	/** Retourne le nombre d'ordres dans la liste d'ordre */
-	public void nbrOrder (){
-    	ListOrder.size();
-    }
-    
-	
-	/** Ajout de la case dans la fenetre */
-	public void draw(){
-		/*TODO*/
-	}
-	
-
-}
-
-	
 }
