@@ -4,17 +4,20 @@ import org.jsfml.graphics.Color;
 
 public class Light extends Order {
 
-	public Light (Character p){
-		
-		personne = p;
-		color= Color.WHITE;
-		
-	}
-	
-	public Light(Character p, Color c){
+	public Light(Character p, Engine e){	
 		
 		personne=p;
-		color= c;
+		engine=e;
+		
+		color=Color.WHITE;
+	}
+	
+	public Light(Character p, Engine e, Color c){
+		
+		personne=p;
+		engine = e;
+		color=c;
+		
 	}
 
 	
@@ -22,7 +25,7 @@ public class Light extends Order {
 	protected void executer() {
 		// TODO Auto-generated method stub
 		
-		if(personne.getColor() == color)
+		if(personne.getColor() == color || color == Color.WHITE)
 		{
 			if(!engine.ExecLight(personne)){
 				try {

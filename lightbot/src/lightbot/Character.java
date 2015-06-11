@@ -147,5 +147,5 @@ public class Character extends DrawableObject{
 		window.draw(this.getSprite());
 	}
 	
-	
+
 }

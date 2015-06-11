@@ -27,11 +27,20 @@ public class Move extends Order {
 		if (color == personne.getColor() || color == Color.WHITE){
 			if(!engine.ExecMove(personne)) {
 				try {
-					throw new Exception("Pas possible d'avancer");
+					throw new Exception("Impossible d'avancer");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+		}
+		else {
+			
+			try {
+				throw new Exception("Pas possible d'executer l'ordre : couleurs differentes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
