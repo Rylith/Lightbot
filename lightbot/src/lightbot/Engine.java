@@ -1,15 +1,23 @@
 package lightbot;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.system.Vector2i;
 
 
 public class Engine {
 	
 	
 	private Map monde;
+	
+	
+	public Engine (Map m){
+		
+		monde = m;
+		
+	}
 	/** 
 	 * 
-	 * @param clone: le clone deplace a la case de destination, hauteur inchangée
+	 * @param clone: le clone deplace a la case de destination, hauteur inchangï¿½e
 	 * @return true si pas d'obstacles, false sinon
 	 * @obstacle1: si les cases de depart et d'arrivee ont des hauteurs differentes
 	 * @obstacle2: 
@@ -169,7 +177,7 @@ public class Engine {
 		
 		if(isAbleToMove(p)){
 			
-			p.updatePostion();
+			updatePostion(p);
 			return true;
 		}
 		else 
@@ -180,7 +188,7 @@ public class Engine {
 	/**
 	 * fait jumper le personnage d'une case vers le haut ou d'une case vers le bas
 	 * @param p: le personnage a fair jumper
-	 * @return true si le jump s'est bien passé false sinon
+	 * @return true si le jump s'est bien passÃ© false sinon
 	 */
 		
 	public boolean ExecJump(Character p){
@@ -190,14 +198,15 @@ public class Engine {
 			return false;
 		}
 		else{
-			p.updatePostion(); //on place le clone a la case au sommet
+			updatePostion(p); //on place le clone a la case au sommet
+			p.setHeight(getCurrentCase(p).getHeight());
 			return true;
 		}
 	}
 	/**
 	 * fait jumper le personnage d'une case ou de deux au max vers le haut ou vers le bas
 	 * @param p: le personnage a fair jumper
-	 * @return true si le jump s'est bien passé false sinon
+	 * @return true si le jump s'est bien passï¿½ false sinon
 	 */	
 
 	public boolean ExecDoubleJump(Character p) {
@@ -208,12 +217,13 @@ public class Engine {
 			return false;
 		}
 		else{
-			p.updatePostion(); //on place le clone a la case au sommet
+			updatePostion(p); //on place le clone a la case au sommet
+			p.setHeight(getCurrentCase(p).getHeight());
 			return true;
 		}
 	}
 	
-	public boolean ExecLight(Character personne) {
+	/*public boolean ExecLight(Character personne) {
 		
 		// TODO Auto-generated method stub
 		Case [][] mat;
@@ -226,10 +236,36 @@ public class Engine {
 		//if (mat[x][y].getColor() == Color.BLUE )
 		return (allumerLampadaire (!mat[x][y].object_list.get(l).isOn()));
 			
-	}
+	}*/
 	
 	
 
+	public void updatePostion(Character p){
+		int new_x = p.getPosition().x;
+		int new_y =p.getPosition().y;
+		
+		switch (p.getOrientation())
+		{
+	       case Up:
+	    	   new_x = new_x-1;
+	       break;
+	       case Down:
+	    	   new_x = new_x+1;
+	       break;
+	       case Left:
+	    	   new_y = new_y-1;
+	       break;
+	       case Right:
+	    	   new_y = new_y+1;
+	       break;
+		}
+		p.setPosition(new Vector2i(new_x,new_y));
+	}
 	
-	
+	public Case getCurrentCase(Character p){
+		int x = p.getPosition().x;
+		int y = p.getPosition().y;
+		
+		return monde.get_m_mat()[x][y];
+	}
 }

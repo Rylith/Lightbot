@@ -5,23 +5,26 @@ import org.jsfml.graphics.Color;
 public class Jump extends Order {
 
 	
-	public Jump(Character p){
+	public Jump(Character p, Engine e){	
 		
 		personne=p;
-		color= Color.WHITE;
+		engine=e;
 		
+		color=Color.WHITE;
 	}
 	
-	public Jump(Character p, Color c){
+	public Jump(Character p, Engine e, Color c){
 		
 		personne=p;
+		engine = e;
 		color=c;
+		
 	}
 	@Override
 	protected void executer() {
 		// TODO Auto-generated method stub
 		
-		if(color == personne.getColor()){
+		if(color == personne.getColor() || color == Color.WHITE){
 			
 			if(!engine.ExecJump(personne)){
 				try {

@@ -25,22 +25,21 @@ public class TurnLeft extends Order {
 	}
 	protected void executer(){
 		
-		if(color == personne.getColor()) {
+		if(color == personne.getColor() || color == Color.WHITE) {
 			
 			switch(personne.getOrientation())
 			{
-				case Up:  personne.setOrientation(Orientation.Left);
-				case Down:  personne.setOrientation(Orientation.Right); 
-				case Left: personne.setOrientation(Orientation.Down); 
-				case Right: personne.setOrientation(Orientation.Up);
-				default:
+				case Up:  personne.setOrientation(Orientation.Left);break;
+				case Down:  personne.setOrientation(Orientation.Right); break;
+				case Left: personne.setOrientation(Orientation.Down); break;
+				case Right: personne.setOrientation(Orientation.Up);break;
 			
 			}
 		//return true;
 		}
 		else{
 			try {
-				throw new Exception("Pas possible de tourner à gauche : couleurs differentes");
+				throw new Exception("Pas possible de tourner ï¿½ gauche : couleurs differentes");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -6,23 +6,26 @@ public class DoubleJump extends Order{
 
 	
 
-	public DoubleJump(Character p){
-		
-		personne= p;
-		color= Color.WHITE;
-
-	}
-	
-	public DoubleJump( Character p, Color c){
+	public DoubleJump(Character p, Engine e){	
 		
 		personne=p;
+		engine=e;
+		
+		color=Color.WHITE;
+	}
+	
+	public DoubleJump(Character p, Engine e, Color c){
+		
+		personne=p;
+		engine = e;
 		color=c;
+		
 	}
 	
 	@Override
 	protected void executer() {
 		// TODO Auto-generated method stub
-		if(personne.getColor() == color){
+		if(personne.getColor() == color || color == Color.WHITE){
 			
 		
 			if(!engine.ExecDoubleJump(personne)){
