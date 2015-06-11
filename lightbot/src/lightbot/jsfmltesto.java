@@ -26,8 +26,21 @@ public class jsfmltesto {
     public static void main(String[] args) {
  
         RenderWindow fenetre = new RenderWindow();
-        Texture textureTile = new Texture();
- 
+        
+        Texture back_text = new Texture();
+        try {
+            //Try to load the texture from file "jsfml.png"
+        	back_text.loadFromFile(Paths.get("background.jpg"));
+
+            //Texture was loaded successfully - retrieve and print size
+            Vector2i size = back_text.getSize();
+            System.out.println("The texture is " + size.x + "x" + size.y);
+        } catch(IOException ex) {
+            //Ouch! something went wrong
+            ex.printStackTrace();
+        }
+        Sprite back_sprite = new Sprite(back_text);
+        
         fenetre.create(new VideoMode(640, 480), "Prototype");
 
         int frame = 3;
@@ -37,21 +50,23 @@ public class jsfmltesto {
         Button butturn = new Button("ButTournerDroite.png",50+0.5f*72,399);
         Button butallumer = new Button("buttest.png",50+72,399);
         
-        Map testo = new Map(3);
-        testo.m_map[0][2].setHeight(3);
+        Map testo = new Map();
         
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "lightbot.png");
         robot.setOrientation(Character.Orientation.Up);
         robot.drawCharac(fenetre);
 /*----------------------------------------Génération du robot----------------------------------------*/ 
+        boolean anti_cligno = true;
         
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
         while (fenetre.isOpen()) {
+        	anti_cligno = true;
+        	fenetre.draw(back_sprite);
             fenetre.draw(buttest.getSprite());
             fenetre.draw(butturn.getSprite());
             fenetre.draw(butallumer.getSprite());
-            testo.drawMap(fenetre);
+            testo.drawMap(fenetre,robot);
             robot.update(fenetre,new Vector2f(0, 0));
             
             // On gère les événements
@@ -98,8 +113,11 @@ public class jsfmltesto {
                                
                                robot.getSprite().setTextureRect(new IntRect(frame * 80, robot.getSprite().getTextureRect().top, 80, 100));
                                animCount++;
-                               testo.drawMap(fenetre);
-                               fenetre.draw(robot.getSprite());
+                               testo.drawMap(fenetre,robot);
+                               fenetre.draw(buttest.getSprite());
+                               fenetre.draw(butturn.getSprite());
+                               fenetre.draw(butallumer.getSprite());
+                              // fenetre.draw(robot.getSprite());
                                fenetre.display();
                                fenetre.clear(Color.WHITE);
                 				}    
@@ -142,8 +160,11 @@ public class jsfmltesto {
                                
                                robot.getSprite().setTextureRect(new IntRect(6*80 + frameElec * 80, robot.getSprite().getTextureRect().top, 80, 100));
                                animCount++;
-                               testo.drawMap(fenetre);
-                               fenetre.draw(robot.getSprite());
+                               testo.drawMap(fenetre,robot);
+                               fenetre.draw(buttest.getSprite());
+                               fenetre.draw(butturn.getSprite());
+                               fenetre.draw(butallumer.getSprite());
+                               //fenetre.draw(robot.getSprite());
                                fenetre.display();
                                fenetre.clear(Color.WHITE);
                            }       
@@ -151,9 +172,12 @@ public class jsfmltesto {
                 		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
 					}
                 }
+                anti_cligno = false;
             } 
-            fenetre.display();
-            fenetre.clear(Color.WHITE);
+            if (anti_cligno) {
+                fenetre.display();
+                fenetre.clear();
+			}
         }
     }
 }
