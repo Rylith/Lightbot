@@ -57,6 +57,16 @@ public class Character extends DrawableObject{
 		return m_listOrder;
 	}
 	
+	public Vector<Pointeur> getPointerList(){
+		
+		return  this.m_listPointeur;
+	}
+		
+	public void RemoveFromPtrList(Pointeur p){
+			
+			this.m_listPointeur.remove(p);
+	}
+	
 	/** Retourne l'orientation du personnage */
 	public Orientation getOrientation(){
 		return m_orientation;
