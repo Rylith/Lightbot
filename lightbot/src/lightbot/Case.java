@@ -28,7 +28,7 @@ public class Case extends DrawableObject {
 	
 	/** Constructeur de la class Case avec value */
 	
-	public Case(Vector2f position, int height, Color color, String tilePath, int value){
+	public Case(Vector2i position, int height, Color color, String tilePath, int value){
 		super(position, height, color, tilePath);
 		m_value = value;
 		if (getColor() == Color.WHITE) {
@@ -56,7 +56,7 @@ public class Case extends DrawableObject {
 	
 	/** Constructeur de la class Case sans value */
 	
-	public Case(Vector2f position, int height, Color color, String tilePath){
+	public Case(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
 		m_value = 1;
 		if (getColor() == Color.WHITE) {
