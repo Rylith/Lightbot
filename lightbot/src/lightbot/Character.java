@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.IntRect;
+import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
@@ -37,6 +38,7 @@ public class Character extends DrawableObject{
 	private Vector<Vector<Order>> m_listOrder;
 	private Vector<Integer> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
+	private Color color;
 
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -44,11 +46,17 @@ public class Character extends DrawableObject{
 		
 	/** Constructeur de la class Character 
 	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
-	public Character(Vector2f position, int height, Color color, String tilePath){
+	public Character(Vector2i position, int height, Color color, String tilePath){
+		super(position, height, color, tilePath);
+		m_sprite.scale(0.75f,0.75f);
+	}
+/* VERSION CONSTRUCTEUR CORALIE : choisir entre le constructeur d'avant et celui la
+ * 
+	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, 1, color, tilePath);
 	}
 
-	
+*/
 /** ---------------- METHODS ----------------- */	
 
 
@@ -58,13 +66,12 @@ public class Character extends DrawableObject{
 	}
 	
 	public Vector<Pointeur> getPointerList(){
-		
 		return  this.m_listPointeur;
 	}
-		
+	
 	public void RemoveFromPtrList(Pointeur p){
-			
-			this.m_listPointeur.remove(p);
+		
+		this.m_listPointeur.remove(p);
 	}
 	
 	/** Retourne l'orientation du personnage */
@@ -72,7 +79,7 @@ public class Character extends DrawableObject{
 		return m_orientation;
 	}
 	
-	/** Assigne l'orientation du personnage & le bon Sprite en consequence
+	/** Assigne l'orientation du personnage & assigne le bon le Sprite en consequence
 	 * @param orientation du personnage : Right Left Up Down
 	 * @return void (mise a jour de m_orientation & m_Texture
 	 */
@@ -124,7 +131,7 @@ public class Character extends DrawableObject{
 	}
     	
 	/** Assigne la position au pointeur correspondant a la couleur fournit en parametre */
-	public void setPointeur(Color color, Vector2f position){
+	public void setPointeur(Color color, Vector2i position){
     	for (int i = m_listPointeur.size(); i > 0; i--){
     		if (m_listPointeur.elementAt(i).getColor() == color){
     			m_listPointeur.elementAt(i).setPosition(position);
@@ -134,11 +141,25 @@ public class Character extends DrawableObject{
 	}
 	
 
-	/*
-	public void update(RenderWindow){
-		TODO
+
+	public void drawCharac(RenderWindow window){
+		//POSTION ROBOT
+		//case3.getPosition().x+82/2-30,case3.getPosition().y+82/4-60
+		
+		//POSTIONNEMENT DES CASES
+		//250 + decaleLine + this.getPosition().y*41 , 100 + this.getPosition().y * 20.5f + this.getPosition().x *20.5f
+		
+		float pos_x_graph = 250 + this.getPosition().x * -41 + this.getPosition().y * 41 + 82/2-30;
+		float pos_y_graph = 100 + this.getPosition().y * 20.5f + this.getPosition().x *20.5f - 2*20.5f;
+		//System.out.println("Pos x: " + this.getPosition().x + " Pos y: " + this.getPosition().y);
+		super.draw(window,pos_x_graph,pos_y_graph);
+		
 	}
-	*/
+	
+	public void update(RenderWindow window, Vector2f dep){
+		super.update(window, dep);
+		window.draw(this.getSprite());
+	}
 	
 
 }
