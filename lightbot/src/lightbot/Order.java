@@ -15,7 +15,7 @@ public abstract class Order  {
 	
 	/** ------------------METHODS------------------*/
 
-	protected abstract void executer();
+	protected abstract int executer();
 	
 	
 }

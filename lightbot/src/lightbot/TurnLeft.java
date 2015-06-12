@@ -23,9 +23,9 @@ public class TurnLeft extends Order {
 		color= c;
 		
 	}
-	protected void executer(){
+	protected int executer(){
 		
-		if(color == personne.getColor() || color == Color.WHITE) {
+		//if(color == personne.getColor() || color == Color.WHITE) {
 			
 			switch(personne.getOrientation())
 			{
@@ -36,8 +36,8 @@ public class TurnLeft extends Order {
 			
 			}
 		//return true;
-		}
-		else{
+		//}
+		/*else{
 			try {
 				throw new Exception("Pas possible de tourner � gauche : couleurs differentes");
 			} catch (Exception e) {
@@ -45,7 +45,8 @@ public class TurnLeft extends Order {
 				e.printStackTrace();
 			}
 				
-		}
+		}*/
+		return 0;
 			
 		//return engine.ExecLeft(personne);
 	

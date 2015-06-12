@@ -23,7 +23,7 @@ public class DoubleJump extends Order{
 	}
 	
 	@Override
-	protected void executer() {
+	protected int executer() {
 		// TODO Auto-generated method stub
 		if(personne.getColor() == color || color == Color.WHITE){
 			
@@ -48,6 +48,7 @@ public class DoubleJump extends Order{
 			}
 				
 		}
+		return 0;
 			
 	}
 	

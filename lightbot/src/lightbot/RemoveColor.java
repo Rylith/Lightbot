@@ -17,13 +17,14 @@ public class RemoveColor extends Order {
 		
 	}
 	@Override
-	protected void executer() {
+	protected int executer() {
 		
 		// TODO Auto-generated method stub
-		if (color == personne.getColor() || color == Color.WHITE){
+		//if (color == personne.getColor() || color == Color.WHITE){
 			if(personne.getColor()!= Color.WHITE)
 				personne.setColor(Color.WHITE);		
-		}
+		//}
+		return 0;
 		
 	}
 

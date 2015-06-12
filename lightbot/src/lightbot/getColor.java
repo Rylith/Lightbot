@@ -21,10 +21,11 @@ public class getColor extends Order {
 	}
 	
 	@Override
-	protected void executer() {
+	protected int executer() {
 		
 		// TODO Auto-generated method stub
-		if (color == personne.getColor() || color == Color.WHITE){
+		
+		//if (color == personne.getColor() || color == Color.WHITE){
 			if (!engine.ExecGetColor(personne)){
 				try {
 					throw new Exception("Pas possible d'executer l'ordre : Aucune couleur sur la case");
@@ -34,9 +35,9 @@ public class getColor extends Order {
 				}
 			}
 			
-		}
+		//}
 			
-		else{
+		/*else{
 			
 			try {
 				throw new Exception("Impossible de changer de couleur : couleurs action/robot differentes");
@@ -44,7 +45,8 @@ public class getColor extends Order {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
+		return 0;
 					
 		
 	}

@@ -23,8 +23,8 @@ public class Move extends Order {
 	}
 
 	@Override
-	protected void executer() {
-		if (color == personne.getColor() || color == Color.WHITE){
+	protected int executer() {
+		//if (color == personne.getColor() || color == Color.WHITE){
 			if(!engine.ExecMove(personne)) {
 				try {
 					throw new Exception("Impossible d'avancer");
@@ -33,8 +33,8 @@ public class Move extends Order {
 					e.printStackTrace();
 				}
 			}
-		}
-		else {
+		//}
+		/*else {
 			
 			try {
 				throw new Exception("Pas possible d'executer l'ordre : couleurs differentes");
@@ -42,7 +42,8 @@ public class Move extends Order {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
+		return 0;
 		
 	}
 	

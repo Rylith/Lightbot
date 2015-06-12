@@ -1,5 +1,7 @@
 package lightbot;
 
+import java.util.Vector;
+
 import org.jsfml.graphics.Color;
 import org.jsfml.system.Vector2i;
 
@@ -313,5 +315,35 @@ public class Engine {
 	public void set_nb_for(int val){
 		
 		nb_for=val;
+	}
+	
+	public boolean ExecMalloc(Character personne) {
+		// TODO Auto-generated method stub
+		Vector <Pointeur> l;
+		l= personne.getPointerList();
+		boolean pursue = true;
+		if(!l.isEmpty()){
+			
+		
+			for(int i=0; i<l.size() && pursue; i++)
+			{
+				if(l.get(i).getColor()== personne.getColor()){
+					//poser pointeur:
+						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
+						getCurrentCase(personne).addObject(l.get(i)); //ajoute le pointeur a la case
+						
+					pursue = false;
+				}
+			}
+			
+			if(!pursue)
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+		
+		
 	}
 }
