@@ -330,7 +330,7 @@ public class Engine {
 				if(l.get(i).getColor()== personne.getColor()){
 					//poser pointeur:
 						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
-						getCurrentCase(personne).addObject(l.get(i)); //ajoute le pointeur a la case
+						//getCurrentCase(personne).addObject(l.get(i)); //ajoute le pointeur a la case
 						
 					pursue = false;
 				}

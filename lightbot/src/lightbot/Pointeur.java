@@ -2,6 +2,7 @@ package lightbot;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 public class Pointeur extends DrawableObject{
 
@@ -16,7 +17,7 @@ public class Pointeur extends DrawableObject{
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	public Pointeur(Vector2f position, int height, Color color, String tilePath, int value){
+	public Pointeur(Vector2i position, int height, Color color, String tilePath, int value){
 		super(position, height, color, tilePath);
 		m_active = false;
 	}

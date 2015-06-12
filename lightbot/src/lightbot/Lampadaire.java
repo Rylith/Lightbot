@@ -2,6 +2,7 @@ package lightbot;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 
 public class Lampadaire extends DrawableObject {
 
@@ -16,7 +17,7 @@ public class Lampadaire extends DrawableObject {
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	public Lampadaire(Vector2f position, int height, Color color, String tilePath, int value){
+	public Lampadaire(Vector2i position, int height, Color color, String tilePath, int value){
 		super(position, height, color, tilePath);
 		m_active = false;
 	}
