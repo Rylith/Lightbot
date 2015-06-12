@@ -230,16 +230,17 @@ public class Engine {
 	public boolean ExecLight(Character personne) {
 		
 		// TODO Auto-generated method stub
-		Case [][] mat;
-		mat= monde.get_m_mat();
-	//	Lampadaire l;
 		
-		int x = personne.getPosition().x;
-		int y =personne.getPosition().y;
+		Lampadaire l;
 		
-		if (mat[x][y].getColor() == Color.BLUE ){
+		if(getCurrentCase(personne).getMapDO().containsKey(2)){
 			
-			//traitement
+			l=(Lampadaire) getCurrentCase(personne).getMapDO().get(2);
+			
+			l.setActive(!l.getActive());
+			
+			getCurrentCase(personne).getMapDO().put(2,l);
+				
 			return true;
 		}
 		
@@ -334,9 +335,9 @@ public class Engine {
 					
 					//poser pointeur:
 						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
-						
-						getCurrentCase(personne).addObject(17,l.get(i)); //ajoute le pointeur a la case Quel depth pour un ptr??
-						
+						l.get(i).setActive(true); // on active le pointeur avant de le poser sur la case
+						getCurrentCase(personne).addObject(1,l.get(i)); //ajoute le pointeur a la liste d'objets de la case
+						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //ajoute le pointeur sur la case 
 						pursue = false;
 				}
 			}
@@ -350,6 +351,11 @@ public class Engine {
 			return false;
 		
 		
+	}
+
+	public boolean ExecAccess(Character personne, Color color_ptr) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	
