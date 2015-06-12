@@ -16,7 +16,7 @@ public class Engine {
 	public Engine (Map m){
 		
 		monde = m;
-		nb_for=0;
+		nb_for=1;
 		
 	}
 	/** 
@@ -293,18 +293,21 @@ public class Engine {
 	 * @param personne: le character
 	 * @return true si for possible false sinon
 	 * @obstacleaufor: si valeur case == 1
+	 * 
 	 */
 	public boolean ExecFor(Character personne) {
 		// TODO Auto-generated method stub
 		
-		if(getCurrentCase(personne).getValue()> 1){ //tests  conditions for
+		if(getCurrentCase(personne).getValue() > 1 && getCurrentCase(personne).getValue() <= 6){ //tests  conditions for
 			
 			set_nb_for(getCurrentCase(personne).getValue());
 			return true;
 		}
 		
-		else	
+		else{
+			//set_nb_for(1);
 			return false;
+		}
 	}
 	
 	public int get_nb_for() {
@@ -317,7 +320,7 @@ public class Engine {
 		nb_for=val;
 	}
 	
-	public boolean ExecMalloc(Character personne) {
+	public boolean ExecMalloc(Character personne, Color cptr) {
 		// TODO Auto-generated method stub
 		Vector <Pointeur> l;
 		l= personne.getPointerList();
@@ -327,12 +330,14 @@ public class Engine {
 		
 			for(int i=0; i<l.size() && pursue; i++)
 			{
-				if(l.get(i).getColor()== personne.getColor()){
+				if(l.get(i).getColor()== cptr){
+					
 					//poser pointeur:
 						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
-						//getCurrentCase(personne).addObject(l.get(i)); //ajoute le pointeur a la case
 						
-					pursue = false;
+						getCurrentCase(personne).addObject(17,l.get(i)); //ajoute le pointeur a la case Quel depth pour un ptr??
+						
+						pursue = false;
 				}
 			}
 			
@@ -346,4 +351,6 @@ public class Engine {
 		
 		
 	}
+	
+	
 }
