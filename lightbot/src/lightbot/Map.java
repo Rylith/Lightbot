@@ -30,6 +30,7 @@ public class Map {
 		List listCases = ml.getCases();
 		int l = 0;
 		for (int i = 0; i < this.m_map.length; i++) {
+			List listCases = ml.getCases();
 			for (int j = 0; j < this.m_map[i].length; j++) {
 				Element caseElement = (Element) listCases.get(l);
 				System.out.println("Before switch");
@@ -105,6 +106,6 @@ public class Map {
 	
 	public Case [][] get_m_mat(){
 		
-		return this.get_m_mat();
+		return this.m_map;
 	}
 }

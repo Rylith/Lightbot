@@ -38,14 +38,8 @@ public class MapLoader {
 	
 	static List<Element> getCasesLine(int line) {
 		 List<Element> listLines = racine.getChildren("line");
-		 List<Element> listCases = (Element)
-		 for (int i = 0;  i < listLines.size(); i++) {
-				Element lineElement = (Element) listLines.get(i);
-				if (Integer.parseInt(lineElement.getAttributeValue("num")) == line) {
-					return lineElement.getChildren("case");
-				}
-		 }
-		return listCases;
+		 Element lineElement = (Element) listLines.get(line);
+		 return lineElement.getChildren("case");
 	}
 	
 }
