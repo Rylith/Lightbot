@@ -28,7 +28,7 @@ public class DoubleJump extends Order{
 		if(personne.getColor() == color || color == Color.WHITE){
 			
 		
-			if(!engine.ExecDoubleJump(personne)){
+			//if(!engine.ExecDoubleJump(personne)){
 				try {
 					throw new Exception("Pas possible de double jump");
 				} catch (Exception e) {
@@ -37,9 +37,9 @@ public class DoubleJump extends Order{
 				}
 					
 			}
-		}
+		//}
 		
-		else{
+		/*else{
 			try {
 				throw new Exception("Pas possible de double JUMP : couleurs differentes");
 			} catch (Exception e) {
@@ -47,7 +47,7 @@ public class DoubleJump extends Order{
 				e.printStackTrace();
 			}
 				
-		}
+		}*/
 		return 0;
 			
 	}
