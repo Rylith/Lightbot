@@ -21,14 +21,14 @@ public class Jump extends Order {
 		
 	}
 	@Override
-	protected void executer() {
+	protected int executer() {
 		// TODO Auto-generated method stub
 		
-		if(color == personne.getColor() || color == Color.WHITE){
+		//if(color == personne.getColor() || color == Color.WHITE){
 			
 			if(!engine.ExecJump(personne)){
 				try {
-					throw new Exception("Pas possible de jump");
+					throw new Exception("Impossible de jump");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -36,8 +36,8 @@ public class Jump extends Order {
 					
 			}
 				
-		}
-		else{
+		//}
+		/*else{
 				try {
 					throw new Exception("Pas possible de JUMP : couleurs differentes");
 				} catch (Exception e) {
@@ -45,7 +45,8 @@ public class Jump extends Order {
 					e.printStackTrace();
 				}
 					
-			}
+			}*/
+		return 0;
 				
 		}
 	

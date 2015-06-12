@@ -2,9 +2,9 @@ package lightbot;
 
 import org.jsfml.graphics.Color;
 
-public class Light extends Order {
-
-	public Light(Character p, Engine e){	
+public class For extends Order {
+	
+	public For(Character p, Engine e){	
 		
 		personne=p;
 		engine=e;
@@ -12,7 +12,7 @@ public class Light extends Order {
 		color=Color.WHITE;
 	}
 	
-	public Light(Character p, Engine e, Color c){
+	public For(Character p, Engine e, Color c){
 		
 		personne=p;
 		engine = e;
@@ -20,16 +20,17 @@ public class Light extends Order {
 		
 	}
 
-	
 	@Override
 	protected int executer() {
 		// TODO Auto-generated method stub
 		
-	//	if(personne.getColor() == color || color == Color.WHITE)
+		
+		//if(personne.getColor() == color || color == Color.WHITE)
 		//{
-			if(!engine.ExecLight(personne)){
+			if(!engine.ExecFor(personne)){
+				
 				try {
-					throw new Exception("Erreur lors de l'allumage de la case");
+					throw new Exception("Erreur lors de l'execution du for");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -39,16 +40,13 @@ public class Light extends Order {
 		//}
 		/*else {
 			try {
-				throw new Exception("Pas possible d'allumer : couleurs  differentes");
+				throw new Exception("Pas possible d'utiliser le for : couleurs  differentes");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 				
 		}*/
-		return 0;
-			
-	
-	
+		return engine.get_nb_for();
 	}
 }

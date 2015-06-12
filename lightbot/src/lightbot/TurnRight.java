@@ -21,9 +21,9 @@ public class TurnRight extends Order {
 		color=c;
 		
 	}
-	protected void executer(){
+	protected int executer(){
 		
-		if(color == personne.getColor() || color == Color.WHITE){
+		//if(color == personne.getColor() || color == Color.WHITE){
 			
 			switch(personne.getOrientation())
 			{
@@ -41,8 +41,8 @@ public class TurnRight extends Order {
 					break;
 			
 			}
-		}
-		else{
+		//}
+		/*else{
 			try {
 				throw new Exception("Pas possible de tourner � droite : couleurs differentes");
 			} catch (Exception e) {
@@ -50,7 +50,8 @@ public class TurnRight extends Order {
 				e.printStackTrace();
 			}
 				
-		}
+		}/*/
+		return 0;
 			
 			
 		//return true;

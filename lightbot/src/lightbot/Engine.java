@@ -1,5 +1,7 @@
 package lightbot;
 
+import java.util.Vector;
+
 import org.jsfml.graphics.Color;
 import org.jsfml.system.Vector2i;
 
@@ -8,11 +10,13 @@ public class Engine {
 	
 	
 	private Map monde;
+	private int nb_for;
 	
 	
 	public Engine (Map m){
 		
 		monde = m;
+		nb_for=0;
 		
 	}
 	/** 
@@ -223,20 +227,27 @@ public class Engine {
 		}
 	}
 	
-	/*public boolean ExecLight(Character personne) {
+	public boolean ExecLight(Character personne) {
 		
 		// TODO Auto-generated method stub
 		Case [][] mat;
 		mat= monde.get_m_mat();
-		Lampadaire l;
+	//	Lampadaire l;
 		
 		int x = personne.getPosition().x;
 		int y =personne.getPosition().y;
 		
-		//if (mat[x][y].getColor() == Color.BLUE )
-		return (allumerLampadaire (!mat[x][y].object_list.get(l).isOn()));
+		if (mat[x][y].getColor() == Color.BLUE ){
 			
-	}*/
+			//traitement
+			return true;
+		}
+		
+		else
+			return false;
+	
+			
+	}
 	
 	
 
@@ -267,5 +278,72 @@ public class Engine {
 		int y = p.getPosition().y;
 		
 		return monde.get_m_mat()[x][y];
+	}
+	public boolean ExecGetColor(Character p) {
+		if (!(getCurrentCase(p).getColor() == Color.WHITE)){
+			p.setColor(getCurrentCase(p).getColor());
+			return true;
+		} 
+		else {
+			return false;
+		}
+	}
+	/**
+	 * retourne la valeur de la case courante
+	 * @param personne: le character
+	 * @return true si for possible false sinon
+	 * @obstacleaufor: si valeur case == 1
+	 */
+	public boolean ExecFor(Character personne) {
+		// TODO Auto-generated method stub
+		
+		if(getCurrentCase(personne).getValue()> 1){ //tests  conditions for
+			
+			set_nb_for(getCurrentCase(personne).getValue());
+			return true;
+		}
+		
+		else	
+			return false;
+	}
+	
+	public int get_nb_for() {
+	
+		// TODO Auto-generated method stub
+		return nb_for;
+	}
+	public void set_nb_for(int val){
+		
+		nb_for=val;
+	}
+	
+	public boolean ExecMalloc(Character personne) {
+		// TODO Auto-generated method stub
+		Vector <Pointeur> l;
+		l= personne.getPointerList();
+		boolean pursue = true;
+		if(!l.isEmpty()){
+			
+		
+			for(int i=0; i<l.size() && pursue; i++)
+			{
+				if(l.get(i).getColor()== personne.getColor()){
+					//poser pointeur:
+						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
+						getCurrentCase(personne).addObject(l.get(i)); //ajoute le pointeur a la case
+						
+					pursue = false;
+				}
+			}
+			
+			if(!pursue)
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+		
+		
 	}
 }

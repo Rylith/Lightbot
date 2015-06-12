@@ -4,29 +4,27 @@ import org.jsfml.graphics.Color;
 
 public class RemoveColor extends Order {
 
-	public RemoveColor(Character p, Engine e){	
+	public RemoveColor(Character p){	
 		
 		personne=p;
-		engine=e;
-		
 		color=Color.WHITE;
 	}
 	
-	public RemoveColor(Character p, Engine e, Color c){
+	public RemoveColor(Character p, Color c){
 		
 		personne=p;
-		engine = e;
 		color=c;
 		
 	}
 	@Override
-	protected void executer() {
+	protected int executer() {
 		
 		// TODO Auto-generated method stub
-		if (color == personne.getColor() || color == Color.WHITE){
+		//if (color == personne.getColor() || color == Color.WHITE){
 			if(personne.getColor()!= Color.WHITE)
 				personne.setColor(Color.WHITE);		
-		}
+		//}
+		return 0;
 		
 	}
 
