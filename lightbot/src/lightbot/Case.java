@@ -52,6 +52,7 @@ public class Case extends DrawableObject {
 		else if (getColor() == Color.RED) {
 			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 5*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
 		}
+		
 	}
 	
 	/** Constructeur de la class Case sans value */
@@ -102,7 +103,7 @@ public class Case extends DrawableObject {
 	}
 	
 	/** Retourne la HashMap de DrawableObject present sur la case */
-	public HashMap getMapDO(){
+	public HashMap <Integer,DrawableObject> getMapDO(){
 		return m_mapDrawableObject;
 	}
 	

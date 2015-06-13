@@ -121,13 +121,21 @@ public class Character extends DrawableObject{
 	
 	/** Retourne le pointeur correspondant a la couleur fournit en parametre 
 	 * @throws Exception */
-	public Pointeur getPointeur(Color color) throws Exception{
+	public Pointeur getPointeur(Color color) {
+		
     	for (int i = m_listPointeur.size(); i > 0; i--){
     		if (m_listPointeur.elementAt(i).getColor() == color){
     			return m_listPointeur.elementAt(i);
     		}
     	}
-    	throw new Exception("Aucun pointeur de cette couleur n'a ete trouve");
+    	
+    	try {
+			throw new Exception("Aucun pointeur de cette couleur n'a ete trouve");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
     	
 	/** Assigne la position au pointeur correspondant a la couleur fournit en parametre */

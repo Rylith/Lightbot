@@ -353,10 +353,26 @@ public class Engine {
 		
 	}
 
-	public boolean ExecAccess(Character personne, Color color_ptr) {
+	public boolean ExecAccess(Character personne, Color color_ptr)  {
 		// TODO Auto-generated method stub
-		return false;
+		
+		//il faut que le smartbot passe sa liste de pointeurs au basic bot apres son passage pour q ca marche
+		
+		Vector <Pointeur> l;
+		l= personne.getPointerList();
+		
+		if(!l.isEmpty()){
+			Pointeur p= personne.getPointeur(color_ptr);
+			if(p==null || !p.getActive())
+				return false;
+			
+			else{
+				personne.setPosition(p.getPosition());
+				return true;
+			}
+		}
+		else
+			return false;
 	}
-	
 	
 }

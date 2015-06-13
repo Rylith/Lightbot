@@ -24,10 +24,10 @@ private Color color_ptr;
 	}
 
 	@Override
-	protected int executer() {
+	protected int executer()  {
 		
 		// TODO Auto-generated method stub
-				if(!engine.ExecAccess(personne,getColor_ptr() )){
+				if(!engine.ExecAccess(personne, getColor_ptr() )){
 					try {
 						throw new Exception("Impossible de poser un pointeur");
 					} catch (Exception e) {
