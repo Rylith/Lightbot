@@ -17,11 +17,10 @@ public abstract class DrawableObject {
 	
 	private Vector2i m_position;
 	private int m_height;
-	private int m_depth;
 	private Color m_color;
 	private String m_tilePath; //chemin vers la texture de l'objet
 	private Texture m_tileSet; //texture de l'objet
-	private Sprite m_sprite; //sprite de l'objet parmis tous les sprites de la texture
+	protected Sprite m_sprite; //sprite de l'objet parmis tous les sprites de la texture
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -42,6 +41,7 @@ public abstract class DrawableObject {
 			e.printStackTrace();
 		}
 		m_sprite = new Sprite(m_tileSet);
+		//m_sprite.setPosition(position);
 	}
 	
 	
@@ -90,16 +90,14 @@ public abstract class DrawableObject {
 		m_sprite = sprite;
 	}
 	
-	/** Dessine l'objet dans la fenetre */
-	public void draw(RenderWindow window){
-		window.draw(m_sprite);
+	
+	public void draw(RenderWindow window, float x, float y){
+		this.getSprite().setPosition(x,y);
+		window.draw(this.getSprite());
 	}
 	
-	/**
-	public void update(RenderWindow){
-		TODO
+	public void update(RenderWindow window, Vector2f dep){
+		this.getSprite().move(dep);
 	}
-	*/
-	
 	
 }

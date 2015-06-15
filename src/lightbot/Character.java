@@ -38,6 +38,7 @@ public class Character extends DrawableObject{
 	private Vector<Vector<Order>> m_listOrder;
 	private Vector<Integer> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
+	private Color color;
 
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -46,10 +47,15 @@ public class Character extends DrawableObject{
 	/** Constructeur de la class Character 
 	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
 	public Character(Vector2i position, int height, Color color, String tilePath){
+		super(position, height, color, tilePath);
+		m_sprite.scale(0.75f,0.75f);
+	}
+/* VERSION CONSTRUCTEUR CORALIE : choisir entre le constructeur d'avant et celui la
+ * 
+	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, 1, color, tilePath);
 	}
-
-	
+*/
 /** ---------------- METHODS ----------------- */	
 
 
@@ -58,12 +64,21 @@ public class Character extends DrawableObject{
 		return m_listOrder;
 	}
 	
+	public Vector<Pointeur> getPointerList(){
+		return  this.m_listPointeur;
+	}
+	
+	public void RemoveFromPtrList(Pointeur p){
+		
+		this.m_listPointeur.remove(p);
+	}
+	
 	/** Retourne l'orientation du personnage */
 	public Orientation getOrientation(){
 		return m_orientation;
 	}
 	
-	/** Assigne l'orientation du personnage & le bon Sprite en consequence
+	/** Assigne l'orientation du personnage & assigne le bon le Sprite en consequence
 	 * @param orientation du personnage : Right Left Up Down
 	 * @return void (mise a jour de m_orientation & m_Texture
 	 */
@@ -105,13 +120,21 @@ public class Character extends DrawableObject{
 	
 	/** Retourne le pointeur correspondant a la couleur fournit en parametre 
 	 * @throws Exception */
-	public Pointeur getPointeur(Color color) throws Exception{
+	public Pointeur getPointeur(Color color) {
+		
     	for (int i = m_listPointeur.size(); i > 0; i--){
     		if (m_listPointeur.elementAt(i).getColor() == color){
     			return m_listPointeur.elementAt(i);
     		}
     	}
-    	throw new Exception("Aucun pointeur de cette couleur n'a ete trouve");
+    	
+    	try {
+			throw new Exception("Aucun pointeur de cette couleur n'a ete trouve");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
     	
 	/** Assigne la position au pointeur correspondant a la couleur fournit en parametre */
@@ -124,7 +147,9 @@ public class Character extends DrawableObject{
     	}
 	}
 	
-/*	public void drawCharac(RenderWindow window){
+
+
+	public void drawCharac(RenderWindow window){
 		//POSTION ROBOT
 		//case3.getPosition().x+82/2-30,case3.getPosition().y+82/4-60
 		
@@ -136,13 +161,12 @@ public class Character extends DrawableObject{
 		//System.out.println("Pos x: " + this.getPosition().x + " Pos y: " + this.getPosition().y);
 		super.draw(window,pos_x_graph,pos_y_graph);
 		
-	}*/
-
-	/*
-	public void update(RenderWindow){
-		TODO
 	}
-	*/
+	
+	public void update(RenderWindow window, Vector2f dep){
+		super.update(window, dep);
+		window.draw(this.getSprite());
+	}
 	
 
 }
