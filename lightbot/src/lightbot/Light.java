@@ -29,7 +29,7 @@ public class Light extends Order {
 		//{
 			if(!engine.ExecLight(personne)){
 				try {
-					throw new Exception("Erreur lors de l'allumage de la case");
+					throw new Exception("Pas de lampadaire à allumer sur la case");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

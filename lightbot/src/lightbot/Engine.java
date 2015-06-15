@@ -16,7 +16,7 @@ public class Engine {
 	public Engine (Map m){
 		
 		monde = m;
-		nb_for=0;
+		nb_for=1;
 		
 	}
 	/** 
@@ -230,16 +230,17 @@ public class Engine {
 	public boolean ExecLight(Character personne) {
 		
 		// TODO Auto-generated method stub
-		Case [][] mat;
-		mat= monde.get_m_mat();
-	//	Lampadaire l;
 		
-		int x = personne.getPosition().x;
-		int y =personne.getPosition().y;
+		Lampadaire l;
 		
-		if (mat[x][y].getColor() == Color.BLUE ){
+		if(getCurrentCase(personne).getMapDO().containsKey(2)){
 			
-			//traitement
+			l=(Lampadaire) getCurrentCase(personne).getMapDO().get(2);
+			
+			l.setActive(!l.getActive());
+			
+			getCurrentCase(personne).getMapDO().put(2,l);
+				
 			return true;
 		}
 		
@@ -293,18 +294,21 @@ public class Engine {
 	 * @param personne: le character
 	 * @return true si for possible false sinon
 	 * @obstacleaufor: si valeur case == 1
+	 * 
 	 */
 	public boolean ExecFor(Character personne) {
 		// TODO Auto-generated method stub
 		
-		if(getCurrentCase(personne).getValue()> 1){ //tests  conditions for
+		if(getCurrentCase(personne).getValue() > 1 && getCurrentCase(personne).getValue() <= 6){ //tests  conditions for
 			
 			set_nb_for(getCurrentCase(personne).getValue());
 			return true;
 		}
 		
-		else	
+		else{
+			//set_nb_for(1);
 			return false;
+		}
 	}
 	
 	public int get_nb_for() {
@@ -317,7 +321,7 @@ public class Engine {
 		nb_for=val;
 	}
 	
-	public boolean ExecMalloc(Character personne) {
+	public boolean ExecMalloc(Character personne, Color cptr) {
 		// TODO Auto-generated method stub
 		Vector <Pointeur> l;
 		l= personne.getPointerList();
@@ -327,12 +331,14 @@ public class Engine {
 		
 			for(int i=0; i<l.size() && pursue; i++)
 			{
-				if(l.get(i).getColor()== personne.getColor()){
+				if(l.get(i).getColor()== cptr){
+					
 					//poser pointeur:
 						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
-						//getCurrentCase(personne).addObject(l.get(i)); //ajoute le pointeur a la case
-						
-					pursue = false;
+						l.get(i).setActive(true); // on active le pointeur avant de le poser sur la case
+						getCurrentCase(personne).addObject(1,l.get(i)); //ajoute le pointeur a la liste d'objets de la case
+						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //ajoute le pointeur sur la case 
+						pursue = false;
 				}
 			}
 			
@@ -346,4 +352,27 @@ public class Engine {
 		
 		
 	}
+
+	public boolean ExecAccess(Character personne, Color color_ptr)  {
+		// TODO Auto-generated method stub
+		
+		//il faut que le smartbot passe sa liste de pointeurs au basic bot apres son passage pour q ca marche
+		
+		Vector <Pointeur> l;
+		l= personne.getPointerList();
+		
+		if(!l.isEmpty()){
+			Pointeur p= personne.getPointeur(color_ptr);
+			if(p==null || !p.getActive())
+				return false;
+			
+			else{
+				personne.setPosition(p.getPosition());
+				return true;
+			}
+		}
+		else
+			return false;
+	}
+	
 }

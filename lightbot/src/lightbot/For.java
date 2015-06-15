@@ -19,7 +19,9 @@ public class For extends Order {
 		color=c;
 		
 	}
-
+/**
+ * usage : tester si retour > 1 (for possible), si retour = 1 for pas possible 
+ */
 	@Override
 	protected int executer() {
 		// TODO Auto-generated method stub
