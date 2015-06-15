@@ -5,13 +5,16 @@ import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
+
 import java.util.List;
+
 import org.jdom2.*;
 import org.jdom2.input.*;
 import org.jdom2.filter.*;
 
 import lightbot.Case;
 import lightbot.MapLoader;
+import lightbot.Lampadaire;
 
 public class Map {
 
@@ -39,15 +42,17 @@ public class Map {
 						{
 				           case "White":
 				        	   System.out.println("White");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "casetest.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Case.png");
 				           break;
 				           case "Basic":
 				        	   System.out.println("Basic");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "casetest.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Case.png");
 				           break;
 				           case "Lampe":
 				        	   System.out.println("Lampe");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "lampadaire.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Case.png");
+				        	   //Lampadaire(Vector2i position, int height, Color color, String tilePath, int value)
+				        	   m_map[i][j].addObject(2, new Lampadaire(new Vector2i(i, j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Object.png"));
 				           break;
 						}
 						l++;

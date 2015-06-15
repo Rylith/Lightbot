@@ -51,7 +51,6 @@ public class jsfmltesto {
         Button butallumer = new Button("buttest.png",new Vector2f(50+72,399),"Allumer",false);
         
         Map testo = new Map();
-        testo.testoMap();
         
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "lightbot.png");

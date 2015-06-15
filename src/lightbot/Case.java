@@ -31,6 +31,7 @@ public class Case extends DrawableObject {
 	
 	public Case(Vector2i position, int height, Color color, String tilePath, int value){
 		super(position, height, color, tilePath);
+		m_mapDrawableObject = new HashMap<Integer,DrawableObject>();
 		m_value = value;
 		if (getColor() == Color.WHITE) {
 			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
@@ -59,11 +60,7 @@ public class Case extends DrawableObject {
 	
 	public Case(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
-		
-		float pos_x = 250 +  position.y * 41f - position.x * 41f;
-		float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
-		
-		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+		m_mapDrawableObject = new HashMap<Integer,DrawableObject>();
 		
 		m_value = 1;
 		if (getColor() == Color.WHITE) {
@@ -87,6 +84,11 @@ public class Case extends DrawableObject {
 		else if (getColor() == Color.RED) {
 			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 5*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
 		}
+		float pos_x = 250 +  position.y * 41f - position.x * 41f;
+		float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+		
+		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+		
 	}
 
 	
@@ -124,7 +126,17 @@ public class Case extends DrawableObject {
 	}
 	
 	public void drawCase(RenderWindow fenetre){
-		fenetre.draw(this.getSprite());
+		for (int i = 0; i < this.getHeight(); i++) {
+			this.getSprite().move(0, -20.5f);
+			fenetre.draw(this.getSprite());
+		}
+		float pos_x = 250 +  this.getPosition().y * 41f - this.getPosition().x * 41f;
+		float pos_y = 100 + this.getPosition().y * 20.5f + this.getPosition().x * 20.5f;
+		
+		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+		if (m_mapDrawableObject.get(2) != null){
+			fenetre.draw(m_mapDrawableObject.get(2).getSprite());
+		}
 	}
 
 }
