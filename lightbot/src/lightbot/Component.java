@@ -17,6 +17,7 @@ public class Component {
 	private Texture m_tileSet; 
 	private Sprite m_sprite;
 	private Vector2f m_position;
+	private boolean m_visible; // indique si le component sera dessine dans la fenetre
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -29,7 +30,8 @@ public class Component {
             ex.printStackTrace();
         }
 		m_sprite = new Sprite(m_tileSet);
-		m_sprite.setPosition(position);		
+		m_sprite.setPosition(position);	
+		m_visible = false;
 	}
 
 	
@@ -41,6 +43,16 @@ public class Component {
 	}
 	
 	/** Assigne un nouveau sprite au component */
+	public void setSprite(Sprite sprite){
+		m_sprite = sprite;
+	}
+	
+	/** Retourne la visibilite du component */
+	public Sprite getSprite(){
+		return m_sprite;
+	}
+	
+	/** Assigne une nouvelle visibilite au component */
 	public void setSprite(Sprite sprite){
 		m_sprite = sprite;
 	}

@@ -1,6 +1,7 @@
 package lightbot;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Vector;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.IntRect;
@@ -23,9 +24,20 @@ public class Controler {
 /** -------------- CONSTRUCTORS -------------- */
 
 	public Controler(){
-		Button b_avancer = new Button(String tilePath, Vector2f position, String name, boolean move); //Avancer
-		//Jump
-		m_listComponent.addElement();
+		Button b_move = new Button("chemin.png", position, "Move", true); //Avancer
+		Button b_turnRight = new Button("chemin.png", position, "TurnRight", true); //Tourner droite
+		Button b_turnLeft = new Button("chemin.png", position, "TurnLeft", true); //Tourner gauche
+		Button b_jump = new Button("chemin.png", position, "Jump", true); //Sauter
+		Button b_putP = new Button("chemin.png", position, "putP", true); //Poser pointeur
+		Button b_useP = new Button("chemin.png", position, "useP", true); //Utiliser pointeur
+		Button b_paint = new Button("chemin.png", position, "paint", true); //Se peindre
+		m_listComponent.addElement(b_move);
+		m_listComponent.addElement(b_turnRight);
+		m_listComponent.addElement(b_turnLeft);
+		m_listComponent.addElement(b_jump);
+		m_listComponent.addElement(b_putP);
+		m_listComponent.addElement(b_useP);
+		m_listComponent.addElement(b_paint);
 	}
 	
 /** ---------------- METHODS ----------------- */	

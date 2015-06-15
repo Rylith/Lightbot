@@ -74,6 +74,11 @@ public class Character extends DrawableObject{
 		this.m_listPointeur.remove(p);
 	}
 	
+	/** Retourne m_limitOrder */
+	public Vector<Integer> getLimitOrder(){
+		return m_limitOrder;
+	}
+	
 	/** Retourne l'orientation du personnage */
 	public Orientation getOrientation(){
 		return m_orientation;
