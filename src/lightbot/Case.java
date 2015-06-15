@@ -111,7 +111,7 @@ public class Case extends DrawableObject {
 	}
 	
 	/** Retourne la HashMap de DrawableObject present sur la case */
-	public HashMap getMapDO(){
+	public HashMap <Integer,DrawableObject> getMapDO(){
 		return m_mapDrawableObject;
 	}
 	
