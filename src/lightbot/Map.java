@@ -49,11 +49,11 @@ public class Map {
 				           case "White":
 				        	   System.out.println("White");
 				        	   //Case(Vector2i position, int height, String tilePath)
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, "caseg.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, "case.png");
 				           break;
 				           case "Basic":
 				        	   System.out.println("Basic");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "caseg.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "case.png");
 				        	   //Character(Vector2i position, int height, Color color, String tilePath)
 				        	   Character rob = new Character(new Vector2i(i, j), h,Color.WHITE, "lightbot.png"); 
 				        	  /* Engine eng = new Engine(this);
