@@ -152,7 +152,7 @@ public class Controler {
 	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
 	 * version avec deux bots
 	 */
-	public void init(Character BasicBot, Character SmartBot){
+	public void init(Character BasicBot, Character SmartBot, Level level){
 		// initialisation des cadres dans le main du BasicBot
 		for (int i = 0 ; i < BasicBot.getLimitOrder().elementAt(0) ; i++) {
 			m_MainBasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
@@ -178,6 +178,7 @@ public class Controler {
 			m_P2SmartBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des ordres visibles du BasicBot
+			
 		/*TODO*/
 		// initialisation des ordres visibles du SmartBot
 		/*TODO*/

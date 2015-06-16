@@ -17,8 +17,6 @@ import org.jsfml.system.Vector2i;
 public class Button extends Component{
 	
 	
-	/* TODO : Position selon l'axe x des boutons poussoires et des boutons bots */
-	
 	
 /** --------------- ATTRIBUTES --------------- */	
 	
@@ -192,7 +190,6 @@ public class Button extends Component{
 	public boolean isClicked(Vector2i position){
 		return super.getSprite().getGlobalBounds().contains(position.x, position.y);
 	}
-<<<<<<< HEAD:lightbot/src/lightbot/Button.java
 	
 	
 	/** Desactive/Active le bouton (mise a jours du sprite)
@@ -594,6 +591,4 @@ public class Button extends Component{
 			}
 		}
 	}
-=======
->>>>>>> e95861bf616b2278dbc403c3fcfe2aa6bf058af0:src/lightbot/Button.java
 }
