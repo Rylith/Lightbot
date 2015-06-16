@@ -21,7 +21,6 @@ import org.jsfml.window.event.Event;
 
 public class Controler {
 	
-	/* TODO : Ajouter les boutons RUN et EXIT */
 	
 	        
 /** --------------- ATTRIBUTES --------------- */        
@@ -69,6 +68,9 @@ public class Controler {
 		Button b_magenta = new Button("chemin.png", position, ButtonType.PushMagenta, false); //Bouton magenta [non presse]
 		Button b_cyan = new Button("chemin.png", position, ButtonType.PushCyan, false); //Bouton cyan [non presse]
 		
+		//Boutons run
+		Button b_run = new Button("chemin.png" , position, ButtonType.Run, false); //Bouton run
+		
 		// Frames
 		Frame f_main = new Frame("chemin.png", position, FrameType.Main); //Main
 		Frame f_p1 = new Frame("chemin.png", position, FrameType.P1); //P1
@@ -94,6 +96,7 @@ public class Controler {
 		m_listButton.addElement(b_grey);
 		m_listButton.addElement(b_magenta);
 		m_listButton.addElement(b_cyan);
+		m_listButton.addElement(b_run);
 		
 		m_listFrame.addElement(f_main);
 		m_listFrame.addElement(f_p1);
@@ -141,6 +144,10 @@ public class Controler {
 		}
 	}
 	
+	
+	
+/** ---------- Supervision de deux Bots ----------------- */
+	
 
 	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
 	 * version avec deux bots
@@ -148,27 +155,27 @@ public class Controler {
 	public void init(Character BasicBot, Character SmartBot){
 		// initialisation des cadres dans le main du BasicBot
 		for (int i = 0 ; i < BasicBot.getLimitOrder().elementAt(0) ; i++) {
-			m_MainBasicBot.addElement(new Button("chemin.png", position, getBoutonType(BasicBot.getListOrder().elementAt(0).elementAt(i)), false)); //ajout un cadre
+			m_MainBasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p1 du BasicBot
 		for (int i = 0 ; i < BasicBot.getLimitOrder().elementAt(1) ; i++) {
-			m_P1BasicBot.addElement(new Button("chemin.png", position, getBoutonType(BasicBot.getListOrder().elementAt(1).elementAt(i)), false)); //ajout un cadre
+			m_P1BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans P2 du BasicBot
 		for (int i = 0 ; i < BasicBot.getLimitOrder().elementAt(2) ; i++) {
-			m_P2BasicBot.addElement(new Button("chemin.png", position, getBoutonType(BasicBot.getListOrder().elementAt(2).elementAt(i)), false)); //ajout un cadre
+			m_P2BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans le main du SmartBot
 		for (int i = 0 ; i < SmartBot.getLimitOrder().elementAt(0) ; i++) {
-			m_MainSmartBot.addElement(new Button("chemin.png", position, getBoutonType(SmartBot.getListOrder().elementAt(0).elementAt(i)), false)); //ajout un cadre
+			m_MainSmartBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p1 du SmartBot
 		for (int i = 0 ; i < SmartBot.getLimitOrder().elementAt(1) ; i++) {
-			m_P1SmartBot.addElement(new Button("chemin.png", position, getBoutonType(SmartBot.getListOrder().elementAt(1).elementAt(i)), false)); //ajout un cadre
+			m_P1SmartBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p2 du SmartBot
 		for (int i = 0 ; i < SmartBot.getLimitOrder().elementAt(2) ; i++) {
-			m_P2SmartBot.addElement(new Button("chemin.png", position, getBoutonType(SmartBot.getListOrder().elementAt(2).elementAt(i)), false)); //ajout un cadre
+			m_P2SmartBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des ordres visibles du BasicBot
 		/*TODO*/
@@ -183,15 +190,15 @@ public class Controler {
 	public void init(Character Bot){
 		// initialisation des cadres dans le main du Bot
 		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(0) ; i++) {
-			m_MainBasicBot.addElement(new Button("chemin.png", position, getBoutonType(Bot.getListOrder().elementAt(0).elementAt(i)), false)); //ajout un cadre
+			m_MainBasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p1 du Bot
 		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(1) ; i++) {
-			m_P1BasicBot.addElement(new Button("chemin.png", position, getBoutonType(Bot.getListOrder().elementAt(1).elementAt(i)), false)); //ajout un cadre
+			m_P1BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p2 du Bot
 		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(2) ; i++) {
-			m_P2BasicBot.addElement(new Button("chemin.png", position, getBoutonType(Bot.getListOrder().elementAt(2).elementAt(i)), false)); //ajout un cadre
+			m_P2BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des ordres visibles du Bot
 		/*TODO*/
@@ -283,6 +290,7 @@ public class Controler {
             		m_listButton.get(13).ActiveButton(0);
             		m_listButton.get(14).ActiveButton(0);
             		m_listButton.get(15).ActiveButton(0);
+            		//on affiche les pointeurs yellow
             	}
             	else if (m_listButton.get(13).isClicked(mouse_pos)) { 
             		//Blue : on active le bouton et on desactive les autres (yellow, green, red)
@@ -290,6 +298,7 @@ public class Controler {
             		m_listButton.get(13).ActiveButton(1);
             		m_listButton.get(14).ActiveButton(0);
             		m_listButton.get(15).ActiveButton(0);
+            		//on affiche les pointeurs blue
             	}
             	else if (m_listButton.get(14).isClicked(mouse_pos)) { 
             		//Green : on active le bouton et on desactive les autres (yellow, blue, red)
@@ -304,44 +313,88 @@ public class Controler {
             		m_listButton.get(13).ActiveButton(0);
             		m_listButton.get(14).ActiveButton(0);
             		m_listButton.get(15).ActiveButton(1);
+            		//on affiche les pointeurs red
             	}
             	else if (m_listButton.get(16).isClicked(mouse_pos)) { 
             		//Grey : on active le bouton et on desactive les autres (magenta, cyan)
             		m_listButton.get(16).ActiveButton(1);
             		m_listButton.get(17).ActiveButton(0);
             		m_listButton.get(18).ActiveButton(0);
+            		//on affiche les instructions grey
             	}
             	else if (m_listButton.get(17).isClicked(mouse_pos)) { 
             		//Magenta : on active le bouton et on desactive les autres (grey, cyan)
             		m_listButton.get(16).ActiveButton(0);
             		m_listButton.get(17).ActiveButton(1);
             		m_listButton.get(18).ActiveButton(0);
+            		//on affiche les instructions magenta
             	}
             	else if (m_listButton.get(18).isClicked(mouse_pos)) { 
             		//Cyan : on active le bouton et on desactive les autres (grey, magenta)
             		m_listButton.get(16).ActiveButton(0);
             		m_listButton.get(17).ActiveButton(0);
             		m_listButton.get(18).ActiveButton(1);
+            		//on affiche les instructions magenta
+            	}
+            	else if (m_listButton.get(19).isClicked(mouse_pos)){
+            		//Run : on active le Run qui se change alors en Stop
+            		m_listButton.get(19).ActiveButton(1);
+            		//on affiche le stop
             	}
             	else if (m_listFrame.get(0).isClicked(mouse_pos)) {
             		//Main : on active la frame main et on desactive p1 et p2
             		m_listFrame.get(0).ActiveFrame(1);
             		m_listFrame.get(1).ActiveFrame(0);
             		m_listFrame.get(2).ActiveFrame(0);
+            		//on affiche le main active avec ses composants
             	}
             	else if (m_listFrame.get(1).isClicked(mouse_pos)) {
             		//P1 : on active la frame p1 et on desactive main et p2
             		m_listFrame.get(0).ActiveFrame(0);
             		m_listFrame.get(1).ActiveFrame(1);
             		m_listFrame.get(2).ActiveFrame(0);
+            		//on affiche P1 active avec ses composants
             	}
             	else if (m_listFrame.get(2).isClicked(mouse_pos)) {
             		//P2 : on active la frame p2 et on desactive main et p1
             		m_listFrame.get(0).ActiveFrame(0);
             		m_listFrame.get(1).ActiveFrame(0);
             		m_listFrame.get(2).ActiveFrame(1);
+            		//on affiche P2 active avec ses composants
             	}	
             }
     	}
 	}
+	
+	
+	
+	
+	
+/** ---------- Supervision d'un seul Bot ----------------- */
+	
+	
+	
+	
+	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
+	 * version avec un bot
+	 */
+	public void init(Character Bot){
+		// initialisation des cadres dans le main du Bot
+		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(0) ; i++) {
+			m_MainBasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+		}
+		// initialisation des cadres dans p1 du Bot
+		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(1) ; i++) {
+			m_P1BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+		}
+		// initialisation des cadres dans p2 du Bot
+		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(2) ; i++) {
+			m_P2BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+		}
+		// initialisation des ordres visibles du Bot
+		/*TODO*/
+	}
+	
+
+	
 }
