@@ -207,7 +207,7 @@ public class Character extends DrawableObject{
 		float pos_x_graph = 250 + this.getPosition().x * -41 + this.getPosition().y * 41 + 82/2-30;
 		float pos_y_graph = 100 + this.getPosition().y * 20.5f + this.getPosition().x *20.5f - 2*20.5f;
 		//System.out.println("Pos x: " + this.getPosition().x + " Pos y: " + this.getPosition().y);
-		super.draw(window,pos_x_graph,pos_y_graph);
+		super.draw(window,(new Vector2i((int)pos_x_graph,(int)pos_y_graph)));
 		
 	}
 	

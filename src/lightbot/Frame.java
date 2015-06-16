@@ -18,12 +18,12 @@ public class Frame extends Component {
 	
 /** --------------- ATTRIBUTES --------------- */
 	
-	private final static int SIZEMAINX = 70; 
-	private final static int SIZEMAINY = 70;
-	private final static int SIZEPROCX = 70;
-	private final static int SIZEPROCY = 70;
-	private final static int SIZELISTX = 70;
-	private final static int SIZELISTY = 70;
+	private final static int SIZEMAINX = 668; 
+	private final static int SIZEMAINY = 312;
+	private final static int SIZEPROCX = 668;
+	private final static int SIZEPROCY = 216;
+	private final static int SIZELISTX = 1442;
+	private final static int SIZELISTY = 122;
 	
 	public enum FrameType{
 		Main,
@@ -44,15 +44,15 @@ public class Frame extends Component {
 		super.setVisibility(true); //Les frames sont visibles par default
 		m_type = type;
 		if (m_type == FrameType.Main){
-			super.getSprite().setTextureRect(new IntRect(0, 0, SIZEMAINX, SIZEMAINY));
-			m_active = true;
+			super.getSprite().setTextureRect(new IntRect(0, SIZEMAINY, SIZEMAINX, SIZEMAINY));
+			m_active = true; //active par default
 		}
 		else if (m_type == FrameType.P1){
-			super.getSprite().setTextureRect(new IntRect(0, 0, SIZEPROCX, SIZEPROCY));
+			super.getSprite().setTextureRect(new IntRect(SIZEMAINX, 0, SIZEPROCX, SIZEPROCY));
 			m_active = false;
 		}
 		else if (m_type == FrameType.P2){
-			super.getSprite().setTextureRect(new IntRect(0, 0, SIZEPROCX, SIZEPROCY));
+			super.getSprite().setTextureRect(new IntRect(SIZEMAINX+SIZEPROCX, 0, SIZEPROCX, SIZEPROCY));
 			m_active = false;
 		}
 		else if (m_type == FrameType.OrderList){
@@ -109,40 +109,44 @@ public class Frame extends Component {
 	
 	
 	/** Desactive/Active la frame
-	 * 0 : Desactive
-	 * 1 : Active
+	 * @INFO : 0 : Desactive , 1 : Active
 	 */
 	public void ActiveFrame(int i){
 		if (i == 0) {
 			if (m_type == FrameType.Main){
 				super.getSprite().setTextureRect(new IntRect(0, 0, SIZEMAINX, SIZEMAINY));
-				m_active = false;	
+				m_active = false;
 			}
 			else if (m_type == FrameType.P1){
-				super.getSprite().setTextureRect(new IntRect(0, 0, SIZEPROCX, SIZEPROCY));
-				m_active = false;	
+				super.getSprite().setTextureRect(new IntRect(SIZEMAINX, 0, SIZEPROCX, SIZEPROCY));
+				m_active = false;
 			}
 			else if (m_type == FrameType.P2){
-				super.getSprite().setTextureRect(new IntRect(0, 0, SIZEPROCX, SIZEPROCY));
-				m_active = false;	
+				super.getSprite().setTextureRect(new IntRect(SIZEMAINX+SIZEPROCX, 0, SIZEPROCX, SIZEPROCY));
+				m_active = false;
 			}
 		}
 		else if (i == 1) {
 			if (m_type == FrameType.Main){
-				super.getSprite().setTextureRect(new IntRect(0, 0, SIZEMAINX, SIZEMAINY));
-				m_active = true;	
+				super.getSprite().setTextureRect(new IntRect(0, SIZEMAINY, SIZEMAINX, SIZEMAINY));
+				m_active = true;
 			}
 			else if (m_type == FrameType.P1){
-				super.getSprite().setTextureRect(new IntRect(0, 0, SIZEPROCX, SIZEPROCY));
-				m_active = true;
+				super.getSprite().setTextureRect(new IntRect(SIZEMAINX, SIZEMAINY, SIZEPROCX, SIZEPROCY));
+				m_active = false;
 			}
 			else if (m_type == FrameType.P2){
-				super.getSprite().setTextureRect(new IntRect(0, 0, SIZEPROCX, SIZEPROCY));
-				m_active = true;
+				super.getSprite().setTextureRect(new IntRect(SIZEMAINX+SIZEPROCX, SIZEMAINY, SIZEPROCX, SIZEPROCY));
+				m_active = false;
 			}
 		}
 		else {
-			/* ERREUR */
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
