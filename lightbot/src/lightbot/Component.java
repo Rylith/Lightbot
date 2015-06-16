@@ -3,6 +3,7 @@ package lightbot;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
@@ -31,6 +32,18 @@ public class Component {
         }
 		m_sprite = new Sprite(m_tileSet);
 		m_sprite.setPosition(position);	
+		m_position = position;
+		m_visible = false;
+	}
+	
+	public Component(String tilePath) {
+		m_tileSet = new Texture();
+		try {
+        	m_tileSet.loadFromFile(Paths.get(tilePath));
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
+		m_sprite = new Sprite(m_tileSet);
 		m_visible = false;
 	}
 
@@ -48,16 +61,24 @@ public class Component {
 	}
 	
 	/** Retourne la visibilite du component */
-	public Sprite getSprite(){
-		return m_sprite;
+	public boolean getVisibility(){
+		return m_visible;
 	}
 	
 	/** Assigne une nouvelle visibilite au component */
-	public void setSprite(Sprite sprite){
-		m_sprite = sprite;
+	public void setVisibility(boolean visible){
+		m_visible = visible;
 	}
-
 	
+	/** Assigne une nouvelle position au component */
+	public void setPosition(Vector2f position){
+		m_position = position;
+		m_sprite.setPosition(position);	
+	}
+	
+	public void draw(RenderWindow window){
+		window.draw(getSprite());	
+	}
 	
 	
 	
