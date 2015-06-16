@@ -50,14 +50,16 @@ public class Engine {
 	           break;
 				}
 			
-			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
-				
-				//teste la difference de hauteur
+			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //test segmentation fault
+				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
+				//test la difference de hauteur
 				
 				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
 				int destination_height =  mat[x][y].getHeight();
 				
 				return (source_height == destination_height);
+				}
+				else return false;
 			}
 			else return false;
 	}
@@ -91,25 +93,25 @@ public class Engine {
 				}
 			
 			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
-				
-				//teste la difference de hauteur :
-				
-				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
-				
-				int destination_height =  mat[x][y].getHeight();
-				
-				if(source_height < destination_height)   //JUMP VERS LE HAUT 
+				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
+					//teste la difference de hauteur :
 					
-					return (destination_height - source_height == 1);
-				
-				else if (source_height > destination_height) //JUMP VERS LE BAS
+					int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
+					
+					int destination_height =  mat[x][y].getHeight();
+					
+					if(source_height < destination_height)   //JUMP VERS LE HAUT 
 						
-					return (source_height - destination_height == 1);
-				
-				else //JUMP VERS UNE CASE DE MM HAUTEUR
+						return (destination_height - source_height == 1);
 					
-					return false;
-				
+					else if (source_height > destination_height) //JUMP VERS LE BAS
+							
+						return true;
+					
+					else //JUMP VERS UNE CASE DE MM HAUTEUR
+						
+						return false;
+				} else return false;
 			}
 			
 			else return false;
@@ -147,25 +149,25 @@ public class Engine {
 				}
 			
 			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
-				
-				//teste la difference de hauteur :
-				
-				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight(); 
-				
-				int destination_height =  mat[x][y].getHeight();
-				
-				if(source_height < destination_height)   //JUMP VERS LE HAUT 
+				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
+					//teste la difference de hauteur :
 					
-					return (destination_height - source_height == 1 || destination_height - source_height == 2  );
-				
-				else if ( source_height > destination_height ) //JUMP VERS LE BAS
+					int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight(); 
+					
+					int destination_height =  mat[x][y].getHeight();
+					
+					if(source_height < destination_height)   //JUMP VERS LE HAUT 
 						
-					return (source_height - destination_height == 1 || source_height - destination_height ==2 );
-				
-				else //JUMP VERS UNE CASE DE MM HAUTEUR
+						return (destination_height - source_height == 1 || destination_height - source_height == 2  );
 					
-					return false;
-				
+					else if ( source_height > destination_height ) //JUMP VERS LE BAS
+							
+						return true;
+					
+					else //JUMP VERS UNE CASE DE MM HAUTEUR
+						
+						return false;
+				} else return false;
 			}
 			
 			else return false;
@@ -181,7 +183,9 @@ public class Engine {
 		
 		if(isAbleToMove(p)){
 			
+			getCurrentCase(p).getMapDO().remove(0);
 			updatePostion(p);
+			getCurrentCase(p).getMapDO().put(0,p);
 			return true;
 		}
 		else 
@@ -192,7 +196,7 @@ public class Engine {
 	/**
 	 * fait jumper le personnage d'une case vers le haut ou d'une case vers le bas
 	 * @param p: le personnage a fair jumper
-	 * @return true si le jump s'est bien passé false sinon
+	 * @return true si le jump s'est bien passï¿½ false sinon
 	 */
 		
 	public boolean ExecJump(Character p){
@@ -202,8 +206,11 @@ public class Engine {
 			return false;
 		}
 		else{
+			
+			getCurrentCase(p).getMapDO().remove(0);
 			updatePostion(p); //on place le clone a la case au sommet
 			p.setHeight(getCurrentCase(p).getHeight());
+			getCurrentCase(p).getMapDO().put(0,p);
 			return true;
 		}
 	}
@@ -221,8 +228,11 @@ public class Engine {
 			return false;
 		}
 		else{
+			
+			getCurrentCase(p).getMapDO().remove(0);
 			updatePostion(p); //on place le clone a la case au sommet
 			p.setHeight(getCurrentCase(p).getHeight());
+			getCurrentCase(p).getMapDO().put(0,p);
 			return true;
 		}
 	}
@@ -334,10 +344,10 @@ public class Engine {
 				if(l.get(i).getColor()== cptr){
 					
 					//poser pointeur:
-						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
 						l.get(i).setActive(true); // on active le pointeur avant de le poser sur la case
+						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //change la position du pointeur 
 						getCurrentCase(personne).addObject(1,l.get(i)); //ajoute le pointeur a la liste d'objets de la case
-						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //ajoute le pointeur sur la case 
+						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
 						pursue = false;
 				}
 			}
@@ -362,13 +372,19 @@ public class Engine {
 		l= personne.getPointerList();
 		
 		if(!l.isEmpty()){
-			Pointeur p= personne.getPointeur(color_ptr);
-			if(p==null || !p.getActive())
+			Pointeur ptr= personne.getPointeur(color_ptr);
+			if(ptr==null || !ptr.getActive())
 				return false;
 			
 			else{
-				personne.setPosition(p.getPosition());
-				return true;
+				if (!(monde.get_m_mat()[ptr.getPosition().x][ptr.getPosition().y].getMapDO().containsKey(0))){
+					getCurrentCase(personne).getMapDO().remove(0);
+					personne.setPosition(ptr.getPosition());
+					getCurrentCase(personne).getMapDO().put(0,personne);
+					return true;
+				} 
+				else 
+					return false;
 			}
 		}
 		else

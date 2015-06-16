@@ -48,19 +48,21 @@ public class Map {
 						{
 				           case "White":
 				        	   System.out.println("White");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, Color.WHITE, "caseg.png");
+				        	   //Case(Vector2i position, int height, String tilePath)
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, "caseg.png");
 				           break;
 				           case "Basic":
 				        	   System.out.println("Basic");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, Color.WHITE, "caseg.png");
-				        	   Character rob = new Character(new Vector2i(i, j), h, Color.WHITE, "lightbot.png"); 
-				        	   Engine eng = new Engine(this);
+				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "caseg.png");
+				        	   //Character(Vector2i position, int height, Color color, String tilePath)
+				        	   Character rob = new Character(new Vector2i(i, j), h,Color.WHITE, "lightbot.png"); 
+				        	  /* Engine eng = new Engine(this);
 				        	   rob.addOrder(0, move);
-				        	   m_map[i][j].addObject(0, rob);
+				        	   m_map[i][j].addObject(0, rob);*/
 				           break;
 				           case "Lampe":
 				        	   System.out.println("Lampe");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, Color.WHITE, "caseg.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), "case.png");
 				        	   //Lampadaire(Vector2i position, int height, Color color, String tilePath, int value)
 				        	   m_map[i][j].addObject(2, new Lampadaire(new Vector2i(i, j), h, Color.WHITE, "Object.png"));
 				           break;
