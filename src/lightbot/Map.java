@@ -42,15 +42,15 @@ public class Map {
 						{
 				           case "White":
 				        	   System.out.println("White");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Case.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "caseg.png");
 				           break;
 				           case "Basic":
 				        	   System.out.println("Basic");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Case.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "caseg.png");
 				           break;
 				           case "Lampe":
 				        	   System.out.println("Lampe");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Case.png");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "caseg.png");
 				        	   //Lampadaire(Vector2i position, int height, Color color, String tilePath, int value)
 				        	   m_map[i][j].addObject(2, new Lampadaire(new Vector2i(i, j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Object.png"));
 				           break;
