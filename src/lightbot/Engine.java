@@ -338,10 +338,10 @@ public class Engine {
 				if(l.get(i).getColor()== cptr){
 					
 					//poser pointeur:
-						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
 						l.get(i).setActive(true); // on active le pointeur avant de le poser sur la case
+						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //change la position du pointeur 
 						getCurrentCase(personne).addObject(1,l.get(i)); //ajoute le pointeur a la liste d'objets de la case
-						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //ajoute le pointeur sur la case 
+						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
 						pursue = false;
 				}
 			}
