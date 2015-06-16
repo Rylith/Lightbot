@@ -17,10 +17,10 @@ public class Case extends DrawableObject {
 /** --------------- ATTRIBUTES --------------- */
 
 	private final static int SIZESPRITEX = 78;
-	private final static int SIZESPRITEY = 48;
+	private final static int SIZESPRITEY = 49;
 	private final static int SIZESPRITEE = 8;
 	
-	private int m_value; //valeur affichée sur la case
+	private int m_value; //valeur de la case
 	private HashMap<Integer,DrawableObject> m_mapDrawableObject ;
 
 	
@@ -28,70 +28,19 @@ public class Case extends DrawableObject {
 /** -------------- CONSTRUCTORS -------------- */
 	
 	
-	/** Constructeur de la class Case avec value */
-	
-	public Case(Vector2i position, int height, Color color, String tilePath, int value){
-		super(position, height, color, tilePath);
+	/** Constructeur de la class Case 
+	 * @info : par defaut la couleur est a WHITE et la valeur a 1
+	 */
+	public Case(Vector2i position, int height, String tilePath){
+		super(position, height, Color.WHITE, tilePath);
 		m_mapDrawableObject = new HashMap<Integer,DrawableObject>();
-		m_value = value;
-		if (getColor() == Color.WHITE) {
-			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.BLUE) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.MAGENTA) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 1*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.CYAN) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 2*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.BLACK) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 3*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.GREEN) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 4*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.RED) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 5*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-	}
-	
-	/** Constructeur de la class Case sans value */
-	
-	public Case(Vector2i position, int height, Color color, String tilePath){
-		super(position, height, color, tilePath);
-		m_mapDrawableObject = new HashMap<Integer,DrawableObject>();
-		
 		m_value = 1;
-		if (getColor() == Color.WHITE) {
-			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.BLUE) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.MAGENTA) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 1*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.CYAN) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 2*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.BLACK) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 3*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.GREEN) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 4*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
-		else if (getColor() == Color.RED) {
-			getSprite().setTextureRect(new IntRect(m_value*SIZESPRITEX, 5*SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		}
+		int i = (int)((Math.random()*(5-0)));
+		getSprite().setTextureRect(new IntRect(i*SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
 		float pos_x = 250 +  position.y * 41f - position.x * 41f;
 		float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
-		
 		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
-		
 	}
-
 	
 /** ---------------- METHODS ----------------- */	
 
@@ -116,12 +65,12 @@ public class Case extends DrawableObject {
 		return m_mapDrawableObject;
 	}
 	
-	/***/
+	/** Permet d'ajouter un DrawableObjet sur la case */
 	public void addObject(int depth, DrawableObject object){
 		m_mapDrawableObject.put(depth, object);		
 	}
 	
-	/***/	
+	/** Permet de supprimer un DrawableObjet de la case */	
 	public void delObject(int depth){
 		m_mapDrawableObject.remove(depth);		
 	}

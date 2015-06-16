@@ -38,6 +38,7 @@ public class Character extends DrawableObject{
 	private Vector<Vector<Order>> m_listOrder;
 	private Vector<Integer> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
+	private Vector<Boolean> m_currentProc; //vector indiquant la procedure active
 	private Color color;
 
 	
@@ -48,6 +49,10 @@ public class Character extends DrawableObject{
 	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
 	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
+		m_listOrder = new Vector<Vector<Order>>();
+		m_limitOrder = new Vector<Integer>();
+		m_listPointeur = new Vector<Pointeur>();
+		m_currentProc = new Vector<Boolean>();
 		m_sprite.scale(0.75f,0.75f);
 		m_listPointeur= new Vector <Pointeur>();
 		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, "lightbot.png"));
@@ -81,6 +86,25 @@ public class Character extends DrawableObject{
 		this.m_listPointeur.remove(p);
 	}
 	
+	/** Retourne m_limitOrder */
+	public Vector<Integer> getLimitOrder(){
+		return m_limitOrder;
+	}
+	
+	/** Active la procedure courante
+	 * 0 : main
+	 * 1 : P1
+	 * 2 : p2
+	 */
+	public void activeProc(int i){
+		for(int j = 0; j < 3; j++){
+			m_currentProc.set(i, false);
+		}
+		m_currentProc.set(i, true);
+		
+	}
+	
+	
 	/** Retourne l'orientation du personnage */
 	public Orientation getOrientation(){
 		return m_orientation;
@@ -110,20 +134,20 @@ public class Character extends DrawableObject{
 	}
 	
 	/** Ajout d'un ordre a la fin de la liste d'ordre passe en parametre
-	 * @param int : Numero de procedure (1:main 2:Proc1 3:Proc3)
+	 * @param int : Numero de procedure (0:main 1:Proc1 2:Proc3)
 	 * @param Order : Ordre a ajouter
 	 * */
 	public void addOrder (int numprocedure, Order odr){
-		m_listOrder.elementAt(numprocedure-1).addElement(odr);
+		m_listOrder.elementAt(numprocedure).addElement(odr);
     }
     
     /** Supprime l'ordre a la fin de la liste d'ordre 
-     * @param int : Numero de procedure (1:main 2:Proc1 3:Proc3)
+     * @param int : Numero de procedure (0:main 1:Proc1 2:Proc3)
      * */
 	public void delOrder (int numprocedure){
 		int lastElem;
-		lastElem = m_listOrder.size() - 1;
-		m_listOrder.elementAt(numprocedure-1).removeElementAt(lastElem);
+		lastElem = m_listOrder.size();
+		m_listOrder.elementAt(numprocedure).removeElementAt(lastElem);
 	}
 	
 	/** Retourne le pointeur correspondant a la couleur fournit en parametre 
