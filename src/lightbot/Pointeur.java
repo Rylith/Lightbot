@@ -17,7 +17,7 @@ public class Pointeur extends DrawableObject{
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	public Pointeur(Vector2i position, int height, Color color, String tilePath, int value){
+	public Pointeur(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
 		m_active = false;
 	}

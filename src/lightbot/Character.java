@@ -49,6 +49,14 @@ public class Character extends DrawableObject{
 	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
 		m_sprite.scale(0.75f,0.75f);
+		m_listPointeur= new Vector <Pointeur>();
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, "lightbot.png"));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.GREEN, "lightbot.png"));
+	
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.YELLOW, "lightbot.png"));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.MAGENTA, "lightbot.png"));
+		
+		
 	}
 /* VERSION CONSTRUCTEUR CORALIE : choisir entre le constructeur d'avant et celui la
  * 
@@ -122,7 +130,7 @@ public class Character extends DrawableObject{
 	 * @throws Exception */
 	public Pointeur getPointeur(Color color) {
 		
-    	for (int i = m_listPointeur.size(); i > 0; i--){
+    	for (int i = 0; i < m_listPointeur.size(); i++){
     		if (m_listPointeur.elementAt(i).getColor() == color){
     			return m_listPointeur.elementAt(i);
     		}
@@ -139,7 +147,7 @@ public class Character extends DrawableObject{
     	
 	/** Assigne la position au pointeur correspondant a la couleur fournit en parametre */
 	public void setPointeur(Color color, Vector2i position){
-    	for (int i = m_listPointeur.size(); i > 0; i--){
+    	for (int i = 0; i< m_listPointeur.size(); i++){
     		if (m_listPointeur.elementAt(i).getColor() == color){
     			m_listPointeur.elementAt(i).setPosition(position);
     			break;
