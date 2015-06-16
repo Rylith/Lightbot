@@ -11,7 +11,7 @@ public class Lampadaire extends DrawableObject {
 /** --------------- ATTRIBUTES --------------- */
 	
 	private final static int SIZESPRITEX = 75;
-	private final static int SIZESPRITEY = 110;
+	private final static int SIZESPRITEY = 105;
 	
 	private boolean m_active; //indique si le lampadaire est allumee
 	
@@ -22,9 +22,15 @@ public class Lampadaire extends DrawableObject {
 		super(position, height, color, tilePath);
 		m_active = false;
 		this.getSprite().setTextureRect(new IntRect(75, 0, SIZESPRITEX, SIZESPRITEY));
-		float pos_x = 250 +  position.y * 41f - position.x * 41f;
-		float pos_y = 100 + position.y * 20.5f + position.x * 20.5f - this.getHeight()*60;
-		this.getSprite().setPosition(pos_x, pos_y);
+		/*private final static int SIZESPRITEX = 78;
+		private final static int SIZESPRITEY = 50;*/
+		float tmp_x = 250 + 78/2;
+		float tmp_y = 100 + (48-8)/2;
+		float pos_x = tmp_x - SIZESPRITEX/2;
+		float pos_y = tmp_y - SIZESPRITEY -5;
+		float pox = pos_x + (position.y - position.x) * 78/2;
+		float poy = pos_y + (position.x + position.y)*(48-8)/2;
+		this.getSprite().setPosition(pox, poy);
 	}
 	
 	
@@ -38,6 +44,12 @@ public class Lampadaire extends DrawableObject {
 	/** Assigne l'etat d'activation au lampadaire */
 	public void setActive(boolean active){
 		m_active = active;
+		if (m_active) {
+			this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else {
+			this.getSprite().setTextureRect(new IntRect(75, 0, SIZESPRITEX, SIZESPRITEY));
+		}
 	}
 	
 	

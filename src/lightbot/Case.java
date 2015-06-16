@@ -16,8 +16,9 @@ public class Case extends DrawableObject {
 
 /** --------------- ATTRIBUTES --------------- */
 
-	private final static int SIZESPRITEX = 82;
-	private final static int SIZESPRITEY = 82;
+	private final static int SIZESPRITEX = 78;
+	private final static int SIZESPRITEY = 48;
+	private final static int SIZESPRITEE = 8;
 	
 	private int m_value; //valeur affichée sur la case
 	private HashMap<Integer,DrawableObject> m_mapDrawableObject ;
@@ -127,11 +128,14 @@ public class Case extends DrawableObject {
 	
 	public void drawCase(RenderWindow fenetre){
 		for (int i = 0; i < this.getHeight(); i++) {
-			this.getSprite().move(0, -20.5f);
+			this.getSprite().move(0, - SIZESPRITEE);
 			fenetre.draw(this.getSprite());
 		}
-		float pos_x = 250 +  this.getPosition().y * 41f - this.getPosition().x * 41f;
-		float pos_y = 100 + this.getPosition().y * 20.5f + this.getPosition().x * 20.5f;
+		/*float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEY/2;
+		float pos_y = 100 + this.getPosition().y * SIZESPRITEX/4 + this.getPosition().x * SIZESPRITEY/4;*/
+		
+		float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+		float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
 		
 		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		if (m_mapDrawableObject.get(2) != null){
