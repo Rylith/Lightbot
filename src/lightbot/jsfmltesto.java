@@ -47,15 +47,11 @@ public class jsfmltesto {
         int frameElec = 1;
         Clock animClock = new Clock();
         Button buttest = new Button("ButAvancer.png",new Vector2f(50,399),"Avancer", false);
-        Button butturn = new Button("ButTournerDroite.png",new Vector2f(50+0.5f*72,399),"TournerDroite",false);
-        Button butallumer = new Button("buttest.png",new Vector2f(50+72,399),"Allumer",false);
+        Button butturn = new Button("ButTournerDroite.png",new Vector2f(50+72,399),"TournerDroite",false);
+        Button butallumer = new Button("buttest.png",new Vector2f(50+72*2,399),"Allumer",false);
         
         Map testo = new Map();
         
-/*----------------------------------------Génération du robot----------------------------------------*/ 
-        Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "lightbot.png");
-        robot.setOrientation(Character.Orientation.Up);
-        //robot.drawCharac(fenetre);
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         boolean anti_cligno = true;
         
@@ -66,8 +62,7 @@ public class jsfmltesto {
             fenetre.draw(buttest.getSprite());
             fenetre.draw(butturn.getSprite());
             fenetre.draw(butallumer.getSprite());
-            testo.drawMap(fenetre,robot);
-            //robot.update(fenetre,new Vector2f(0, 0));
+            testo.drawMap(fenetre);
             
             // On gère les événements
             for (Event event : fenetre.pollEvents()) {
@@ -81,7 +76,7 @@ public class jsfmltesto {
                 	if (buttest.clicked(mouse_pos)) {
                //TESTER SI CASE DEVANT DISPO
                 		
-                		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
+ /*               		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
 
                 		int animCount = 0;
                 		while (animCount < 16) {
@@ -142,7 +137,7 @@ public class jsfmltesto {
                              case Right:
                             	 robot.setOrientation(Character.Orientation.Down);
                              break;
-                         }
+                         }*/
 					}
                 	if (butallumer.clicked(mouse_pos)) {
                 		int animCount = 0;
@@ -158,9 +153,9 @@ public class jsfmltesto {
                                	frameElec = 1;
                                }
                                
-                               robot.getSprite().setTextureRect(new IntRect(6*80 + frameElec * 80, robot.getSprite().getTextureRect().top, 80, 100));
+                           //    robot.getSprite().setTextureRect(new IntRect(6*80 + frameElec * 80, robot.getSprite().getTextureRect().top, 80, 100));
                                animCount++;
-                               testo.drawMap(fenetre,robot);
+                              // testo.drawMap(fenetre,robot);
                                fenetre.draw(buttest.getSprite());
                                fenetre.draw(butturn.getSprite());
                                fenetre.draw(butallumer.getSprite());
@@ -169,7 +164,7 @@ public class jsfmltesto {
                                fenetre.clear(Color.WHITE);
                            }       
 						}
-                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
+                		//robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
 					}
                 }
                 anti_cligno = false;

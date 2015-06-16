@@ -11,6 +11,9 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
+import lightbot.Move;
+import lightbot.Engine;
+
 
 public class Character extends DrawableObject{
 
@@ -48,6 +51,17 @@ public class Character extends DrawableObject{
 	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
 	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
+		m_listOrder = ;
+		
+		this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+
+		float tmp_x = 250 + 78/2;
+		float tmp_y = 100 + (48-8)/2;
+		float pos_x = tmp_x - (SIZESPRITEX*0.75f)/2;
+		float pos_y = tmp_y - (SIZESPRITEY*0.75f)+5;
+		float pox = pos_x + (position.y - position.x) * 78/2;
+		float poy = pos_y + (position.x + position.y)*(48-8)/2 - (height-1)*8;
+		this.getSprite().setPosition(pox, poy);
 		m_sprite.scale(0.75f,0.75f);
 	}
 /* VERSION CONSTRUCTEUR CORALIE : choisir entre le constructeur d'avant et celui la
@@ -106,7 +120,7 @@ public class Character extends DrawableObject{
 	 * @param Order : Ordre a ajouter
 	 * */
 	public void addOrder (int numprocedure, Order odr){
-		m_listOrder.elementAt(numprocedure-1).addElement(odr);
+		m_listOrder.elementAt(numprocedure).addElement(odr);
     }
     
     /** Supprime l'ordre a la fin de la liste d'ordre 

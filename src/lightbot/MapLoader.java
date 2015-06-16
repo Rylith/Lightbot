@@ -42,4 +42,7 @@ public class MapLoader {
 		 return lineElement.getChildren("case");
 	}
 	
+	static String getOrders(){
+		return racine.getChild("character").getChild("orders").getText();
+	}
 }
