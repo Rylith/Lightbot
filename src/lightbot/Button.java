@@ -196,7 +196,7 @@ public class Button extends Component{
 	 * @param 0 : Desactive , 1 : Active
 	 * @throws Exception 
 	 */
-	public void ActiveButton(int i) throws Exception{
+	public void ActiveButton(int i) {
 		if (i == 0) { //Bouton non enfonce
 			if (m_type == ButtonType.PushMagenta){
 				super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER), 3*SIZEORDER, SIZEPUSHX, SIZEPUSHY));
@@ -296,7 +296,12 @@ public class Button extends Component{
 			}
 		}
 		else {
-			throw new Exception();
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

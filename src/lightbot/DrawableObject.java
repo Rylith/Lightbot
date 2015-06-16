@@ -91,8 +91,10 @@ public abstract class DrawableObject {
 	}
 	
 	
-	public void draw(RenderWindow window, float x, float y){
-		this.getSprite().setPosition(x,y);
+	public void draw(RenderWindow window, Vector2i position){
+		float pos_x = 250 +  position.y * 41f - position.x * 41f;
+		float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		window.draw(this.getSprite());
 	}
 	

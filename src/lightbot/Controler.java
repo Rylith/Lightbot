@@ -44,38 +44,38 @@ public class Controler {
 	 */
 	public Controler(){
 		// Boutons representants les Ordres
-		Button b_move = new Button("chemin.png", position, ButtonType.Move, true); //Avancer
-		Button b_turnRight = new Button("chemin.png", position, ButtonType.TurnRight, true); //Tourner droite
-		Button b_turnLeft = new Button("chemin.png", position, ButtonType.TurnLeft, true); //Tourner gauche
-		Button b_jump = new Button("chemin.png", position, ButtonType.Jump, true); //Sauter
-		Button b_light = new Button("chemin.png", position, ButtonType.Light, true); //Allumer
-		Button b_for = new Button("chemin.png", position, ButtonType.For, true); //For
-		Button b_putP = new Button("chemin.png", position, ButtonType.PutP, true); //Poser pointeur
-		Button b_useP = new Button("chemin.png", position, ButtonType.UseP, true); //Utiliser pointeur
-		Button b_paint = new Button("chemin.png", position, ButtonType.Paint, true); //Se peindre
-		Button b_removeColor = new Button("chemin.png", position, ButtonType.RemoveColor, true); //Se laver
-		Button b_p1 = new Button("chemin.png", position, ButtonType.P1, true); //P1
-		Button b_p2 = new Button("chemin.png", position, ButtonType.P2, true); //P2
+		Button b_move = new Button("action.png", position, ButtonType.Move, true); //Avancer
+		Button b_turnRight = new Button("action.png", position, ButtonType.TurnRight, true); //Tourner droite
+		Button b_turnLeft = new Button("action.png", position, ButtonType.TurnLeft, true); //Tourner gauche
+		Button b_jump = new Button("action.png", position, ButtonType.Jump, true); //Sauter
+		Button b_light = new Button("action.png", position, ButtonType.Light, true); //Allumer
+		Button b_for = new Button("action.png", position, ButtonType.For, true); //For
+		Button b_putP = new Button("action.png", position, ButtonType.PutP, true); //Poser pointeur
+		Button b_useP = new Button("action.png", position, ButtonType.UseP, true); //Utiliser pointeur
+		Button b_paint = new Button("action.png", position, ButtonType.Paint, true); //Se peindre
+		Button b_removeColor = new Button("action.png", position, ButtonType.RemoveColor, true); //Se laver
+		Button b_p1 = new Button("action.png", position, ButtonType.P1, true); //P1
+		Button b_p2 = new Button("action.png", position, ButtonType.P2, true); //P2
 		// Boutons representants les Bots
-		Button b_basicBot = new Button("chemin.png", position, ButtonType.BasicBot, false); //SmartBot [presse]
-		Button b_smartBot = new Button("chemin.png", position, ButtonType.SmartBot, false); //BasicBot [non presse]
+		Button b_basicBot = new Button("action.png", position, ButtonType.BasicBot, false); //SmartBot [presse]
+		Button b_smartBot = new Button("action.png", position, ButtonType.SmartBot, false); //BasicBot [non presse]
 		// Boutons representants les couleurs des pointeurs et instructions
-		Button b_yellow = new Button("chemin.png", position, ButtonType.PushYellow, false); //Bouton jaune [presse]
-		Button b_blue = new Button("chemin.png", position, ButtonType.PushBlue, false); //Bouton bleue [non presse]
-		Button b_green = new Button("chemin.png", position, ButtonType.PushGreen, false); //Bouton vert [non presse]
-		Button b_red = new Button("chemin.png", position, ButtonType.PushRed, false); //Bouton rouge [non presse]
-		Button b_grey = new Button("chemin.png", position, ButtonType.PushGrey, false); //Bouton gris [presse]
-		Button b_magenta = new Button("chemin.png", position, ButtonType.PushMagenta, false); //Bouton magenta [non presse]
-		Button b_cyan = new Button("chemin.png", position, ButtonType.PushCyan, false); //Bouton cyan [non presse]
+		Button b_yellow = new Button("action.png", position, ButtonType.PushYellow, false); //Bouton jaune [presse]
+		Button b_blue = new Button("action.png", position, ButtonType.PushBlue, false); //Bouton bleue [non presse]
+		Button b_green = new Button("action.png", position, ButtonType.PushGreen, false); //Bouton vert [non presse]
+		Button b_red = new Button("action.png", position, ButtonType.PushRed, false); //Bouton rouge [non presse]
+		Button b_grey = new Button("action.png", position, ButtonType.PushGrey, false); //Bouton gris [presse]
+		Button b_magenta = new Button("action.png", position, ButtonType.PushMagenta, false); //Bouton magenta [non presse]
+		Button b_cyan = new Button("action.png", position, ButtonType.PushCyan, false); //Bouton cyan [non presse]
 		
 		//Boutons run
-		Button b_run = new Button("chemin.png" , position, ButtonType.Run, false); //Bouton run
+		Button b_run = new Button("action.png" , position, ButtonType.Run, false); //Bouton run
 		
 		// Frames
-		Frame f_main = new Frame("chemin.png", position, FrameType.Main); //Main
-		Frame f_p1 = new Frame("chemin.png", position, FrameType.P1); //P1
-		Frame f_p2 = new Frame("chemin.png", position, FrameType.P2); //P2
-		Frame f_orderList = new Frame("chemin.png", position, FrameType.OrderList); //OrderList
+		Frame f_main = new Frame("BackProc.png", position, FrameType.Main); //Main
+		Frame f_p1 = new Frame("BackProc.png", position, FrameType.P1); //P1
+		Frame f_p2 = new Frame("BackProc.png", position, FrameType.P2); //P2
+		Frame f_orderList = new Frame("BackOrder.png", position, FrameType.OrderList); //OrderList
 		
 		m_listButton.addElement(b_move);
 		m_listButton.addElement(b_turnRight);
@@ -155,27 +155,27 @@ public class Controler {
 	public void init(Character BasicBot, Character SmartBot, Level level){
 		// initialisation des cadres dans le main du BasicBot
 		for (int i = 0 ; i < BasicBot.getLimitOrder().elementAt(0) ; i++) {
-			m_MainBasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_MainBasicBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p1 du BasicBot
 		for (int i = 0 ; i < BasicBot.getLimitOrder().elementAt(1) ; i++) {
-			m_P1BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_P1BasicBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans P2 du BasicBot
 		for (int i = 0 ; i < BasicBot.getLimitOrder().elementAt(2) ; i++) {
-			m_P2BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_P2BasicBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans le main du SmartBot
 		for (int i = 0 ; i < SmartBot.getLimitOrder().elementAt(0) ; i++) {
-			m_MainSmartBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_MainSmartBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p1 du SmartBot
 		for (int i = 0 ; i < SmartBot.getLimitOrder().elementAt(1) ; i++) {
-			m_P1SmartBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_P1SmartBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p2 du SmartBot
 		for (int i = 0 ; i < SmartBot.getLimitOrder().elementAt(2) ; i++) {
-			m_P2SmartBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_P2SmartBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des ordres visibles du BasicBot
 			
@@ -191,15 +191,15 @@ public class Controler {
 	public void init(Character Bot){
 		// initialisation des cadres dans le main du Bot
 		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(0) ; i++) {
-			m_MainBasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_MainBasicBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p1 du Bot
 		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(1) ; i++) {
-			m_P1BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_P1BasicBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des cadres dans p2 du Bot
 		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(2) ; i++) {
-			m_P2BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
+			m_P2BasicBot.addElement(new Button("action.png", position, ButtonType.Cadre, false)); //ajout un cadre
 		}
 		// initialisation des ordres visibles du Bot
 		/*TODO*/
@@ -366,36 +366,5 @@ public class Controler {
             }
     	}
 	}
-	
-	
-	
-	
-	
-/** ---------- Supervision d'un seul Bot ----------------- */
-	
-	
-	
-	
-	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
-	 * version avec un bot
-	 */
-	public void init(Character Bot){
-		// initialisation des cadres dans le main du Bot
-		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(0) ; i++) {
-			m_MainBasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
-		}
-		// initialisation des cadres dans p1 du Bot
-		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(1) ; i++) {
-			m_P1BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
-		}
-		// initialisation des cadres dans p2 du Bot
-		for (int i = 0 ; i < Bot.getLimitOrder().elementAt(2) ; i++) {
-			m_P2BasicBot.addElement(new Button("chemin.png", position, ButtonType.Cadre, false)); //ajout un cadre
-		}
-		// initialisation des ordres visibles du Bot
-		/*TODO*/
-	}
-	
-
 	
 }
