@@ -60,6 +60,10 @@ public class jsfmltesto {
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         boolean anti_cligno = true;
         
+/*----------------------------------------GENERATION ENGINE----------------------------------------------*/
+        
+        Engine engine = new Engine (testo);
+        
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
         while (fenetre.isOpen()) {
         	anti_cligno = true;
@@ -79,9 +83,14 @@ public class jsfmltesto {
                 }
                 if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
+                	
                 	if (buttest.isClicked(mouse_pos)) {
-               //TESTER SI CASE DEVANT DISPO
                 		
+                		Order ordre_move= new Move(robot, engine, Color.WHITE);
+                		ordre_move.executer();
+                		
+               //TESTER SI CASE DEVANT DISPO
+                	/*	
                 		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
 
                 		int animCount = 0;
@@ -124,12 +133,17 @@ public class jsfmltesto {
                 				}    
                 			}
                 		//robot.updatePostion();
-                		}
+                		}*/
                 		
 					}
                 	if (butturn.isClicked(mouse_pos)) {
+                		
+                		Order ordreRight= new TurnRight(robot, Color.WHITE);
+                		ordreRight.executer();
+                		
                 		//robot.setOrientation(Character.Orientation.Right);
-                		  switch (robot.getOrientation())
+                		
+                		/*switch (robot.getOrientation())
                  			{
                              case Up:
                             	 robot.setOrientation(Character.Orientation.Right);
@@ -144,8 +158,13 @@ public class jsfmltesto {
                             	 robot.setOrientation(Character.Orientation.Down);
                              break;
                          }
+                         */
 					}
                 	if (butallumer.isClicked(mouse_pos)) {
+                		
+                		Order ordre_light= new Light(robot, engine, Color.WHITE);
+                		ordre_light.executer();
+                		/*
                 		int animCount = 0;
                 		while (animCount < 16) {
                 			if (animClock.getElapsedTime().asMilliseconds() >= 50) {
@@ -170,7 +189,7 @@ public class jsfmltesto {
                                fenetre.clear(Color.WHITE);
                            }       
 						}
-                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
+                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));*/
 					}
                 }
                 anti_cligno = false;
