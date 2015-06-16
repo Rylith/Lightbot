@@ -51,7 +51,7 @@ public class Engine {
 				}
 			
 			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //test segmentation fault
-				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(1))){
+				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
 				//test la difference de hauteur
 				
 				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
@@ -183,9 +183,9 @@ public class Engine {
 		
 		if(isAbleToMove(p)){
 			
-			getCurrentCase(p).getMapDO().remove(1);
+			getCurrentCase(p).getMapDO().remove(0);
 			updatePostion(p);
-			getCurrentCase(p).getMapDO().put(1,p);
+			getCurrentCase(p).getMapDO().put(0,p);
 			return true;
 		}
 		else 
