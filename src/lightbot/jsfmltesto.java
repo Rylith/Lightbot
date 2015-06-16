@@ -17,6 +17,7 @@ import org.jsfml.window.event.Event;
 
 import lightbot.Button;
 import lightbot.Character;
+import lightbot.Button.ButtonType;
 
 public class jsfmltesto {
  
@@ -30,7 +31,7 @@ public class jsfmltesto {
         Texture back_text = new Texture();
         try {
             //Try to load the texture from file "jsfml.png"
-        	back_text.loadFromFile(Paths.get("background.jpg"));
+        	back_text.loadFromFile(Paths.get("Background_1366x768.jpg"));
 
             //Texture was loaded successfully - retrieve and print size
             Vector2i size = back_text.getSize();
@@ -41,14 +42,14 @@ public class jsfmltesto {
         }
         Sprite back_sprite = new Sprite(back_text);
         
-        fenetre.create(new VideoMode(640, 480), "Prototype");
+        fenetre.create(new VideoMode(1366, 768), "Prototype");
 
         int frame = 3;
         int frameElec = 1;
         Clock animClock = new Clock();
-        Button buttest = new Button("ButAvancer.png",new Vector2f(50,399),"Avancer", false);
-        Button butturn = new Button("ButTournerDroite.png",new Vector2f(50+0.5f*72,399),"TournerDroite",false);
-        Button butallumer = new Button("buttest.png",new Vector2f(50+72,399),"Allumer",false);
+        Button buttest = new Button("action.png",new Vector2f(50,399),Button.ButtonType.Move, true);
+        Button butturn = new Button("action.png",new Vector2f(50+72,399),Button.ButtonType.TurnRight,true);
+        Button butallumer = new Button("action.png",new Vector2f(50+72*2,399),Button.ButtonType.Light,true);
         
         Map testo = new Map();
         
@@ -78,7 +79,7 @@ public class jsfmltesto {
                 }
                 if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
-                	if (buttest.clicked(mouse_pos)) {
+                	if (buttest.isClicked(mouse_pos)) {
                //TESTER SI CASE DEVANT DISPO
                 		
                 		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
@@ -126,7 +127,7 @@ public class jsfmltesto {
                 		}
                 		
 					}
-                	if (butturn.clicked(mouse_pos)) {
+                	if (butturn.isClicked(mouse_pos)) {
                 		//robot.setOrientation(Character.Orientation.Right);
                 		  switch (robot.getOrientation())
                  			{
@@ -144,7 +145,7 @@ public class jsfmltesto {
                              break;
                          }
 					}
-                	if (butallumer.clicked(mouse_pos)) {
+                	if (butallumer.isClicked(mouse_pos)) {
                 		int animCount = 0;
                 		while (animCount < 16) {
                 			if (animClock.getElapsedTime().asMilliseconds() >= 50) {

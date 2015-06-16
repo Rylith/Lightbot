@@ -49,6 +49,10 @@ public class Character extends DrawableObject{
 	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
 	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
+		m_listOrder = new Vector<Vector<Order>>();
+		m_limitOrder = new Vector<Integer>();
+		m_listPointeur = new Vector<Pointeur>();
+		m_currentProc = new Vector<Boolean>();
 		m_sprite.scale(0.75f,0.75f);
 		m_listPointeur= new Vector <Pointeur>();
 		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, "lightbot.png"));
