@@ -21,10 +21,10 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.Window;
 import org.jsfml.window.event.Event;
 
+
 public class Controler {
 
-	// DIMENSION DE L'ECRAN
-	
+
 	// EMPLACEMENT RESSOURCES GRAPHIQUE
 	private final static String TILEPATHACTION = "ressource/Sprite/action.png";
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
@@ -39,8 +39,8 @@ public class Controler {
 	private final static Vector2f SIZEONGLETBOT = new Vector2f(84.0f,82.0f);
 	
 	// POSITION BOUTTON POINTEUR //
-	private final static Vector2f POSINITBUTTONPOINTER = new Vector2f(809.0f,953.0f);
-	private final static Vector2f SIZEBUTTONCOLOR = new Vector2f(15.0f,20.0f);
+	private final static Vector2f POSINITBUTTONPOINTER = new Vector2f(1016.0f,953.0f);
+	private final static Vector2f SIZEBUTTONCOLOR = new Vector2f(20.0f,15.0f);
 	private final static float DECALBUTTONPOINTER = 5.0f;
 	
 	// POSITION BOUTTON COULEUR //
@@ -69,6 +69,8 @@ public class Controler {
 	// POSITION BACK //
 	private final static Vector2f POSINITBACKORDER = new Vector2f(24.0f,949.0f);
 	private final static Vector2f POSINITBACKMAIN = new Vector2f(1197.0f,97.0f);	
+
+
 /** --------------- ATTRIBUTES --------------- */        
         
 	private Vector<Button> m_listButton = new Vector<Button>();
@@ -83,9 +85,15 @@ public class Controler {
 	private Vector<Button> m_orderSmartBot = new Vector<Button>();
 	private Component m_backOrder;
 	private Component m_backMain;
+
+	private Game m_game;
+	private RenderWindow m_window;
+
 	private Vector2i m_screenSize;
 	private Vector2f m_decal;
 	private Vector2f m_scale;
+	
+	
 	
 /** -------------- CONSTRUCTORS -------------- */
 
@@ -163,7 +171,7 @@ public class Controler {
 		f_orderList.setScale(m_scale);
 		
 		
-		// Boutons representants les Ordres
+		//Boutons representant les ordres
 		Vector2f realInitPosButton = Vector2f.add(m_backOrder.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITBUTTON, POSINITBACKORDER), m_scale));
 		float realDecalButton = DECALBUTTON * m_scale.x;
 		Vector2f realSizeButton = Vector2f.componentwiseMul(SIZEBUTTONORDER, m_scale);
@@ -272,7 +280,7 @@ public class Controler {
 		m_listFrame.addElement(f_main); //#0
 		m_listFrame.addElement(f_p1); //#1
 		m_listFrame.addElement(f_p2); //#2
-		m_listFrame.addElement(f_orderList); //#2
+		m_listFrame.addElement(f_orderList); //#3
 	}
 	
 	
@@ -320,6 +328,7 @@ public class Controler {
 	 * version avec deux bots
 	 */
 	public void init(Character BasicBot, Character SmartBot/*, Map map*/){
+
 		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), m_scale));
 		//System.out.println("RealInitPosCadreMain x : " + realInitPosCadreMain.x + " y : " + realInitPosCadreMain.y);
 		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), m_scale));
@@ -344,6 +353,7 @@ public class Controler {
 					break;
 				case 2:
 					pos = new Vector2f(pos.x,realInitPosCadreP2.y + (realdDecalCadre.y * j));
+
 					break;
 				}
 				//pos = new Vector2f(pos.x,POSINITFRAMEMAIN.y + (DECALFRAME * j));
@@ -475,19 +485,33 @@ public class Controler {
 	 * @param window
 	 * @require la fenetre window doit etre ouverte
 	 */
-	public void supervise(Window window){
+	public void supervise(){
 		for (Event event : window.pollEvents()) {
+			
+		
         	// Si l'utilisateur clique sur la croix rouge : on ferme la fenetre
             if (event.type == Event.Type.CLOSED) {
                 window.close();
             }
+            
             // Si l'utilisateur clique on recupere la position et on regarde s'il s'agit d'un bouton ou d'une view
             if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
             	Vector2i mouse_pos = Mouse.getPosition(window); 
             	if (m_listButton.get(0).isClicked(mouse_pos)) { 
             		//Move : on ajoute l'ordre dans la view active & dans m_listOrder (Character)
-            		/*TODO*/
-            		
+            		if (m_listButton.get(10).getActive()){ //si le BasicBot est active
+	            		if (m_listFrame.get(0).getActive()){ //si main est active
+	            			m_mainBasicBot.addElement(ButtonType.Move);
+	            			game.addOrder(0, ButtonType.Move);
+	           
+	            		}
+	            		else if (m_listFrame.get(1).getActive()){ //si p1 est active
+	            			m_p1BasicBot.addElement(ButtonType.Move);
+	            		}
+	            		else if (m_listFrame.get(2).getActive()){ //si p2 est active
+							m_p2BasicBot.addElement(ButtonType.Move);
+						}
+            		} else if (m_listButton.get(11).getActive()){ //si le SmartBot est active
 	            }
             	else if (m_listButton.get(1).isClicked(mouse_pos)) { 
             		//TurnRight : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
@@ -610,59 +634,9 @@ public class Controler {
             		m_listFrame.get(1).ActiveFrame(0);
             		m_listFrame.get(2).ActiveFrame(1);
             		//on affiche P2 active avec ses composants
-            	}	
+            		}	
+            	}
             }
-    	}
-	}
-	
-	
-	
-	
-	
-/** ---------- Supervision d'un seul Bot ----------------- */
-	
-	
-	
-	
-	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
-	 * version avec un bot
-	 */
-	public void init(Character bot){
-		Vector2f pos = new Vector2f(POSINITFRAMEMAIN.x,POSINITFRAMEMAIN.y);
-		for (int j = 0; j < NUMBERFRAME; j++) {
-			pos = new Vector2f(pos.x,POSINITFRAMEMAIN.y + (DECALFRAME * j));
-			//pos.y = POSINITFRAMEMAIN.y + (DECALFRAME * j);
-			// initialisation des cadres dans le main du BasicBot
-			// initialisation des cadres dans p1 du BasicBot
-			// initialisation des cadres dans P2 du BasicBot
-			for (int i = 0 ; i < bot.getLimitOrder(j) ; i++) {
-				if(i % 8 == 1 && i != 1 ) {
-					pos = new Vector2f(POSINITFRAMEMAIN.x,pos.y + SIZECADREORDER.y + DECALCADREORDER.y);
-					//pos.x = POSINITFRAMEMAIN.x;
-					//pos.y = pos.y + SIZECADREORDER.y + DECALCADREORDER.y;
-				}
-				else {
-					pos = new Vector2f(pos.x + SIZECADREORDER.x + DECALCADREORDER.x,pos.y);
-					//pos.x = pos.x + SIZECADREORDER.x + DECALCADREORDER.x;
-				}
-				switch(j) {
-				case 0:
-					m_MainBasicBot.addElement(new Button("chemin.png", pos , ButtonType.Cadre, false)); //ajout un cadre
-					break;
-				case 1:
-					m_P1BasicBot.addElement(new Button("chemin.png", pos, ButtonType.Cadre, false)); //ajout un cadre
-					break;
-				case 2:
-					m_P1BasicBot.addElement(new Button("chemin.png", pos, ButtonType.Cadre, false)); //ajout un cadre
-					break;
-				}
-			}
 		}
-		// initialisation des ordres visibles du Bot
-		/*TODO*/
-		initOrder();
-	}
-	
-
-	
+	}	
 }
