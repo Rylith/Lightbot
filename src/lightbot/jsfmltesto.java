@@ -13,11 +13,11 @@ import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
+import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 
 import lightbot.Button;
 import lightbot.Character;
-import lightbot.Button.ButtonType;
 
 public class jsfmltesto {
  
@@ -31,7 +31,7 @@ public class jsfmltesto {
         Texture back_text = new Texture();
         try {
             //Try to load the texture from file "jsfml.png"
-        	back_text.loadFromFile(Paths.get("Background_1366x768.jpg"));
+        	back_text.loadFromFile(Paths.get("ressource/Sprite/background.jpg"));
 
             //Texture was loaded successfully - retrieve and print size
             Vector2i size = back_text.getSize();
@@ -41,37 +41,38 @@ public class jsfmltesto {
             ex.printStackTrace();
         }
         Sprite back_sprite = new Sprite(back_text);
-        
-        fenetre.create(new VideoMode(1366, 768), "Prototype");
+        Vector2i screenSize = new Vector2i(1600,900);
+        fenetre.create(new VideoMode(screenSize.x,screenSize.y), "Prototype"); //,WindowStyle.FULLSCREEN);
 
         int frame = 3;
         int frameElec = 1;
         Clock animClock = new Clock();
-        Button buttest = new Button("action.png",new Vector2f(50,399),Button.ButtonType.Move, true);
-        Button butturn = new Button("action.png",new Vector2f(50+72,399),Button.ButtonType.TurnRight,true);
-        Button butallumer = new Button("action.png",new Vector2f(50+72*2,399),Button.ButtonType.Light,true);
+        Controler control = new Controler(screenSize);
         
-        Map testo = new Map();
+        //Button buttest = new Button("ButAvancer.png",50,399);
+        //Button butturn = new Button("ButTournerDroite.png",50+0.5f*72,399);
+        //Button butallumer = new Button("buttest.png",50+72,399);
+        
+        //Map testo = new Map();
         
 /*----------------------------------------Génération du robot----------------------------------------*/ 
-        Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "lightbot.png");
+        Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
         robot.setOrientation(Character.Orientation.Up);
+        robot.setLimitOrder(0, 12);
         //robot.drawCharac(fenetre);
+        control.init(robot,robot);
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         boolean anti_cligno = true;
-        
-/*----------------------------------------GENERATION ENGINE----------------------------------------------*/
-        
-        Engine engine = new Engine (testo);
         
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
         while (fenetre.isOpen()) {
         	anti_cligno = true;
         	fenetre.draw(back_sprite);
-            fenetre.draw(buttest.getSprite());
-            fenetre.draw(butturn.getSprite());
-            fenetre.draw(butallumer.getSprite());
-            testo.drawMap(fenetre,robot);
+        	control.update(fenetre);
+            //fenetre.draw(buttest.getSprite());
+            //fenetre.draw(butturn.getSprite());
+            //fenetre.draw(butallumer.getSprite());
+            //testo.drawMap(fenetre,robot);
             //robot.update(fenetre,new Vector2f(0, 0));
             
             // On gère les événements
@@ -81,16 +82,11 @@ public class jsfmltesto {
                     // la fenêtre
                     fenetre.close();
                 }
-                if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+               /* if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
-                	
-                	if (buttest.isClicked(mouse_pos)) {
-                		
-                		Order ordre_move= new Move(robot, engine, Color.WHITE);
-                		ordre_move.executer();
-                		
+                	if (buttest.clicked(mouse_pos)) {
                //TESTER SI CASE DEVANT DISPO
-                	/*	
+                		
                 		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
 
                 		int animCount = 0;
@@ -108,16 +104,16 @@ public class jsfmltesto {
                                switch (robot.getOrientation())
                        			{
                                    case Up:
-                                	   //robot.update(fenetre, new Vector2f(2.5625f,-1.28125f));
+                                	   robot.update(fenetre, new Vector2f(2.5625f,-1.28125f));
                                    break;
                                    case Down:
-                                	   //robot.update(fenetre, new Vector2f(-2.5625f,1.28125f));
+                                	   robot.update(fenetre, new Vector2f(-2.5625f,1.28125f));
                                    break;
                                    case Left:
-                                	   //robot.update(fenetre, new Vector2f(-2.5625f,-1.28125f));
+                                	   robot.update(fenetre, new Vector2f(-2.5625f,-1.28125f));
                                    break;
                                    case Right:
-                                	   //robot.update(fenetre, new Vector2f(2.5625f,1.28125f));
+                                	   robot.update(fenetre, new Vector2f(2.5625f,1.28125f));
                                    break;
                                }
                                
@@ -132,18 +128,13 @@ public class jsfmltesto {
                                fenetre.clear(Color.WHITE);
                 				}    
                 			}
-                		//robot.updatePostion();
-                		}*/
+                		robot.updatePostion();
+                		}
                 		
 					}
-                	if (butturn.isClicked(mouse_pos)) {
-                		
-                		Order ordreRight= new TurnRight(robot, Color.WHITE);
-                		ordreRight.executer();
-                		
+                	if (butturn.clicked(mouse_pos)) {
                 		//robot.setOrientation(Character.Orientation.Right);
-                		
-                		/*switch (robot.getOrientation())
+                		  switch (robot.getOrientation())
                  			{
                              case Up:
                             	 robot.setOrientation(Character.Orientation.Right);
@@ -158,13 +149,8 @@ public class jsfmltesto {
                             	 robot.setOrientation(Character.Orientation.Down);
                              break;
                          }
-                         */
 					}
-                	if (butallumer.isClicked(mouse_pos)) {
-                		
-                		Order ordre_light= new Light(robot, engine, Color.WHITE);
-                		ordre_light.executer();
-                		/*
+                	if (butallumer.clicked(mouse_pos)) {
                 		int animCount = 0;
                 		while (animCount < 16) {
                 			if (animClock.getElapsedTime().asMilliseconds() >= 50) {
@@ -189,9 +175,9 @@ public class jsfmltesto {
                                fenetre.clear(Color.WHITE);
                            }       
 						}
-                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));*/
+                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
 					}
-                }
+                }*/
                 anti_cligno = false;
             } 
             if (anti_cligno) {

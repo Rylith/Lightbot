@@ -191,7 +191,13 @@ public class Button extends Component{
 		return super.getSprite().getGlobalBounds().contains(position.x, position.y);
 	}
 	
-	
+	/**
+	 * Indiqque si le bouton est pressse
+	 */
+	public boolean isActive(){
+		return m_active;
+	}
+		
 	/** Desactive/Active le bouton (mise a jours du sprite)
 	 * @param 0 : Desactive , 1 : Active
 	 * @throws Exception 

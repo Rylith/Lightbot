@@ -51,6 +51,9 @@ public class Character extends DrawableObject{
 		super(position, height, color, tilePath);
 		m_listOrder = new Vector<Vector<Order>>();
 		m_limitOrder = new Vector<Integer>();
+		for(int i=0; i<3; i++){
+			m_limitOrder.add(0);
+		}
 		m_listPointeur = new Vector<Pointeur>();
 		m_currentProc = new Vector<Boolean>();
 		m_sprite.scale(0.75f,0.75f);
@@ -89,6 +92,13 @@ public class Character extends DrawableObject{
 	/** Retourne m_limitOrder */
 	public Vector<Integer> getLimitOrder(){
 		return m_limitOrder;
+	}
+	
+	/**
+	 * Setteur m_limitOrder
+	 */
+	public void setLimitOrder(int proc, int nbr){
+		m_limitOrder.set(proc, nbr);
 	}
 	
 	/** Active la procedure courante
