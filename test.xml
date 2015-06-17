@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
 	<character type ="" pos_x="" pos_y ="" orientation = "">
-		<main></main>
-		<proc1> </proc1>
-		<proc2> </proc2>
-		<orders></orders>
+		<main>8</main>
+		<proc1>6</proc1>
+		<proc2>6</proc2>
+		<orders>move saut laver</orders>
 	</character>
 
 	<character type ="" pos_x="" pos_y ="" orientation = "">
 		<main>8</main>
 		<proc1>6</proc1>
 		<proc2>6</proc2>
-		<orders></orders>
+		<orders>move saut laver</orders>
 	</character>
 
 	<size>
@@ -20,7 +20,7 @@
 	</size>
 
 	<line num="0">
-		<case type="Lampe" height="1" color="" pos_y="0"/>
+		<case type="Basic" height="1" color="" pos_y="0"/>
 		<case type="White" height="1" color="" pos_y="1"/>
 		<case type="White" height="1" color="" pos_y="3"/>
 		<case type="Lampe" height="1" color="" pos_y="4"/>

@@ -36,7 +36,7 @@ public class jsfmltesto {
 
             //Texture was loaded successfully - retrieve and print size
             Vector2i size = back_text.getSize();
-            System.out.println("The texture is " + size.x + "x" + size.y);
+            //System.out.println("The texture is " + size.x + "x" + size.y);
         } catch(IOException ex) {
             //Ouch! something went wrong
             ex.printStackTrace();

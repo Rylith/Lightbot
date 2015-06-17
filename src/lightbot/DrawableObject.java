@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -25,10 +26,10 @@ public abstract class DrawableObject {
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	
-	/** Constructeur de la class DrawableObject
-	 * @param Vector2f position, int height, Color color, String tilePath */
-	
+	/** Constructeur de la class DrawableObject 
+	 * @info Penser a recadrer le sprite et a lui allouer une position
+	 * [non inclus dans ce constructeur]
+	 */
 	public DrawableObject(Vector2i position, int height, Color color, String tilePath){
 		m_position = position;
 		m_height = height;
@@ -41,12 +42,10 @@ public abstract class DrawableObject {
 			e.printStackTrace();
 		}
 		m_sprite = new Sprite(m_tileSet);
-		//m_sprite.setPosition(position);
 	}
 	
 	
 /** ---------------- METHODS ----------------- */
-	
 	
 	/** Retourne la position de l'objet */
 	public Vector2i getPosition(){
@@ -90,7 +89,7 @@ public abstract class DrawableObject {
 		m_sprite = sprite;
 	}
 	
-	
+	/** Dessine le DrawableObject dans la fenetre */
 	public void draw(RenderWindow window, Vector2i position){
 		float pos_x = 250 +  position.y * 41f - position.x * 41f;
 		float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
@@ -98,6 +97,7 @@ public abstract class DrawableObject {
 		window.draw(this.getSprite());
 	}
 	
+	/** Met a jours la position du sprite */
 	public void update(RenderWindow window, Vector2f dep){
 		this.getSprite().move(dep);
 	}

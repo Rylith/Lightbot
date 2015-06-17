@@ -38,7 +38,7 @@ public class Map {
 		for (int i = 0; i < this.m_map.length; i++) {
 			int l = 0;
 			List<Element> listCases = ml.getCasesLine(i);
-			System.out.println("J'ai recup ma liste de cases");
+			//System.out.println("J'ai recup ma liste de cases");
 			for (int j = 0; j < this.m_map[i].length; j++) {
 				if (listCases.size() > 0 && l < listCases.size()) {
 					Element caseElement = (Element) listCases.get(l);
@@ -47,21 +47,18 @@ public class Map {
 						switch (caseElement.getAttributeValue("type"))
 						{
 				           case "White":
-				        	   System.out.println("White");
+				        	   //System.out.println("White");
 				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, "case.png");
 				           break;
 				           case "Basic":
-				        	   System.out.println("Basic");
+				        	   //System.out.println("Basic");
 				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "case.png");
 				        	   rob.setPosition(new Vector2i(i,j));
 				        	   rob.setHeight(h);
 				        	   m_map[i][j].addObject(0, rob);
-				        	  /* Engine eng = new Engine(this);
-				        	   rob.addOrder(0, move);
-				        	   m_map[i][j].addObject(0, rob);*/
 				           break;
 				           case "Lampe":
-				        	   System.out.println("Lampe");
+				        	   //System.out.println("Lampe");
 				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), "case.png");
 				        	   //Lampadaire(Vector2i position, int height, Color color, String tilePath, int value)
 				        	   m_map[i][j].addObject(2, new Lampadaire(new Vector2i(i, j), h, Color.WHITE, "Object.png"));
