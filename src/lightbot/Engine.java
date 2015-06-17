@@ -366,29 +366,17 @@ public class Engine {
 	public boolean ExecAccess(Character personne, Color color_ptr)  {
 		// TODO Auto-generated method stub
 		
-		//il faut que le smartbot passe sa liste de pointeurs au basic bot apres son passage pour q ca marche
-		
-		Vector <Pointeur> l;
-		l= personne.getPointerList();
-		
-		if(!l.isEmpty()){
-			Pointeur ptr= personne.getPointeur(color_ptr);
-			if(ptr==null || !ptr.getActive())
-				return false;
-			
-			else{
-				if (!(monde.get_m_mat()[ptr.getPosition().x][ptr.getPosition().y].getMapDO().containsKey(0))){
+				if (monde.getPointer(color_ptr)!=null){
+					
 					getCurrentCase(personne).getMapDO().remove(0);
-					personne.setPosition(ptr.getPosition());
+					personne.setPosition(monde.getPointer(color_ptr));
 					getCurrentCase(personne).getMapDO().put(0,personne);
 					return true;
 				} 
 				else 
 					return false;
-			}
-		}
-		else
-			return false;
+			
+		
 	}
 	
 }
