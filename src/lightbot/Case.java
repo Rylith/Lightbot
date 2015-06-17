@@ -92,6 +92,10 @@ public class Case extends DrawableObject {
 		if (m_mapDrawableObject.get(2) != null){
 			fenetre.draw(m_mapDrawableObject.get(2).getSprite());
 		}
+		if (m_mapDrawableObject.get(0) != null){
+			fenetre.draw(m_mapDrawableObject.get(0).getSprite());
+		}
+
 	}
 
 }
