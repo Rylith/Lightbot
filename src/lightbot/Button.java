@@ -25,8 +25,8 @@ public class Button extends Component{
 	private final static int SIZEPUSHX = 15;
 	private final static int SIZEPUSHY = 20;
 	
-	private final static int SIZEBOTX = 83;
-	private final static int SIZEBOTY = 85;
+	private final static int SIZEBOTX = 85;
+	private final static int SIZEBOTY = 83;
 	
 	private final static int SIZEONX = 140;
 	private final static int SIZEONY = 70;
