@@ -104,12 +104,14 @@ public class Character extends DrawableObject{
 		return m_limitOrder;
 	}
 	
+
 	/** Assigne la limite d'ordre de la procedure
 	 */
 	public void setLimitOrder(int proc, int nbr){
 		m_limitOrder.set(proc, nbr);
 	}
 	
+
 	/** Active la procedure courante du character
 	 * 0 : main
 	 * 1 : P1

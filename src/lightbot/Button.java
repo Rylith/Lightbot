@@ -27,8 +27,8 @@ public class Button extends Component{
 	private final static int SIZEPUSHX = 15;
 	private final static int SIZEPUSHY = 20;
 	
-	private final static int SIZEBOTX = 83;
-	private final static int SIZEBOTY = 85;
+	private final static int SIZEBOTX = 85;
+	private final static int SIZEBOTY = 83;
 	
 	private final static int SIZEONX = 140;
 	private final static int SIZEONY = 70;
@@ -193,7 +193,13 @@ public class Button extends Component{
 		return super.getSprite().getGlobalBounds().contains(position.x, position.y);
 	}
 	
-	
+	/**
+	 * Indiqque si le bouton est pressse
+	 */
+	public boolean isActive(){
+		return m_active;
+	}
+		
 	/** Desactive/Active le bouton (mise a jours du sprite)
 	 * @param 0 : Desactive , 1 : Active
 	 * @throws Exception 

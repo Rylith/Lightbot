@@ -18,7 +18,6 @@ import org.jsfml.window.event.Event;
 
 import lightbot.Button;
 import lightbot.Character;
-import lightbot.Button.ButtonType;
 
 public class jsfmltesto {
  
@@ -32,7 +31,7 @@ public class jsfmltesto {
         Texture back_text = new Texture();
         try {
             //Try to load the texture from file "jsfml.png"
-        	back_text.loadFromFile(Paths.get("Background_1366x768.jpg"));
+        	back_text.loadFromFile(Paths.get("ressource/Sprite/background.jpg"));
 
             //Texture was loaded successfully - retrieve and print size
             Vector2i size = back_text.getSize();
@@ -42,17 +41,20 @@ public class jsfmltesto {
             ex.printStackTrace();
         }
         Sprite back_sprite = new Sprite(back_text);
-        
-        fenetre.create(new VideoMode(1366, 768), "Prototype");
+        Vector2i screenSize = new Vector2i(1600,900);
+        //Vector2i screenSize = new Vector2i(1280,720);
+        //Vector2i screenSize = new Vector2i(1440,900);
+        //Vector2i screenSize = new Vector2i(1920,1080);
+        fenetre.create(new VideoMode(screenSize.x,screenSize.y), "Prototype"); //,WindowStyle.FULLSCREEN);
 
         int frame = 3;
         int frameElec = 1;
         Clock animClock = new Clock();
-
-        Button buttest = new Button("action.png",new Vector2f(50,399),Button.ButtonType.Move, true);
-        Button butturn = new Button("action.png",new Vector2f(50+72,399),Button.ButtonType.TurnRight,true);
-        Button butallumer = new Button("action.png",new Vector2f(50+72*2,399),Button.ButtonType.Light,true);
+        Controler control = new Controler(screenSize);
         
+        //Button buttest = new Button("ButAvancer.png",50,399);
+        //Button butturn = new Button("ButTournerDroite.png",50+0.5f*72,399);
+        //Button butallumer = new Button("buttest.png",50+72,399);
         
         Character rob = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
         rob.setOrientation(Character.Orientation.Right);
@@ -64,29 +66,40 @@ public class jsfmltesto {
         Engine eng = new Engine(testo);
         
 /*----------------------------------------Génération du robot----------------------------------------*/ 
+        Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
+        robot.setOrientation(Character.Orientation.Up);
+        robot.setLimitOrder(0, 17);
+        //robot.drawCharac(fenetre);
+        control.init(robot,robot);
+/*----------------------------------------Génération du robot----------------------------------------*/ 
         boolean anti_cligno = true;
-/*----------------------------------------GENERATION ENGINE----------------------------------------------*/
-        
-        Engine engine = new Engine (testo);
         
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
         while (fenetre.isOpen()) {
         	anti_cligno = true;
         	fenetre.draw(back_sprite);
+        	/*
             fenetre.draw(buttest.getSprite());
             fenetre.draw(butturn.getSprite());
             fenetre.draw(butallumer.getSprite());
+            */
             System.out.println("Bijour");
             testo.drawMap(fenetre);
-            
+        	control.update(fenetre);
+            //fenetre.draw(buttest.getSprite());
+            //fenetre.draw(butturn.getSprite());
+            //fenetre.draw(butallumer.getSprite());
+            //testo.drawMap(fenetre,robot);
+            //robot.update(fenetre,new Vector2f(0, 0));
+
             // On gère les événements
-            for (Event event : fenetre.pollEvents()) {
+            /*for (Event event : fenetre.pollEvents()) {
                 if (event.type == Event.Type.CLOSED) {
                     // Si l'utilisateur clique sur la croix rouge alors on ferme
                     // la fenêtre
                     fenetre.close();
                 }
-                if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+               /* if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
                 	
                 	if (buttest.isClicked(mouse_pos)) {
@@ -97,9 +110,8 @@ public class jsfmltesto {
                 		ordre_move.executer();
                 		
                //TESTER SI CASE DEVANT DISPO
-                	/*	
+                		
                 		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
->>>>>>> 97a7071a05ceeeefc2fff63db72b4ab5b5712c32
 
                 		int animCount = 0;
                 		while (animCount < 16) {
@@ -116,16 +128,16 @@ public class jsfmltesto {
                                switch (robot.getOrientation())
                        			{
                                    case Up:
-                                	   //robot.update(fenetre, new Vector2f(2.5625f,-1.28125f));
+                                	   robot.update(fenetre, new Vector2f(2.5625f,-1.28125f));
                                    break;
                                    case Down:
-                                	   //robot.update(fenetre, new Vector2f(-2.5625f,1.28125f));
+                                	   robot.update(fenetre, new Vector2f(-2.5625f,1.28125f));
                                    break;
                                    case Left:
-                                	   //robot.update(fenetre, new Vector2f(-2.5625f,-1.28125f));
+                                	   robot.update(fenetre, new Vector2f(-2.5625f,-1.28125f));
                                    break;
                                    case Right:
-                                	   //robot.update(fenetre, new Vector2f(2.5625f,1.28125f));
+                                	   robot.update(fenetre, new Vector2f(2.5625f,1.28125f));
                                    break;
                                }
                                
@@ -140,33 +152,13 @@ public class jsfmltesto {
                                fenetre.clear(Color.WHITE);
                 				}    
                 			}
-                		//robot.updatePostion();
-                		}*/
+                		robot.updatePostion();
+                		}
                 		
 					}
-                	if (butturn.isClicked(mouse_pos)) {
-                		
-                		Order ordreRight= new TurnRight(rob, Color.WHITE);
-                		ordreRight.executer();
-                		
-                		//robot.setOrientation(Character.Orientation.Right);
-                		
-                		/*switch (robot.getOrientation())
-                 			{
-                             case Up:
-                            	 robot.setOrientation(Character.Orientation.Right);
-                             break;
-                             case Down:
-                            	 robot.setOrientation(Character.Orientation.Left);
-                             break;
-                             case Left:
-                            	 robot.setOrientation(Character.Orientation.Up);
-                             break;
-                             case Right:
-                            	 robot.setOrientation(Character.Orientation.Down);
-                             break;
+                	if (butturn.clicked(mouse_pos)) {
                          }*/
-					}
+					/*}
                 	if (butallumer.isClicked(mouse_pos)) {
                 		
                 		Order ordre_light= new Light(rob, engine, Color.WHITE);
@@ -196,13 +188,11 @@ public class jsfmltesto {
                                fenetre.clear(Color.WHITE);
                            }       
 						}
-<<<<<<< HEAD
+                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
                 		//robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
-=======
-                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));*/
-                		
+
 					}
-                }
+                }*/
                 anti_cligno = false;
             } 
             if (anti_cligno) {
@@ -211,4 +201,3 @@ public class jsfmltesto {
 			}
         }
     }
-}

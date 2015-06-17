@@ -33,7 +33,7 @@ public class Frame extends Component {
 	}
 	
 	private FrameType m_type; //indique le type de frame
-	private Vector<Component> m_contain; //liste d'odre contenu dans la Frame
+	private Vector<Component> m_contain = new Vector<Component>(); //liste d'odre contenu dans la Frame
 	private boolean m_active; //indique si la frame est active (on ne peut ajouter des ordres que dans la vue active)
 	
 	
