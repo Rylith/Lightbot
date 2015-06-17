@@ -1,5 +1,6 @@
 package lightbot;
 
+import java.util.LinkedList;
 import java.util.Vector;
 
 import org.jsfml.graphics.Color;
@@ -11,13 +12,33 @@ public class Engine {
 	
 	private Map monde;
 	private int nb_for;
+	private LinkedList <Lampadaire> liste_lampadaire; 
 	
 	
 	public Engine (Map m){
 		
 		monde = m;
 		nb_for=1;
+		liste_lampadaire= new LinkedList<Lampadaire>();
 		
+	}
+	
+	/**
+	 * ajoute un lampadaire à la liste 
+	 * 
+	 */
+	
+	private void  addLampadaire (Lampadaire l){
+		liste_lampadaire.add(l);
+	}
+	
+	private boolean LampadairesAllumes(){
+		
+		for(int i=0; i<liste_lampadaire.size(); i++){
+			if(!liste_lampadaire.get(i).getActive())
+				return false;
+		}
+		return true;
 	}
 	/** 
 	 * 
@@ -373,7 +394,7 @@ public class Engine {
 				if (monde.getPointer(color_ptr)!=null){
 					
 					getCurrentCase(personne).getMapDO().remove(0);
-					personne.setPosition(monde.getPointer(color_ptr));
+					personne.update(monde.getPointer(color_ptr));
 					getCurrentCase(personne).getMapDO().put(0,personne);
 					return true;
 				} 
@@ -382,5 +403,6 @@ public class Engine {
 			
 		
 	}
+	
 	
 }
