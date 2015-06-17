@@ -22,37 +22,46 @@ public class Map {
 	public Case m_map[][];
 	
 /** -------------- CONSTRUCTORS -------------- */
-	public Map(){
+	public Map(Character rob){
 		MapLoader ml = new MapLoader();
 		Vector2i size = MapLoader.mapSize();
+		String str = ml.getOrders();
+		String[] splited = str.split("\\s+");
+		//System.out.println(splited[0]);
+		//System.out.println(splited[1]);
+		//System.out.println(splited[2]);
 		m_map = new Case[size.x][size.y];
-		createMap(ml);
+		createMap(ml,rob);
 	}
 /** ---------------- METHODS ----------------- */
-	public void createMap(MapLoader ml){
+	public void createMap(MapLoader ml, Character rob){
 		for (int i = 0; i < this.m_map.length; i++) {
 			int l = 0;
 			List<Element> listCases = ml.getCasesLine(i);
-			System.out.println("J'ai recup ma liste de cases");
+			//System.out.println("J'ai recup ma liste de cases");
 			for (int j = 0; j < this.m_map[i].length; j++) {
 				if (listCases.size() > 0 && l < listCases.size()) {
 					Element caseElement = (Element) listCases.get(l);
 					if (Integer.parseInt(caseElement.getAttributeValue("pos_y")) == j) {
+						int h =Integer.parseInt(caseElement.getAttributeValue("height"));
 						switch (caseElement.getAttributeValue("type"))
 						{
 				           case "White":
-				        	   System.out.println("White");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), "case.png");
+				        	   //System.out.println("White");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, "case.png");
 				           break;
 				           case "Basic":
-				        	   System.out.println("Basic");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), "case.png");
+				        	   //System.out.println("Basic");
+				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "case.png");
+				        	   rob.setPosition(new Vector2i(i,j));
+				        	   rob.setHeight(h);
+				        	   m_map[i][j].addObject(0, rob);
 				           break;
 				           case "Lampe":
-				        	   System.out.println("Lampe");
+				        	   //System.out.println("Lampe");
 				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), "case.png");
 				        	   //Lampadaire(Vector2i position, int height, Color color, String tilePath, int value)
-				        	   m_map[i][j].addObject(2, new Lampadaire(new Vector2i(i, j), Integer.parseInt(caseElement.getAttributeValue("height")), Color.WHITE, "Object.png"));
+				        	   m_map[i][j].addObject(2, new Lampadaire(new Vector2i(i, j), h, Color.WHITE, "Object.png"));
 				           break;
 						}
 						l++;
@@ -62,15 +71,12 @@ public class Map {
 		}
 	}
 	
-	public void drawMap(RenderWindow fenetre, Character robot){
+	public void drawMap(RenderWindow fenetre){
 		for (int i = 0; i < this.m_map.length; i++) {
 			for (int j = 0; j < this.m_map[i].length; j++) {
 				if (this.m_map[i][j] != null) {
 					this.m_map[i][j].drawCase(fenetre);
 				}
-				/*if (robot.getPosition().x == i && robot.getPosition().y == j) {
-					robot.update(fenetre,new Vector2f(0, 0));
-				}*/
 			}
 		}
 	}
@@ -117,5 +123,22 @@ public class Map {
 	public Case [][] get_m_mat(){
 		
 		return this.m_map;
+	}
+	
+public Vector2i getPointer(Color c){
+		
+		for(int i=0; i<m_map.length; i++){
+			for(int j=0; j<m_map[i].length;j++){
+				
+				if((m_map[i][j].getMapDO().containsKey(1)) && (m_map[i][j].getMapDO().get(1).getColor()== c)){
+					
+					return m_map[i][j].getPosition();
+				}
+					
+			}
+		}
+
+		return null;
+		
 	}
 }

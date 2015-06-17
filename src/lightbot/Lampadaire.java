@@ -18,18 +18,17 @@ public class Lampadaire extends DrawableObject {
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
+	/** Constructeur de la classe Lampadaire */
 	public Lampadaire(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
 		m_active = false;
 		this.getSprite().setTextureRect(new IntRect(75, 0, SIZESPRITEX, SIZESPRITEY));
-		/*private final static int SIZESPRITEX = 78;
-		private final static int SIZESPRITEY = 50;*/
 		float tmp_x = 250 + 78/2;
 		float tmp_y = 100 + (48-8)/2;
 		float pos_x = tmp_x - SIZESPRITEX/2;
 		float pos_y = tmp_y - SIZESPRITEY -5;
 		float pox = pos_x + (position.y - position.x) * 78/2;
-		float poy = pos_y + (position.x + position.y)*(48-8)/2;
+		float poy = pos_y + (position.x + position.y)*(48-8)/2 - (height-1)*8;
 		this.getSprite().setPosition(pox, poy);
 	}
 	

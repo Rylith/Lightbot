@@ -35,7 +35,7 @@ public class jsfmltesto {
 
             //Texture was loaded successfully - retrieve and print size
             Vector2i size = back_text.getSize();
-            System.out.println("The texture is " + size.x + "x" + size.y);
+            //System.out.println("The texture is " + size.x + "x" + size.y);
         } catch(IOException ex) {
             //Ouch! something went wrong
             ex.printStackTrace();
@@ -77,6 +77,7 @@ public class jsfmltesto {
             //fenetre.draw(butallumer.getSprite());
             //testo.drawMap(fenetre,robot);
             //robot.update(fenetre,new Vector2f(0, 0));
+
             
             // On gère les événements
             for (Event event : fenetre.pollEvents()) {
@@ -87,7 +88,14 @@ public class jsfmltesto {
                 }
                /* if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
-                	if (buttest.clicked(mouse_pos)) {
+                	
+                	if (buttest.isClicked(mouse_pos)) {
+                		Order ordreMove = new Move(rob, eng);
+                		ordreMove.executer();
+ /*               		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
+                		Order ordre_move= new Move(robot, engine, Color.WHITE);
+                		ordre_move.executer();
+                		
                //TESTER SI CASE DEVANT DISPO
                 		
                 		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
@@ -136,24 +144,13 @@ public class jsfmltesto {
                 		
 					}
                 	if (butturn.clicked(mouse_pos)) {
-                		//robot.setOrientation(Character.Orientation.Right);
-                		  switch (robot.getOrientation())
-                 			{
-                             case Up:
-                            	 robot.setOrientation(Character.Orientation.Right);
-                             break;
-                             case Down:
-                            	 robot.setOrientation(Character.Orientation.Left);
-                             break;
-                             case Left:
-                            	 robot.setOrientation(Character.Orientation.Up);
-                             break;
-                             case Right:
-                            	 robot.setOrientation(Character.Orientation.Down);
-                             break;
-                         }
+                         }*/
 					}
-                	if (butallumer.clicked(mouse_pos)) {
+                	if (butallumer.isClicked(mouse_pos)) {
+                		
+                		Order ordre_light= new Light(rob, engine, Color.WHITE);
+                		ordre_light.executer();
+                		/*
                 		int animCount = 0;
                 		while (animCount < 16) {
                 			if (animClock.getElapsedTime().asMilliseconds() >= 50) {
@@ -167,9 +164,9 @@ public class jsfmltesto {
                                	frameElec = 1;
                                }
                                
-                               robot.getSprite().setTextureRect(new IntRect(6*80 + frameElec * 80, robot.getSprite().getTextureRect().top, 80, 100));
+                           //    robot.getSprite().setTextureRect(new IntRect(6*80 + frameElec * 80, robot.getSprite().getTextureRect().top, 80, 100));
                                animCount++;
-                               testo.drawMap(fenetre,robot);
+                              // testo.drawMap(fenetre,robot);
                                fenetre.draw(buttest.getSprite());
                                fenetre.draw(butturn.getSprite());
                                fenetre.draw(butallumer.getSprite());
@@ -179,6 +176,8 @@ public class jsfmltesto {
                            }       
 						}
                 		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
+                		//robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
+
 					}
                 }*/
                 anti_cligno = false;

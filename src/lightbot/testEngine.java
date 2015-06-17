@@ -11,15 +11,16 @@ public class testEngine {
 	
 	public static void main (String[] args){
 
+		Character p = new Character(new Vector2i(0,0), 1, Color.GREEN, "lightbot.png");
 		
-	Map teste = new Map();
+	Map teste = new Map(p);
 	
 	//teste.get_m_mat()[0][1].setHeight(2);
 	//teste.get_m_mat()[0][2].setHeight(4);
 	
 	Engine MonEngine = new Engine (teste);
 	
-	Character p = new Character(new Vector2i(0,0), 1, Color.GREEN, "lightbot.png");
+	
 	
 	/* ========================TESTS DE TURNLEFT==============================
 	 System.out.println("la couleur bleu?  :" +Color.BLUE);
@@ -57,6 +58,7 @@ public class testEngine {
 	//Pointeur ptr;
 	//ptr = (Pointeur) teste.get_m_mat()[0][0].getMapDO().get(1);
 	
+	
 	System.out.println("le personnage a le pointeur bleu avec lui?  :" + (p.getPointeur(Color.BLUE)!=null) );
 	System.out.println("la case contient un pointeur?  :" + teste.get_m_mat()[0][0].getMapDO().containsKey(1)  );
 	ordre.executer();
@@ -73,7 +75,16 @@ public class testEngine {
 	System.out.println("la case contient le pointeur bleu?  :" + (teste.get_m_mat()[0][0].getMapDO().get(1).getColor()== Color.BLUE));
 	
 	System.out.println("le personnage a  toujours le pointeur bleu avec lui  :" + (p.getPointeur(Color.BLUE)!=null) );
-	 
+	System.out.println("le personnage a  la position  :" + p.getPosition() );
+	System.out.println("le personnage est dans la hashmap de la case :" +teste.get_m_mat()[0][0].getMapDO().containsKey(0));
+	Order ordre2= new Move(p, MonEngine, Color.WHITE);
+	Order ordre1 = new AccessPointer (p, MonEngine, Color.WHITE, Color.BLUE );
+	p.setOrientation(Orientation.Right);
+	ordre2.executer();
+	System.out.println("le personnage a  la position apres move :" + p.getPosition() );
+	ordre1.executer();
+	System.out.println("le personnage est dans la hashmap de la nvlle case :" +teste.get_m_mat()[p.getPosition().x][p.getPosition().y].getMapDO().containsKey(0));
+	System.out.println("le personnage a  la position apres execAccess  :" + p.getPosition());
 	
 }
 	

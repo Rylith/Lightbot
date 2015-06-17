@@ -11,6 +11,9 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
+import lightbot.Move;
+import lightbot.Engine;
+
 
 public class Character extends DrawableObject{
 
@@ -46,9 +49,24 @@ public class Character extends DrawableObject{
 	
 		
 	/** Constructeur de la class Character 
-	 * @param coordonne x du haut gauche de l'image, coordonnee y du haut gauche de l'image et orientation du personnage */
+	 * @info Penser a donner l'orientation (pour allouer le bon sprite) + Donner la position du Sprite 
+	 * [non inclus dans ce constructeur]
+	 */
 	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
+		//m_listOrder = ;
+		
+		this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+
+		float tmp_x = 250 + 78/2;
+		float tmp_y = 100 + (48-8)/2;
+		float pos_x = tmp_x - (SIZESPRITEX*0.75f)/2;
+		float pos_y = tmp_y - (SIZESPRITEY*0.75f)+5;
+		float pox = pos_x + (position.y - position.x) * 78/2;
+		float poy = pos_y + (position.x + position.y)*(48-8)/2 - (height-1)*8;
+		this.getSprite().setPosition(pox, poy);
+		m_sprite.scale(0.75f,0.75f);
+
 		m_listOrder = new Vector<Vector<Order>>();
 		m_limitOrder = new Vector<Integer>();
 		for(int i=0; i<3; i++){
@@ -56,64 +74,55 @@ public class Character extends DrawableObject{
 		}
 		m_listPointeur = new Vector<Pointeur>();
 		m_currentProc = new Vector<Boolean>();
-		m_sprite.scale(0.75f,0.75f);
 		m_listPointeur= new Vector <Pointeur>();
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, "lightbot.png"));
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.GREEN, "lightbot.png"));
-	
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.YELLOW, "lightbot.png"));
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.MAGENTA, "lightbot.png"));
-		
-		
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, "case.png"));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.GREEN, "case.png"));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.YELLOW, "case.png"));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.RED, "case.png"));
 	}
-/* VERSION CONSTRUCTEUR CORALIE : choisir entre le constructeur d'avant et celui la
- * 
-	public Character(Vector2i position, int height, Color color, String tilePath){
-		super(position, 1, color, tilePath);
-	}
-*/
+
 /** ---------------- METHODS ----------------- */	
 
 
-	/** Retourne m_listOrder */
+	/** Retourne la liste d'ordre du character */
 	public Vector<Vector<Order>> getListOrder(){
 		return m_listOrder;
 	}
 	
+	/** Retourne la liste de pointeur du caractere */
 	public Vector<Pointeur> getPointerList(){
 		return  this.m_listPointeur;
 	}
 	
+	/** Supprime le pointeur de la liste de pointeur du character */
 	public void RemoveFromPtrList(Pointeur p){
-		
 		this.m_listPointeur.remove(p);
 	}
 	
-	/** Retourne m_limitOrder */
+	/** Retourne la limite d'ordre de chaque procedures du character */
 	public Vector<Integer> getLimitOrder(){
 		return m_limitOrder;
 	}
 	
-	/**
-	 * Setteur m_limitOrder
+
+	/** Assigne la limite d'ordre de la procedure
 	 */
 	public void setLimitOrder(int proc, int nbr){
 		m_limitOrder.set(proc, nbr);
 	}
 	
-	/** Active la procedure courante
+
+	/** Active la procedure courante du character
 	 * 0 : main
 	 * 1 : P1
 	 * 2 : p2
 	 */
 	public void activeProc(int i){
 		for(int j = 0; j < 3; j++){
-			m_currentProc.set(i, false);
+			m_currentProc.set(j, false);
 		}
-		m_currentProc.set(i, true);
-		
-	}
-	
+		m_currentProc.set(i, true);	
+	}	
 	
 	/** Retourne l'orientation du personnage */
 	public Orientation getOrientation(){
@@ -146,30 +155,27 @@ public class Character extends DrawableObject{
 	/** Ajout d'un ordre a la fin de la liste d'ordre passe en parametre
 	 * @param int : Numero de procedure (0:main 1:Proc1 2:Proc3)
 	 * @param Order : Ordre a ajouter
-	 * */
+	 */
 	public void addOrder (int numprocedure, Order odr){
 		m_listOrder.elementAt(numprocedure).addElement(odr);
     }
     
     /** Supprime l'ordre a la fin de la liste d'ordre 
      * @param int : Numero de procedure (0:main 1:Proc1 2:Proc3)
-     * */
+     */
 	public void delOrder (int numprocedure){
 		int lastElem;
 		lastElem = m_listOrder.size();
 		m_listOrder.elementAt(numprocedure).removeElementAt(lastElem);
 	}
 	
-	/** Retourne le pointeur correspondant a la couleur fournit en parametre 
-	 * @throws Exception */
+	/** Retourne le pointeur correspondant a la couleur fournit en parametre */
 	public Pointeur getPointeur(Color color) {
-		
     	for (int i = 0; i < m_listPointeur.size(); i++){
     		if (m_listPointeur.elementAt(i).getColor() == color){
     			return m_listPointeur.elementAt(i);
     		}
     	}
-    	
     	try {
 			throw new Exception("Aucun pointeur de cette couleur n'a ete trouve");
 		} catch (Exception e) {
@@ -189,8 +195,7 @@ public class Character extends DrawableObject{
     	}
 	}
 	
-
-
+	/** Dessine le caractere dans la fenetre */
 	public void drawCharac(RenderWindow window){
 		//POSTION ROBOT
 		//case3.getPosition().x+82/2-30,case3.getPosition().y+82/4-60
@@ -205,9 +210,17 @@ public class Character extends DrawableObject{
 		
 	}
 	
-	public void update(RenderWindow window, Vector2f dep){
-		super.update(window, dep);
-		window.draw(this.getSprite());
+
+	/** Met a jours la position du sprite */
+	public void update(Vector2i dep){
+		this.setPosition(dep);
+		float tmp_x = 250 + 78/2;
+		float tmp_y = 100 + (48-8)/2;
+		float pos_x = tmp_x - (SIZESPRITEX*0.75f)/2;
+		float pos_y = tmp_y - (SIZESPRITEY*0.75f)+5;
+		float pox = pos_x + (dep.y - dep.x) * 78/2;
+		float poy = pos_y + (dep.x + dep.y)*(48-8)/2;// - (height-1)*8;
+		this.getSprite().setPosition(pox, poy);
 	}
 	
 

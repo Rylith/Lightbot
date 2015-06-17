@@ -14,6 +14,7 @@ import org.jsfml.system.Vector2i;
 
 public class Case extends DrawableObject {
 
+	
 /** --------------- ATTRIBUTES --------------- */
 
 	private final static int SIZESPRITEX = 78;
@@ -27,7 +28,6 @@ public class Case extends DrawableObject {
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
-	
 	/** Constructeur de la class Case 
 	 * @info : par defaut la couleur est a WHITE et la valeur a 1
 	 */
@@ -35,6 +35,7 @@ public class Case extends DrawableObject {
 		super(position, height, Color.WHITE, tilePath);
 		m_mapDrawableObject = new HashMap<Integer,DrawableObject>();
 		m_value = 1;
+		//Generation aleatoire de la case parmis 5 possibilite de cases differentes
 		int i = (int)((Math.random()*(5-0)));
 		getSprite().setTextureRect(new IntRect(i*SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
 		float pos_x = 250 +  position.y * 41f - position.x * 41f;
@@ -75,6 +76,7 @@ public class Case extends DrawableObject {
 		m_mapDrawableObject.remove(depth);		
 	}
 	
+	/** Dessine la case dans la fenetre */
 	public void drawCase(RenderWindow fenetre){
 		for (int i = 0; i < this.getHeight(); i++) {
 			this.getSprite().move(0, - SIZESPRITEE);
@@ -90,6 +92,10 @@ public class Case extends DrawableObject {
 		if (m_mapDrawableObject.get(2) != null){
 			fenetre.draw(m_mapDrawableObject.get(2).getSprite());
 		}
+		if (m_mapDrawableObject.get(0) != null){
+			fenetre.draw(m_mapDrawableObject.get(0).getSprite());
+		}
+
 	}
 
 }

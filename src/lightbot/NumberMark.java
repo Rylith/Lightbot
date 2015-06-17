@@ -20,7 +20,7 @@ public class NumberMark extends DrawableObject {
 	
 	
 	/** Constructeur de la class ColorMark
-	 * @throws Exception 
+	 * @info value = 1 | 2 | 3 | 4 | 5
 	 */
 	public NumberMark(Vector2i position, int height, String tilePath, int value) {
 		super(position, height, Color.BLACK, tilePath);
