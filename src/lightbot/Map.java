@@ -27,9 +27,9 @@ public class Map {
 		Vector2i size = MapLoader.mapSize();
 		String str = ml.getOrders();
 		String[] splited = str.split("\\s+");
-		System.out.println(splited[0]);
-		System.out.println(splited[1]);
-		System.out.println(splited[2]);
+		//System.out.println(splited[0]);
+		//System.out.println(splited[1]);
+		//System.out.println(splited[2]);
 		m_map = new Case[size.x][size.y];
 		createMap(ml);
 	}
@@ -126,5 +126,22 @@ public class Map {
 	public Case [][] get_m_mat(){
 		
 		return this.m_map;
+	}
+	
+public Vector2i getPointer(Color c){
+		
+		for(int i=0; i<m_map.length; i++){
+			for(int j=0; j<m_map[i].length;j++){
+				
+				if((m_map[i][j].getMapDO().containsKey(1)) && (m_map[i][j].getMapDO().get(1).getColor()== c)){
+					
+					return m_map[i][j].getPosition();
+				}
+					
+			}
+		}
+
+		return null;
+		
 	}
 }
