@@ -118,25 +118,36 @@ public class Engine {
 				}
 			
 			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
-				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
-					//teste la difference de hauteur :
+				
+				if (!(monde.get_m_mat()[x][y] == null)) {
 					
-					int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
-					
-					int destination_height =  mat[x][y].getHeight();
-					
-					if(source_height < destination_height)   //JUMP VERS LE HAUT 
+				
+					if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
+						//teste la difference de hauteur :
 						
-						return (destination_height - source_height == 1);
-					
-					else if (source_height > destination_height) //JUMP VERS LE BAS
+						int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
+						
+						int destination_height =  mat[x][y].getHeight();
+						
+						if(source_height < destination_height)   //JUMP VERS LE HAUT 
 							
-						return true;
-					
-					else //JUMP VERS UNE CASE DE MM HAUTEUR
+							return (destination_height - source_height == 1);
 						
+						else if (source_height > destination_height) //JUMP VERS LE BAS
+								
+							return true;
+						
+						else //JUMP VERS UNE CASE DE MM HAUTEUR
+							
+							return false;
+						
+					} 
+				
+					else
 						return false;
-				} else return false;
+				}
+				else 
+					return false;
 			}
 			
 			else return false;
@@ -174,25 +185,31 @@ public class Engine {
 				}
 			
 			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //teste segmentation fault
-				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
-					//teste la difference de hauteur :
-					
-					int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight(); 
-					
-					int destination_height =  mat[x][y].getHeight();
-					
-					if(source_height < destination_height)   //JUMP VERS LE HAUT 
+				if (!(monde.get_m_mat()[x][y] == null)) {
+					if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
+						//teste la difference de hauteur :
 						
-						return (destination_height - source_height == 1 || destination_height - source_height == 2  );
-					
-					else if ( source_height > destination_height ) //JUMP VERS LE BAS
+						int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight(); 
+						
+						int destination_height =  mat[x][y].getHeight();
+						
+						if(source_height < destination_height)   //JUMP VERS LE HAUT 
 							
-						return true;
-					
-					else //JUMP VERS UNE CASE DE MM HAUTEUR
+							return (destination_height - source_height == 1 || destination_height - source_height == 2  );
 						
+						else if ( source_height > destination_height ) //JUMP VERS LE BAS
+								
+							return true;
+						
+						else //JUMP VERS UNE CASE DE MM HAUTEUR
+							
+							return false;
+					} 
+					else
 						return false;
-				} else return false;
+				}
+				else
+					return false;
 			}
 			
 			else return false;
