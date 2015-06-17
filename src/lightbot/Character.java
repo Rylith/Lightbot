@@ -211,9 +211,15 @@ public class Character extends DrawableObject{
 		
 	}
 	
-	public void update(RenderWindow window, Vector2f dep){
-		super.update(window, dep);
-		window.draw(this.getSprite());
+	public void update(Vector2i dep){
+		this.setPosition(dep);
+		float tmp_x = 250 + 78/2;
+		float tmp_y = 100 + (48-8)/2;
+		float pos_x = tmp_x - (SIZESPRITEX*0.75f)/2;
+		float pos_y = tmp_y - (SIZESPRITEY*0.75f)+5;
+		float pox = pos_x + (dep.y - dep.x) * 78/2;
+		float poy = pos_y + (dep.x + dep.y)*(48-8)/2;// - (height-1)*8;
+		this.getSprite().setPosition(pox, poy);
 	}
 	
 

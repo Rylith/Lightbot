@@ -183,9 +183,13 @@ public class Engine {
 		
 		if(isAbleToMove(p)){
 			
-			getCurrentCase(p).getMapDO().remove(0);
+			System.out.println("X:" + getCurrentCase(p).getPosition().x + "Y: " + getCurrentCase(p).getPosition().y);
+			getCurrentCase(p).delObject(0);
+			//getCurrentCase(p).getMapDO().remove(0);
 			updatePostion(p);
-			getCurrentCase(p).getMapDO().put(0,p);
+			System.out.println("X:" + getCurrentCase(p).getPosition().x + "Y: " + getCurrentCase(p).getPosition().y);
+			getCurrentCase(p).addObject(0, p);
+			//getCurrentCase(p).getMapDO().put(0,p);
 			return true;
 		}
 		else 
@@ -281,7 +285,7 @@ public class Engine {
 	    	   new_y = new_y+1;
 	       break;
 		}
-		p.setPosition(new Vector2i(new_x,new_y));
+		p.update(new Vector2i(new_x,new_y));
 	}
 	
 	public Case getCurrentCase(Character p){
