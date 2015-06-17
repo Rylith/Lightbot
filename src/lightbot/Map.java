@@ -22,7 +22,7 @@ public class Map {
 	public Case m_map[][];
 	
 /** -------------- CONSTRUCTORS -------------- */
-	public Map(){
+	public Map(Character rob){
 		MapLoader ml = new MapLoader();
 		Vector2i size = MapLoader.mapSize();
 		String str = ml.getOrders();
@@ -31,10 +31,10 @@ public class Map {
 		System.out.println(splited[1]);
 		System.out.println(splited[2]);
 		m_map = new Case[size.x][size.y];
-		createMap(ml);
+		createMap(ml,rob);
 	}
 /** ---------------- METHODS ----------------- */
-	public void createMap(MapLoader ml){
+	public void createMap(MapLoader ml, Character rob){
 		for (int i = 0; i < this.m_map.length; i++) {
 			int l = 0;
 			List<Element> listCases = ml.getCasesLine(i);
@@ -48,14 +48,14 @@ public class Map {
 						{
 				           case "White":
 				        	   System.out.println("White");
-				        	   //Case(Vector2i position, int height, String tilePath)
 				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, "case.png");
 				           break;
 				           case "Basic":
 				        	   System.out.println("Basic");
 				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "case.png");
-				        	   //Character(Vector2i position, int height, Color color, String tilePath)
-				        	   Character rob = new Character(new Vector2i(i, j), h,Color.WHITE, "lightbot.png"); 
+				        	   rob.setPosition(new Vector2i(i,j));
+				        	   rob.setHeight(h);
+				        	   m_map[i][j].addObject(0, rob);
 				        	  /* Engine eng = new Engine(this);
 				        	   rob.addOrder(0, move);
 				        	   m_map[i][j].addObject(0, rob);*/

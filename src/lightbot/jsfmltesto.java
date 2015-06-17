@@ -13,6 +13,7 @@ import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
+import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 
 import lightbot.Button;
@@ -52,11 +53,14 @@ public class jsfmltesto {
         Button butturn = new Button("action.png",new Vector2f(50+72,399),Button.ButtonType.TurnRight,true);
         Button butallumer = new Button("action.png",new Vector2f(50+72*2,399),Button.ButtonType.Light,true);
         
-        Map testo = new Map();
+        
+        Character rob = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
+        rob.setOrientation(Character.Orientation.Right);
+        Map testo = new Map(rob);
+        Engine eng = new Engine(testo);
         
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         boolean anti_cligno = true;
-        Character robot = new Character(new Vector2i(1,2), 1, Color.WHITE, "lighbot.png");
 /*----------------------------------------GENERATION ENGINE----------------------------------------------*/
         
         Engine engine = new Engine (testo);
@@ -81,9 +85,9 @@ public class jsfmltesto {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
                 	
                 	if (buttest.isClicked(mouse_pos)) {
-                		
+                		Order ordreMove = new Move(rob, eng);
+                		ordreMove.executer();
  /*               		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
-=======
                 		Order ordre_move= new Move(robot, engine, Color.WHITE);
                 		ordre_move.executer();
                 		
@@ -137,7 +141,7 @@ public class jsfmltesto {
 					}
                 	if (butturn.isClicked(mouse_pos)) {
                 		
-                		Order ordreRight= new TurnRight(robot, Color.WHITE);
+                		Order ordreRight= new TurnRight(rob, Color.WHITE);
                 		ordreRight.executer();
                 		
                 		//robot.setOrientation(Character.Orientation.Right);
@@ -160,7 +164,7 @@ public class jsfmltesto {
 					}
                 	if (butallumer.isClicked(mouse_pos)) {
                 		
-                		Order ordre_light= new Light(robot, engine, Color.WHITE);
+                		Order ordre_light= new Light(rob, engine, Color.WHITE);
                 		ordre_light.executer();
                 		/*
                 		int animCount = 0;
