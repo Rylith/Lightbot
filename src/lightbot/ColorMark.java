@@ -20,7 +20,7 @@ public class ColorMark extends DrawableObject{
 	
 	
 	/** Constructeur de la class ColorMark
-	 * @throws Exception 
+	 * @info color = Color.MAGENTA | Color.CYAN
 	 */
 	public ColorMark(Vector2i position, int height, String tilePath, Color color) {
 		super(position, height, color, tilePath);
