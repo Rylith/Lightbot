@@ -79,7 +79,6 @@ public class Character extends DrawableObject{
 		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.GREEN, "case.png"));
 		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.YELLOW, "case.png"));
 		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.RED, "case.png"));
-		m_sprite.scale(0.75f,0.75f);
 	}
 
 /** ---------------- METHODS ----------------- */	
