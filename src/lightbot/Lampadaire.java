@@ -18,6 +18,7 @@ public class Lampadaire extends DrawableObject {
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
+	/** Constructeur de la classe Lampadaire */
 	public Lampadaire(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
 		m_active = false;
