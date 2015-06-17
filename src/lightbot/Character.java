@@ -74,10 +74,6 @@ public class Character extends DrawableObject{
 		}
 		m_listPointeur = new Vector<Pointeur>();
 		m_currentProc = new Vector<Boolean>();
-<<<<<<< HEAD
-=======
-		
->>>>>>> 8c61877a414b0fcefe6652702c38f445f6f8dc73
 		m_listPointeur= new Vector <Pointeur>();
 		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, "case.png"));
 		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.GREEN, "case.png"));
@@ -213,12 +209,8 @@ public class Character extends DrawableObject{
 		
 	}
 	
-<<<<<<< HEAD
+
 	/** Met a jours la position du sprite */
-	public void update(RenderWindow window, Vector2f dep){
-		super.update(window, dep);
-		window.draw(this.getSprite());
-=======
 	public void update(Vector2i dep){
 		this.setPosition(dep);
 		float tmp_x = 250 + 78/2;
@@ -228,7 +220,6 @@ public class Character extends DrawableObject{
 		float pox = pos_x + (dep.y - dep.x) * 78/2;
 		float poy = pos_y + (dep.x + dep.y)*(48-8)/2;// - (height-1)*8;
 		this.getSprite().setPosition(pox, poy);
->>>>>>> 8c61877a414b0fcefe6652702c38f445f6f8dc73
 	}
 	
 
