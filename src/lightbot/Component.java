@@ -19,11 +19,13 @@ public class Component {
 	private Sprite m_sprite;
 	private Vector2f m_position;
 	private boolean m_visible; // indique si le component sera dessine dans la fenetre
+	private Vector2f m_scale;
 	
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
 	public Component(String tilePath,Vector2f position) {
+		m_scale = new Vector2f(1.0f,1.0f);
 		m_tileSet = new Texture();
 		try {
         	m_tileSet.loadFromFile(Paths.get(tilePath));
@@ -37,6 +39,7 @@ public class Component {
 	}
 	
 	public Component(String tilePath) {
+		m_scale = new Vector2f(1.0f,1.0f);
 		m_tileSet = new Texture();
 		try {
         	m_tileSet.loadFromFile(Paths.get(tilePath));
@@ -74,6 +77,15 @@ public class Component {
 	public void setPosition(Vector2f position){
 		m_position = position;
 		m_sprite.setPosition(position);	
+	}
+	
+	public Vector2f getScale(){
+		return m_scale;
+	}
+	
+	public void setScale(Vector2f scale) {
+		m_scale = scale; 
+		m_sprite.setScale(m_scale);
 	}
 	
 	public void draw(RenderWindow window){
