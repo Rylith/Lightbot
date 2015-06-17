@@ -26,7 +26,7 @@ public class Engine {
 	 * @obstacle1: si les cases de depart et d'arrivee ont des hauteurs differentes
 	 * @obstacle2: 
 	 */
-	private boolean isAbleToMove(Character p){
+	private boolean isAbleToMove(Character p) {
 		
 		Case [][] mat;
 		mat= monde.get_m_mat();
@@ -51,13 +51,17 @@ public class Engine {
 				}
 			
 			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //test segmentation fault
-				if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
-				//test la difference de hauteur
-				
-				int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
-				int destination_height =  mat[x][y].getHeight();
-				
-				return (source_height == destination_height);
+				if (!(monde.get_m_mat()[x][y] == null)) {
+
+					if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))) {
+					//test la difference de hauteur
+					
+					int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
+					int destination_height =  mat[x][y].getHeight();
+					
+					return (source_height == destination_height);
+					}
+					else return false;
 				}
 				else return false;
 			}
@@ -183,13 +187,9 @@ public class Engine {
 		
 		if(isAbleToMove(p)){
 			
-			System.out.println("X:" + getCurrentCase(p).getPosition().x + "Y: " + getCurrentCase(p).getPosition().y);
 			getCurrentCase(p).delObject(0);
-			//getCurrentCase(p).getMapDO().remove(0);
 			updatePostion(p);
-			System.out.println("X:" + getCurrentCase(p).getPosition().x + "Y: " + getCurrentCase(p).getPosition().y);
 			getCurrentCase(p).addObject(0, p);
-			//getCurrentCase(p).getMapDO().put(0,p);
 			return true;
 		}
 		else 
@@ -211,10 +211,10 @@ public class Engine {
 		}
 		else{
 			
-			getCurrentCase(p).getMapDO().remove(0);
+			getCurrentCase(p).delObject(0);
 			updatePostion(p); //on place le clone a la case au sommet
 			p.setHeight(getCurrentCase(p).getHeight());
-			getCurrentCase(p).getMapDO().put(0,p);
+			getCurrentCase(p).addObject(0, p);
 			return true;
 		}
 	}
@@ -233,10 +233,10 @@ public class Engine {
 		}
 		else{
 			
-			getCurrentCase(p).getMapDO().remove(0);
+			getCurrentCase(p).delObject(0);
 			updatePostion(p); //on place le clone a la case au sommet
 			p.setHeight(getCurrentCase(p).getHeight());
-			getCurrentCase(p).getMapDO().put(0,p);
+			getCurrentCase(p).addObject(0, p);
 			return true;
 		}
 	}
@@ -253,7 +253,7 @@ public class Engine {
 			
 			l.setActive(!l.getActive());
 			
-			getCurrentCase(personne).getMapDO().put(2,l);
+			getCurrentCase(personne).addObject(2,l);
 				
 			return true;
 		}
@@ -372,9 +372,9 @@ public class Engine {
 		
 				if (monde.getPointer(color_ptr)!=null){
 					
-					getCurrentCase(personne).getMapDO().remove(0);
+					getCurrentCase(personne).delObject(0);
 					personne.setPosition(monde.getPointer(color_ptr));
-					getCurrentCase(personne).getMapDO().put(0,personne);
+					getCurrentCase(personne).addObject(0,personne);
 					return true;
 				} 
 				else 
