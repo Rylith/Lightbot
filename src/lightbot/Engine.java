@@ -14,10 +14,10 @@ public class Engine {
 	private int nb_for;
 	private LinkedList <Lampadaire> liste_lampadaire; 
 	
-	private static int d_lampe = 0;
+	private static int d_lampe = 2;
 	private static int d_paint = 1;
 	private static int d_for = 2;
-	private static int d_pointeur = 3;
+	private static int d_pointeur = 0;
 	private static int d_charac = 4;
 	
 	

@@ -41,8 +41,8 @@ public class jsfmltesto {
             ex.printStackTrace();
         }
         Sprite back_sprite = new Sprite(back_text);
-        Vector2i screenSize = new Vector2i(1600,900);
-        //Vector2i screenSize = new Vector2i(1280,720);
+        //Vector2i screenSize = new Vector2i(1600,900);
+        Vector2i screenSize = new Vector2i(1280,720);
         //Vector2i screenSize = new Vector2i(1440,900);
         //Vector2i screenSize = new Vector2i(1920,1080);
         fenetre.create(new VideoMode(screenSize.x,screenSize.y), "Prototype"); //,WindowStyle.FULLSCREEN);
@@ -50,154 +50,63 @@ public class jsfmltesto {
         int frame = 3;
         int frameElec = 1;
         Clock animClock = new Clock();
-        Controler control = new Controler(screenSize);
+        //Controler control = new Controler(screenSize);
         
-        //Button buttest = new Button("ButAvancer.png",50,399);
-        //Button butturn = new Button("ButTournerDroite.png",50+0.5f*72,399);
-        //Button butallumer = new Button("buttest.png",50+72,399);
+        Button buttest = new Button("action.png", new Vector2f(50, 399), Button.ButtonType.Move, true);
+        Button butturn = new Button("action.png", new Vector2f(50+72, 399), Button.ButtonType.TurnRight, true);
+        Button butallumer = new Button("action.png", new Vector2f(50+144, 399), Button.ButtonType.Light, true);
         
         Character rob = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
         rob.setOrientation(Character.Orientation.Right);
         Map testo = new Map(rob);
-        Pointeur po = new Pointeur(new Vector2i(3, 4), 1, Color.BLUE, "case.png");
-        testo.m_map[3][4].addObject(0, po);
-        Pointeur po2 = new Pointeur(new Vector2i(3, 2), 1, Color.YELLOW, "case.png");
-        testo.m_map[3][2].addObject(3, po2);
         Engine eng = new Engine(testo);
         
 /*----------------------------------------Génération du robot----------------------------------------*/ 
-        Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
+        /*Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
         robot.setOrientation(Character.Orientation.Up);
         robot.setLimitOrder(0, 17);
         //robot.drawCharac(fenetre);
-        control.init(robot,robot);
+        control.init(robot,robot);*/
 /*----------------------------------------Génération du robot----------------------------------------*/ 
-        boolean anti_cligno = true;
         
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
         while (fenetre.isOpen()) {
-        	anti_cligno = true;
         	fenetre.draw(back_sprite);
-        	/*
+
             fenetre.draw(buttest.getSprite());
             fenetre.draw(butturn.getSprite());
             fenetre.draw(butallumer.getSprite());
-            */
-            System.out.println("Bijour");
+
             testo.drawMap(fenetre);
-        	control.update(fenetre);
-            //fenetre.draw(buttest.getSprite());
-            //fenetre.draw(butturn.getSprite());
-            //fenetre.draw(butallumer.getSprite());
-            //testo.drawMap(fenetre,robot);
-            //robot.update(fenetre,new Vector2f(0, 0));
 
             // On gère les événements
-            /*for (Event event : fenetre.pollEvents()) {
+            fenetre.display();
+            fenetre.clear();
+            
+            for (Event event : fenetre.pollEvents()) {
                 if (event.type == Event.Type.CLOSED) {
                     // Si l'utilisateur clique sur la croix rouge alors on ferme
                     // la fenêtre
                     fenetre.close();
                 }
-               /* if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+                if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
                 	
                 	if (buttest.isClicked(mouse_pos)) {
                 		Order ordreMove = new Move(rob, eng);
                 		ordreMove.executer();
- /*               		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
-                		Order ordre_move= new Move(robot, engine, Color.WHITE);
-                		ordre_move.executer();
-                		
-               //TESTER SI CASE DEVANT DISPO
-                		
-                		if (testo.caseAccess(robot.getPosition(), robot.getOrientation())) {
-
-                		int animCount = 0;
-                		while (animCount < 16) {
-                			if (animClock.getElapsedTime().asMilliseconds() >= 50) {
-                           	 //Restart the clock
-                               animClock.restart();
-
-                               //Increase the frame counter by one
-                               frame--;
-
-                               if(frame == 0){
-                               	frame = 3;
-                               }
-                               switch (robot.getOrientation())
-                       			{
-                                   case Up:
-                                	   robot.update(fenetre, new Vector2f(2.5625f,-1.28125f));
-                                   break;
-                                   case Down:
-                                	   robot.update(fenetre, new Vector2f(-2.5625f,1.28125f));
-                                   break;
-                                   case Left:
-                                	   robot.update(fenetre, new Vector2f(-2.5625f,-1.28125f));
-                                   break;
-                                   case Right:
-                                	   robot.update(fenetre, new Vector2f(2.5625f,1.28125f));
-                                   break;
-                               }
-                               
-                               robot.getSprite().setTextureRect(new IntRect(frame * 80, robot.getSprite().getTextureRect().top, 80, 100));
-                               animCount++;
-                               testo.drawMap(fenetre,robot);
-                               fenetre.draw(buttest.getSprite());
-                               fenetre.draw(butturn.getSprite());
-                               fenetre.draw(butallumer.getSprite());
-                              // fenetre.draw(robot.getSprite());
-                               fenetre.display();
-                               fenetre.clear(Color.WHITE);
-                				}    
-                			}
-                		robot.updatePostion();
-                		}
-                		
-					}
-                	if (butturn.clicked(mouse_pos)) {
-                         }*/
-					/*}
+                	}
+                	if (butturn.isClicked(mouse_pos)) {
+                		Order orderRight = new TurnRight(rob);
+                		orderRight.executer();
+                	}
                 	if (butallumer.isClicked(mouse_pos)) {
-                		
-                		Order ordre_light= new Light(rob, engine, Color.WHITE);
+                		Order ordre_light= new Light(rob, eng, Color.WHITE);
                 		ordre_light.executer();
-                		/*
-                		int animCount = 0;
-                		while (animCount < 16) {
-                			if (animClock.getElapsedTime().asMilliseconds() >= 50) {
-                           	 //Restart the clock
-                               animClock.restart();
+                	}
+                }
+            }
 
-                               //Increase the frame counter by one
-                               frameElec--;
-
-                               if(frameElec < 0){
-                               	frameElec = 1;
-                               }
-                               
-                           //    robot.getSprite().setTextureRect(new IntRect(6*80 + frameElec * 80, robot.getSprite().getTextureRect().top, 80, 100));
-                               animCount++;
-                              // testo.drawMap(fenetre,robot);
-                               fenetre.draw(buttest.getSprite());
-                               fenetre.draw(butturn.getSprite());
-                               fenetre.draw(butallumer.getSprite());
-                               //fenetre.draw(robot.getSprite());
-                               fenetre.display();
-                               fenetre.clear(Color.WHITE);
-                           }       
-						}
-                		robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
-                		//robot.getSprite().setTextureRect(new IntRect(0, robot.getSprite().getTextureRect().top, 80, 100));
-
-					}
-                }*/
-                anti_cligno = false;
-            } 
-            if (anti_cligno) {
-                fenetre.display();
-                fenetre.clear();
-			}
-        }
+        } 
     }
+}

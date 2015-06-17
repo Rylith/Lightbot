@@ -181,6 +181,8 @@ public class Button extends Component{
 			super.setVisibility(true); //Toujours visible
 			m_active = false;
 		}
+		
+		this.getSprite().setPosition(position);
 	}
 	
 
