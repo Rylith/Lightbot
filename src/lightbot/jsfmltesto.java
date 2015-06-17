@@ -57,6 +57,10 @@ public class jsfmltesto {
         Character rob = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
         rob.setOrientation(Character.Orientation.Right);
         Map testo = new Map(rob);
+        Pointeur po = new Pointeur(new Vector2i(3, 4), 1, Color.BLUE, "case.png");
+        testo.m_map[3][4].addObject(0, po);
+        Pointeur po2 = new Pointeur(new Vector2i(3, 2), 1, Color.YELLOW, "case.png");
+        testo.m_map[3][2].addObject(3, po2);
         Engine eng = new Engine(testo);
         
 /*----------------------------------------Génération du robot----------------------------------------*/ 
@@ -72,6 +76,7 @@ public class jsfmltesto {
             fenetre.draw(buttest.getSprite());
             fenetre.draw(butturn.getSprite());
             fenetre.draw(butallumer.getSprite());
+            System.out.println("Bijour");
             testo.drawMap(fenetre);
             
             // On gère les événements

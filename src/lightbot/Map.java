@@ -38,12 +38,17 @@ public class Map {
 		for (int i = 0; i < this.m_map.length; i++) {
 			int l = 0;
 			List<Element> listCases = ml.getCasesLine(i);
-			//System.out.println("J'ai recup ma liste de cases");
+			
+/*--------------------TRAITEMENT DE LA LISTE DE CASES--------------------*/		
 			for (int j = 0; j < this.m_map[i].length; j++) {
 				if (listCases.size() > 0 && l < listCases.size()) {
 					Element caseElement = (Element) listCases.get(l);
 					if (Integer.parseInt(caseElement.getAttributeValue("pos_y")) == j) {
 						int h =Integer.parseInt(caseElement.getAttributeValue("height"));
+						/*------------------------------NEW VERSION------------------------------*/
+						//m_map[i][j] = new Case(new Vector2i(i,j), h, "case.png");
+						/*------------------------------NEW VERSION------------------------------*/
+				//---------------------------------------------------------------
 						switch (caseElement.getAttributeValue("type"))
 						{
 				           case "White":
@@ -55,19 +60,21 @@ public class Map {
 				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "case.png");
 				        	   rob.setPosition(new Vector2i(i,j));
 				        	   rob.setHeight(h);
-				        	   m_map[i][j].addObject(0, rob);
+				        	   m_map[i][j].addObject(2, rob);
 				           break;
 				           case "Lampe":
 				        	   //System.out.println("Lampe");
 				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), "case.png");
 				        	   //Lampadaire(Vector2i position, int height, Color color, String tilePath, int value)
-				        	   m_map[i][j].addObject(2, new Lampadaire(new Vector2i(i, j), h, Color.WHITE, "Object.png"));
+				        	   m_map[i][j].addObject(3, new Lampadaire(new Vector2i(i, j), h, Color.WHITE, "Object.png"));
 				           break;
 						}
+				//-----------------------------------------------------------------
 						l++;
 					}
 				}
 			}
+/*--------------------TRAITEMENT DE LA LISTE DE CASES--------------------*/			
 		}
 	}
 	

@@ -14,6 +14,12 @@ public class Engine {
 	private int nb_for;
 	private LinkedList <Lampadaire> liste_lampadaire; 
 	
+	private static int d_lampe = 0;
+	private static int d_paint = 1;
+	private static int d_for = 2;
+	private static int d_pointeur = 3;
+	private static int d_charac = 4;
+	
 	
 	public Engine (Map m){
 		
@@ -24,7 +30,7 @@ public class Engine {
 	}
 	
 	/**
-	 * ajoute un lampadaire à la liste 
+	 * ajoute un lampadaire ï¿½ la liste 
 	 * 
 	 */
 	
@@ -74,7 +80,7 @@ public class Engine {
 			if(mat.length > x && mat[0].length > y && x >=0 && y >=0) { //test segmentation fault
 				if (!(monde.get_m_mat()[x][y] == null)) {
 
-					if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))) {
+					if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(d_charac))) {
 					//test la difference de hauteur
 					
 					int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
@@ -208,9 +214,9 @@ public class Engine {
 		
 		if(isAbleToMove(p)){
 			
-			getCurrentCase(p).delObject(0);
+			getCurrentCase(p).delObject(d_charac);
 			updatePostion(p);
-			getCurrentCase(p).addObject(0, p);
+			getCurrentCase(p).addObject(d_charac, p);
 			return true;
 		}
 		else 
@@ -232,10 +238,10 @@ public class Engine {
 		}
 		else{
 			
-			getCurrentCase(p).delObject(0);
+			getCurrentCase(p).delObject(d_charac);
 			updatePostion(p); //on place le clone a la case au sommet
 			p.setHeight(getCurrentCase(p).getHeight());
-			getCurrentCase(p).addObject(0, p);
+			getCurrentCase(p).addObject(d_charac, p);
 			return true;
 		}
 	}
@@ -254,10 +260,10 @@ public class Engine {
 		}
 		else{
 			
-			getCurrentCase(p).delObject(0);
+			getCurrentCase(p).delObject(d_charac);
 			updatePostion(p); //on place le clone a la case au sommet
 			p.setHeight(getCurrentCase(p).getHeight());
-			getCurrentCase(p).addObject(0, p);
+			getCurrentCase(p).addObject(d_charac, p);
 			return true;
 		}
 	}
@@ -268,13 +274,13 @@ public class Engine {
 		
 		Lampadaire l;
 		
-		if(getCurrentCase(personne).getMapDO().containsKey(2)){
+		if(getCurrentCase(personne).getMapDO().containsKey(d_lampe)){
 			
-			l=(Lampadaire) getCurrentCase(personne).getMapDO().get(2);
+			l=(Lampadaire) getCurrentCase(personne).getMapDO().get(d_lampe);
 			
 			l.setActive(!l.getActive());
 			
-			getCurrentCase(personne).addObject(2,l);
+			getCurrentCase(personne).addObject(d_lampe,l);
 				
 			return true;
 		}
@@ -371,7 +377,7 @@ public class Engine {
 					//poser pointeur:
 						l.get(i).setActive(true); // on active le pointeur avant de le poser sur la case
 						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //change la position du pointeur 
-						getCurrentCase(personne).addObject(1,l.get(i)); //ajoute le pointeur a la liste d'objets de la case
+						getCurrentCase(personne).addObject(d_pointeur,l.get(i)); //ajoute le pointeur a la liste d'objets de la case
 						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
 						pursue = false;
 				}
@@ -392,15 +398,10 @@ public class Engine {
 		// TODO Auto-generated method stub
 		
 				if (monde.getPointer(color_ptr)!=null){
-					
 
-					getCurrentCase(personne).getMapDO().remove(0);
-					personne.update(monde.getPointer(color_ptr));
-					getCurrentCase(personne).getMapDO().put(0,personne);
-
-					getCurrentCase(personne).delObject(0);
+					getCurrentCase(personne).delObject(d_charac);
 					personne.setPosition(monde.getPointer(color_ptr));
-					getCurrentCase(personne).addObject(0,personne);
+					getCurrentCase(personne).addObject(d_charac,personne);
 
 					return true;
 				} 
