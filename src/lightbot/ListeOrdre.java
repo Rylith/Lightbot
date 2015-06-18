@@ -37,6 +37,11 @@ public class ListeOrdre extends Order {
 				int res = l.get(j).executer();
 				j++;
 				for(int i=0; i<res; i++){
+					try {
+						Thread.sleep(300);
+					}catch(InterruptedException e){
+						System.out.println(e.getMessage());
+					}
 					l.get(j).executer();
 				}
 				j++;
