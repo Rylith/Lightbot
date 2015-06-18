@@ -32,8 +32,8 @@ public class Map {
 	private static final int d_charac = 4;
 	
 /** -------------- CONSTRUCTORS -------------- */
-	public Map(Character robb, Character robs){
-		MapLoader ml = new MapLoader();
+	public Map(Character robb, Character robs,String map_path){
+		MapLoader ml = new MapLoader(map_path);
 		Vector2i size = MapLoader.mapSize();
 		this.m_lines = size.x;
 		this.m_colonnes = size.y;

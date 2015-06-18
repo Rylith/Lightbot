@@ -155,6 +155,8 @@ public class Game {
 		}	
 	}
 	
-
+	/*public void animation(Order ordre) {
+		
+	}*/
 	
 }
