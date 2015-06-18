@@ -37,7 +37,7 @@ public class Game {
 		m_window = window;
 		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
 		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
-		m_map = new Map(m_character.get("BasicBot"));
+		m_map = new Map(m_character.get("BasicBot"),m_character.get("SmartBot"));
 		m_engine = new Engine(m_map);
 		getCharacter("BasicBot").setLimitOrder(0, 17);
 		getCharacter("BasicBot").setLimitOrder(1, 3);
@@ -52,7 +52,7 @@ public class Game {
 	 */
 	public Game(RenderWindow window, Engine engine, Character basicbot, Character smartbot){
 		m_window = window;
-		m_map = new Map(basicbot);
+		m_map = new Map(basicbot,smartbot);
 		m_engine = new Engine(m_map);
 		m_character.put("BasicBot", basicbot);
 		m_character.put("SmartBot", smartbot);
