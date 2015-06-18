@@ -11,7 +11,6 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
-
 public class Case extends DrawableObject {
 
 	
@@ -38,8 +37,8 @@ public class Case extends DrawableObject {
 		//Generation aleatoire de la case parmis 5 possibilite de cases differentes
 		int i = (int)((Math.random()*(5-0)));
 		getSprite().setTextureRect(new IntRect(i*SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-		float pos_x = 250 +  position.y * 41f - position.x * 41f;
-		float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+		float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+		float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
 		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 	}
 	
@@ -77,25 +76,34 @@ public class Case extends DrawableObject {
 	}
 	
 	/** Dessine la case dans la fenetre */
-	public void drawCase(RenderWindow fenetre){
+	public void drawCase(RenderWindow fenetre) {
 		for (int i = 0; i < this.getHeight(); i++) {
 			this.getSprite().move(0, - SIZESPRITEE);
 			fenetre.draw(this.getSprite());
 		}
-		/*float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEY/2;
-		float pos_y = 100 + this.getPosition().y * SIZESPRITEX/4 + this.getPosition().x * SIZESPRITEY/4;*/
 		
 		float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
 		float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
 		
 		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
-		if (m_mapDrawableObject.get(2) != null){
-			fenetre.draw(m_mapDrawableObject.get(2).getSprite());
+		/*for (int i = 0; i < m_mapDrawableObject.size(); i++) {
+			if (m_mapDrawableObject.get(i) != null){
+				fenetre.draw(m_mapDrawableObject.get(i).getSprite());
+			}
+		}*/
+		int obd = 0;
+		int testo = 0;
+		if (m_mapDrawableObject.size() > 0) {
+			while (obd < m_mapDrawableObject.size()) {
+				DrawableObject dob = m_mapDrawableObject.get(testo);
+				if (dob != null){
+					fenetre.draw(dob.getSprite());
+					obd++;
+				}
+				testo++;
+			}
 		}
-		if (m_mapDrawableObject.get(0) != null){
-			fenetre.draw(m_mapDrawableObject.get(0).getSprite());
-		}
-
 	}
 
+	
 }

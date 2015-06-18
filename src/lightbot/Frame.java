@@ -96,23 +96,23 @@ public class Frame extends Component {
 	}
 	
 	
-	/** Indique si on a clique dans la frame */
+	/** Indique si on a clique dans le sprite de la frame */
 	public boolean isClicked(Vector2i position){
 		return super.getSprite().getGlobalBounds().contains(position.x, position.y);
 	}
 	
 	
 	/** Retourne l'etat d'activation de la frame */
-	public boolean getActive(){
+	public boolean isActive(){
 		return m_active;
 	}
 	
 	
 	/** Desactive/Active la frame
-	 * @INFO : 0 : Desactive , 1 : Active
+	 * @info : false : Desactive | true : Active
 	 */
-	public void ActiveFrame(int i){
-		if (i == 0) {
+	public void ActiveFrame(boolean i){
+		if (i == false) {
 			if (m_type == FrameType.Main){
 				super.getSprite().setTextureRect(new IntRect(0, 0, SIZEMAINX, SIZEMAINY));
 				m_active = false;
@@ -126,26 +126,18 @@ public class Frame extends Component {
 				m_active = false;
 			}
 		}
-		else if (i == 1) {
+		else if (i == true) {
 			if (m_type == FrameType.Main){
 				super.getSprite().setTextureRect(new IntRect(0, SIZEMAINY, SIZEMAINX, SIZEMAINY));
 				m_active = true;
 			}
 			else if (m_type == FrameType.P1){
 				super.getSprite().setTextureRect(new IntRect(SIZEMAINX, SIZEMAINY, SIZEPROCX, SIZEPROCY));
-				m_active = false;
+				m_active = true;
 			}
 			else if (m_type == FrameType.P2){
 				super.getSprite().setTextureRect(new IntRect(SIZEMAINX+SIZEPROCX, SIZEMAINY, SIZEPROCX, SIZEPROCY));
-				m_active = false;
-			}
-		}
-		else {
-			try {
-				throw new Exception();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				m_active = true;
 			}
 		}
 	}
