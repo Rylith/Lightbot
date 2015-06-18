@@ -63,7 +63,7 @@ public class jsfmltesto {
         Character robs = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
         robb.setOrientation(Character.Orientation.Right);
         robs.setOrientation(Character.Orientation.Right);
-        Map testo = new Map(robb,robs);
+        Map testo = new Map(robb,robs,"test2.xml");
         Engine eng = new Engine(testo);
         //testo.setScale(new Vector2f(0.75f, 0.75f));
         

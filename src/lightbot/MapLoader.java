@@ -16,13 +16,12 @@ public class MapLoader {
 	static org.jdom2.Document document;
 	static Element racine;
 	
-	public MapLoader(){
+	public MapLoader(String map_path){
 		
 		//On crée une instance de SAXBuilder
 		SAXBuilder sxb = new SAXBuilder();
 		try {
-			//document = sxb.build(new File("test2.xml"));
-			document = sxb.build(new File("test2.xml"));
+			document = sxb.build(new File(map_path));
 		}
 		catch(Exception e) {
 			
