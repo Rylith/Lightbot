@@ -90,15 +90,23 @@ public class testEngine {
 		*/
 		
 		//=================TESTS LISTE D'ORDRE=====================================
-		
+		Order ForOrder = new For (p, MonEngine, Color.WHITE);
+		Order ordre3 = new TurnLeft(p,Color.WHITE);
 		LinkedList <Order> l= new LinkedList <Order>();
-		l.add(ordre);
-		l.add(ordre2);
-		l.add(ordre1);
+		System.out.println("position initiale du perso  :" + p.getPosition());
+		System.out.println("Vla lorientation initiale :" + p.getOrientation());
+		l.add(ordre); //pose ptr
+		l.add(ordre2); //move  0 - 1
+		l.add(ordre1); // acess 0 - 0
+		l.add(ordre2); // 0 - 1 
+		l.add(ForOrder); // recup nb
+		l.add(ordre3); // ??
+		//l.add(ordre3);
 		Order execAll = new ListeOrdre(p,MonEngine,l);
 		execAll.executer();
-		System.out.println("la case contient un pointeur?  :" + teste.get_m_mat()[0][0].getMapDO().containsKey(0));
+		System.out.println("la case contient un pointeur?  :" + teste.get_m_mat()[0][0].getMapDO().containsKey(2));
 		System.out.println("le personnage a  la position apres execAccess  :" + p.getPosition());
+		System.out.println("Vla lorientation batard :" + p.getOrientation());
 		
 }
 		

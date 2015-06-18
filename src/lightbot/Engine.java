@@ -14,10 +14,10 @@ public class Engine {
 	private int nb_for;
 	private LinkedList <Lampadaire> liste_lampadaire; 
 
-	private static final int d_lampe = 2;
-	private static final int d_paint = 1;
-	private static final int d_for = 2;
-	private static final int d_pointeur = 0;
+	private static final int d_lampe = 3;
+	private static final int d_paint = 0;
+	private static final int d_for = 1;
+	private static final int d_pointeur = 2;
 	private static final int d_charac = 4;
 
 	
@@ -363,10 +363,10 @@ public class Engine {
 			return true;
 		}
 		
-		else{
+		//else{
 			//set_nb_for(1);
 			return false;
-		}
+		//}
 	}
 	
 	public int get_nb_for() {
