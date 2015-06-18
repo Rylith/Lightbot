@@ -13,12 +13,13 @@ public class Engine {
 	private Map monde;
 	private int nb_for;
 	private LinkedList <Lampadaire> liste_lampadaire; 
-	
-	private static int d_lampe = 2;
-	private static int d_paint = 1;
-	private static int d_for = 2;
-	private static int d_pointeur = 0;
-	private static int d_charac = 4;
+
+	private static final int d_lampe = 3;
+	private static final int d_paint = 0;
+	private static final int d_for = 1;
+	private static final int d_pointeur = 2;
+	private static final int d_charac = 4;
+
 	
 	
 	public Engine (Map m){
@@ -128,7 +129,7 @@ public class Engine {
 				if (!(monde.get_m_mat()[x][y] == null)) {
 					
 				
-					if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(0))){
+					if (!(monde.get_m_mat()[x][y].getMapDO().containsKey(d_charac))){
 						//teste la difference de hauteur :
 						
 						int source_height = mat[p.getPosition().x][p.getPosition().y].getHeight();
@@ -254,9 +255,8 @@ public class Engine {
 			return false;
 		}
 		else{
-			
 			getCurrentCase(p).delObject(d_charac);
-			updatePostion(p); //on place le clone a la case au sommet
+			updatePostion(p);
 			p.setHeight(getCurrentCase(p).getHeight());
 			getCurrentCase(p).addObject(d_charac, p);
 			return true;
@@ -363,10 +363,10 @@ public class Engine {
 			return true;
 		}
 		
-		else{
+		//else{
 			//set_nb_for(1);
 			return false;
-		}
+		//}
 	}
 	
 	public int get_nb_for() {
@@ -417,7 +417,8 @@ public class Engine {
 				if (monde.getPointer(color_ptr)!=null){
 
 					getCurrentCase(personne).delObject(d_charac);
-					personne.setPosition(monde.getPointer(color_ptr));
+					personne.update(monde.getPointer(color_ptr));
+					personne.setHeight(getCurrentCase(personne).getHeight());
 					getCurrentCase(personne).addObject(d_charac,personne);
 
 					return true;

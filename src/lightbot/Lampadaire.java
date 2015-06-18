@@ -29,7 +29,12 @@ public class Lampadaire extends DrawableObject {
 		float pos_y = tmp_y - SIZESPRITEY -5;
 		float pox = pos_x + (position.y - position.x) * 78/2;
 		float poy = pos_y + (position.x + position.y)*(48-8)/2 - (height-1)*8;
-		this.getSprite().setPosition(pox, poy);
+		
+		Vector2f ancient = new Vector2f(this.getSprite().getGlobalBounds().height , this.getSprite().getGlobalBounds().width);
+		Vector2f newS = new Vector2f(this.getSprite().getLocalBounds().height,this.getSprite().getLocalBounds().width);
+		Vector2f diff = Vector2f.componentwiseDiv(ancient, newS);
+		
+		this.getSprite().setPosition(pox*diff.x, poy*diff.y);
 	}
 	
 	

@@ -54,13 +54,28 @@ public class jsfmltesto {
         
         Button buttest = new Button("action.png", new Vector2f(50, 399), Button.ButtonType.Move, true);
         Button butturn = new Button("action.png", new Vector2f(50+72, 399), Button.ButtonType.TurnRight, true);
-        Button butallumer = new Button("action.png", new Vector2f(50+144, 399), Button.ButtonType.Light, true);
+        Button butjump = new Button("action.png", new Vector2f(50+144, 399), Button.ButtonType.Jump, true);
+        Button butallumer = new Button("action.png", new Vector2f(50+144+72, 399), Button.ButtonType.Light, true);
+        Button buttelep = new Button("action.png", new Vector2f(50+288, 399), Button.ButtonType.UseP, true);
+
         
-        Character rob = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
-        rob.setOrientation(Character.Orientation.Right);
-        Map testo = new Map(rob);
+        Character robb = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
+        Character robs = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
+        robb.setOrientation(Character.Orientation.Right);
+        robs.setOrientation(Character.Orientation.Right);
+        Map testo = new Map(robb,robs);
         Engine eng = new Engine(testo);
+        //testo.setScale(new Vector2f(0.75f, 0.75f));
         
+        Texture m_tileSet = new Texture();
+		try {
+			m_tileSet.loadFromFile(Paths.get("HautCarte.png"));
+			m_tileSet.setSmooth(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Sprite m_sprite = new Sprite(m_tileSet);
+		m_sprite.setPosition(testo.getMapSize());
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         /*Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
         robot.setOrientation(Character.Orientation.Up);
@@ -76,8 +91,9 @@ public class jsfmltesto {
             fenetre.draw(buttest.getSprite());
             fenetre.draw(butturn.getSprite());
             fenetre.draw(butallumer.getSprite());
-
+            
             testo.drawMap(fenetre);
+            fenetre.draw(m_sprite);
 
             // On gère les événements
             fenetre.display();
@@ -93,16 +109,24 @@ public class jsfmltesto {
                 	Vector2i mouse_pos = Mouse.getPosition(fenetre);
                 	
                 	if (buttest.isClicked(mouse_pos)) {
-                		Order ordreMove = new Move(rob, eng);
+                		Order ordreMove = new Move(robb, eng);
                 		ordreMove.executer();
                 	}
                 	if (butturn.isClicked(mouse_pos)) {
-                		Order orderRight = new TurnRight(rob);
+                		Order orderRight = new TurnRight(robb);
                 		orderRight.executer();
                 	}
                 	if (butallumer.isClicked(mouse_pos)) {
-                		Order ordre_light= new Light(rob, eng, Color.WHITE);
+                		Order ordre_light= new Light(robb, eng, Color.WHITE);
                 		ordre_light.executer();
+                	}
+                	if (butjump.isClicked(mouse_pos)) {
+                		Order jump = new Jump(robb, eng);
+                		jump.executer();
+                	}
+                	if (buttelep.isClicked(mouse_pos)) {
+                		Order usep = new AccessPointer(robb, eng, Color.BLUE);
+                		usep.executer();
                 	}
                 }
             }

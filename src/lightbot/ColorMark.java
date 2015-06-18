@@ -14,7 +14,7 @@ public class ColorMark extends DrawableObject{
 
 	private final static int SIZESPRITEX = 78;
 	private final static int SIZESPRITEY = 49;
-		
+	private final static int SIZESPRITEE = 8;
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
@@ -26,14 +26,14 @@ public class ColorMark extends DrawableObject{
 		super(position, height, color, tilePath);
 		if (color == Color.CYAN){
 			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - height*8;
 			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		}
 		else if (color == Color.MAGENTA) {
 			getSprite().setTextureRect(new IntRect(SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - height*8;
 			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		}
 		else {
@@ -51,6 +51,23 @@ public class ColorMark extends DrawableObject{
 	
 /** ---------------- METHODS ----------------- */	
 
-	
+	/** Assigne la couleur a l'objet */
+	public void setColor(Color color){
+		super.setColor(color);
+		if (color == Color.CYAN){
+			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (color == Color.MAGENTA) {
+			getSprite().setTextureRect(new IntRect(SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
+		}
+		else {
+			try {
+				throw new Exception("La couleur de la tache ne peut être que magenta ou cyan");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 }
