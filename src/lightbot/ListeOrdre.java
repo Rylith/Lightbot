@@ -19,15 +19,28 @@ public class ListeOrdre extends Order {
 	@Override
 	protected int executer() {
 		// TODO Auto-generated method stub
-
-		for (Order o : l) {
+		int j=0;
+		
+		while (j<l.size()) {
 			try {
 				Thread.sleep(300);
 			}catch(InterruptedException e){
 				System.out.println(e.getMessage());
 			}
 			//traitement
-			o.executer();
+			if(!(l.get(j) instanceof For)){
+				l.get(j).executer();
+				j++;
+			}
+			else
+			{	
+				int res = l.get(j).executer();
+				j++;
+				for(int i=0; i<res; i++){
+					l.get(j).executer();
+				}
+				j++;
+			}
 		}
 		return 0;
 	}
