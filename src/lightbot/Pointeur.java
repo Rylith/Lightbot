@@ -11,6 +11,7 @@ public class Pointeur extends DrawableObject{
 
 	private final static int SIZESPRITEX = 78;
 	private final static int SIZESPRITEY = 49;
+	private final static int SIZESPRITEE = 8;
 	
 	private boolean m_active; //indique si le pointeur a ete place sur la map
 
@@ -26,27 +27,28 @@ public class Pointeur extends DrawableObject{
 		m_active = false;
 		if (color == Color.BLUE){
 			getSprite().setTextureRect(new IntRect(7*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
-			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+			
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
+			this.getSprite().setPosition(new Vector2f(pos_x,pos_y-8));
 		}
 		else if (color == Color.YELLOW) {
 			getSprite().setTextureRect(new IntRect(8*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
-			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
+			this.getSprite().setPosition(new Vector2f(pos_x,pos_y-8));
 		}
 		else if (color == Color.RED){
 			getSprite().setTextureRect(new IntRect(9*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
-			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
+			this.getSprite().setPosition(new Vector2f(pos_x,pos_y-8));
 		}
 		else if (color == Color.GREEN){
 			getSprite().setTextureRect(new IntRect(10*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
-			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
+			this.getSprite().setPosition(new Vector2f(pos_x,pos_y-8));
 		}
 		else {
 			try {

@@ -168,9 +168,7 @@ public class Controler {
 		m_backOrder.setScale(m_scale);
 		
 		if (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height < m_screenSize.y) {
-			//System.out.println("decaly : " + decaly );
 			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height))+10));
-			//System.out.println("Pos : x = " + m_backOrder.getSprite().getPosition().x + " y = " + m_backOrder.getSprite().getPosition().y  );
 		}
 		
 		Vector2f scaleFrame;
@@ -195,10 +193,7 @@ public class Controler {
 		}
 		if(m_backMain.getSprite().getPosition().y + m_backMain.getSprite().getGlobalBounds().height > m_backOrder.getSprite().getPosition().y ) {
 			Vector2f newScaleFrame = new Vector2f(1.0f,m_backOrder.getSprite().getPosition().y / (m_backMain.getSprite().getPosition().y + m_backMain.getSprite().getGlobalBounds().height));
-			//System.out.println("Scale : " + newScaleFrame.y  );
-			//System.out.println("LastScale : x = " + scaleFrame.x + " y = " + scaleFrame.y  );
 			scaleFrame = new Vector2f(scaleFrame.x, scaleFrame.y - (1-newScaleFrame.y));
-			//System.out.println("NewScale : x = " + scaleFrame.x + " y = " + scaleFrame.y  );
 			m_backMain.setScale(scaleFrame);
 		}
 
@@ -249,8 +244,6 @@ public class Controler {
 		
 		// Boutons representants les Bots
 		Vector2f realInitPosOngletBot = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITONGLETBOT, POSINITBACKMAIN), m_scale));
-		//System.out.println("RealInitPosOngletBot : x = " + realInitPosOngletBot.x + " y = " + realInitPosOngletBot.y);
-		//float realDecalOngletBot = DECAL * m_scale.x;
 		Vector2f realSizeOngletBot = Vector2f.componentwiseMul(SIZEONGLETBOT, m_scale);
 		Button b_basicBot = new Button(TILEPATHACTION, realInitPosOngletBot, ButtonType.BasicBot, false); //SmartBot [presse]
 		b_basicBot.setScale(m_scale);
@@ -338,15 +331,10 @@ public class Controler {
 	public void init(){
 
 		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), m_scale));
-		//System.out.println("RealInitPosCadreMain x : " + realInitPosCadreMain.x + " y : " + realInitPosCadreMain.y);
 		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), m_scale));
-		//System.out.println("realInitPosCadreP1 x : " + realInitPosCadreP1.x + " y : " + realInitPosCadreP1.y);
 		Vector2f realInitPosCadreP2 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP2, POSINITBACKMAIN), m_scale));
-		//System.out.println("realInitPosCadreP2 x : " + realInitPosCadreP2.x + " y : " + realInitPosCadreP2.y);
 		Vector2f realdDecalCadre = Vector2f.componentwiseMul(DECALCADREORDER, m_scale);
-		//System.out.println("realdDecalCadre x : " + realdDecalCadre.x + " y : " + realdDecalCadre.y);
 		Vector2f realSizeCadreOrder = Vector2f.componentwiseMul(SIZECADREORDER, m_scale);
-		//System.out.println("realSizeCadreOrder x : " + realSizeCadreOrder.x + " y : " + realSizeCadreOrder.y);
 		Vector2f pos = realInitPosCadreMain;
 		Character currentChar;
 		for (int g = 0; g < 2 ; g++) {
@@ -364,8 +352,6 @@ public class Controler {
 
 					break;
 				}
-				//pos = new Vector2f(pos.x,POSINITFRAMEMAIN.y + (DECALFRAME * j));
-				//pos.y = POSINITFRAMEMAIN.y + (DECALFRAME * j);
 				if (g == 0 ) {
 					currentChar = m_game.getCharacter().get("BasicBot"); 	
 				} else {
@@ -380,45 +366,34 @@ public class Controler {
 				for (int i = 0 ; i < currentChar.getLimitOrder().get(j) ; i++) {
 					if(i % 7 == 1 && i != 1 ) {
 						pos = new Vector2f(realInitPosCadreMain.x,pos.y + realSizeCadreOrder.y + realdDecalCadre.y);
-						//pos.x = POSINITFRAMEMAIN.x;
-						//pos.y = pos.y + SIZECADREORDER.y + DECALCADREORDER.y;
 					}
 					else if (i != 0){
 						pos = new Vector2f(pos.x + realSizeCadreOrder.x + realdDecalCadre.x,pos.y);
-						//System.out.println("UP");
-						//pos.x = pos.x + SIZECADREORDER.x + DECALCADREORDER.x;
 					}
-					//System.out.println("Pos : " + pos.x + " | " + pos.y);
 					Button cadre = new Button(TILEPATHACTION, pos , ButtonType.Cadre, false);
 					cadre.setScale(m_scale);
 					if(g == 0) {
 						switch(j) {
 						case 0:
 							m_mainBasicBot.addElement(cadre); //ajout un cadre
-							//System.out.println("PosNewCadre dans mBB: " + m_mainBasicBot.get(i).getSprite().getPosition().x + " | " + m_mainBasicBot.get(i).getSprite().getPosition().y);
 							break;
 						case 1:
 							m_p1BasicBot.addElement(cadre); //ajout un cadre
-							//System.out.println("PosNewCadre dans p1BB: " + m_p1BasicBot.get(i).getSprite().getPosition().x + " | " + m_p1BasicBot.get(i).getSprite().getPosition().y);
 							break;
 						case 2:
 							m_p2BasicBot.addElement(cadre); //ajout un cadre
-							//System.out.println("PosNewCadre dans p2BB : " + m_p2BasicBot.get(i).getSprite().getPosition().x + " | " + m_p2BasicBot.get(i).getSprite().getPosition().y);
 							break;
 						}
 					} else {
 						switch(j) {
 						case 0:
 							m_mainSmartBot.addElement(cadre); //ajout un cadre
-							//System.out.println("PosNewCadre dans MainSmartBot : " + m_mainSmartBot.get(i).getSprite().getPosition().x + " | " + m_mainSmartBot.get(i).getSprite().getPosition().y);
 							break;
 						case 1:
 							m_p1SmartBot.addElement(cadre); //ajout un cadre
-							//System.out.println("PosNewCadre dans P1SM: " + m_p1SmartBot.get(i).getSprite().getPosition().x + " | " + m_p1SmartBot.get(i).getSprite().getPosition().y);
 							break;
 						case 2:
 							m_p2SmartBot.addElement(cadre); //ajout un cadre
-							//System.out.println("PosNewCadre dans P2SM: " + m_p2SmartBot.get(i).getSprite().getPosition().x + " | " + m_p2SmartBot.get(i).getSprite().getPosition().y);
 							break;
 						}
 					}
