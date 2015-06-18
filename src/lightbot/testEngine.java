@@ -1,5 +1,6 @@
 package lightbot;
 
+import java.util.LinkedList;
 import java.util.Vector;
 
 import lightbot.Character.Orientation;
