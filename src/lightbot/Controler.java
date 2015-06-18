@@ -1,6 +1,8 @@
 package lightbot;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.text.Position;
@@ -28,6 +30,7 @@ public class Controler {
 	// EMPLACEMENT RESSOURCES GRAPHIQUE
 	private final static String TILEPATHACTION = "ressource/Sprite/action.png";
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
+	private final static String TILEPATHBACKGROUND = "ressource/Sprite/background.jpg";
 	
 	// POSITION DES ORDRES //
 	private final static Vector2f POSINITBUTTON = new Vector2f(58.0f,989.0f);
@@ -39,8 +42,8 @@ public class Controler {
 	private final static Vector2f SIZEONGLETBOT = new Vector2f(84.0f,82.0f);
 	
 	// POSITION BOUTTON POINTEUR //
-	private final static Vector2f POSINITBUTTONPOINTER = new Vector2f(1016.0f,953.0f);
-	private final static Vector2f SIZEBUTTONCOLOR = new Vector2f(20.0f,15.0f);
+	private final static Vector2f POSINITBUTTONPOINTER = new Vector2f(809.0f,953.0f);
+	private final static Vector2f SIZEBUTTONCOLOR = new Vector2f(15.0f,20.0f);
 	private final static float DECALBUTTONPOINTER = 5.0f;
 	
 	// POSITION BOUTTON COULEUR //
@@ -61,10 +64,10 @@ public class Controler {
 	
 	// POSITION CADRE ORDER //
 	private final static Vector2f POSINITCADREMAIN = new Vector2f(1215.0f,180.0f);
-	private final static Vector2f POSINITCADREP1 = new Vector2f(1215.0f,526.0f);
-	private final static Vector2f POSINITCADREP2 = new Vector2f(1215.0f,764.0f);
+	private final static Vector2f POSINITCADREP1 = new Vector2f(1215.0f,515.0f);
+	private final static Vector2f POSINITCADREP2 = new Vector2f(1215.0f,755.0f);
 	private final static Vector2f SIZECADREORDER = new Vector2f(70.0f,70.0f);
-	private final static Vector2f DECALCADREORDER = new Vector2f(11.0f,11.0f);
+	private final static Vector2f DECALCADREORDER = new Vector2f(11.0f,16.0f);
 
 	// POSITION BACK //
 	private final static Vector2f POSINITBACKORDER = new Vector2f(24.0f,949.0f);
@@ -73,8 +76,8 @@ public class Controler {
 
 /** --------------- ATTRIBUTES --------------- */        
         
-	private Vector<Button> m_listButton = new Vector<Button>();
-	private Vector<Frame> m_listFrame = new Vector<Frame>();
+	private HashMap<ButtonType, Button> m_listButton = new HashMap<Button.ButtonType, Button>();
+	private HashMap<FrameType, Frame> m_listFrame = new HashMap<FrameType, Frame>();
 	private Vector<Button> m_mainBasicBot = new Vector<Button>();
 	private Vector<Button> m_p1BasicBot = new Vector<Button>();
 	private Vector<Button> m_p2BasicBot = new Vector<Button>();
@@ -85,9 +88,9 @@ public class Controler {
 	private Vector<Button> m_orderSmartBot = new Vector<Button>();
 	private Component m_backOrder;
 	private Component m_backMain;
+	private Sprite m_background;
 
 	private Game m_game;
-	private RenderWindow m_window;
 
 	private Vector2i m_screenSize;
 	private Vector2f m_decal;
@@ -98,30 +101,82 @@ public class Controler {
 /** -------------- CONSTRUCTORS -------------- */
 
 	/** Constructeur du Controler
-	 * construit la liste des boutons et la liste des frames
+	 * @param screenSize
+	 * @param game
+	 * @param window
 	 */
-	public Controler(Vector2i screenSize){
+	public Controler(Vector2i screenSize, Game game){
+		m_game = game;
 		reloadInterface(screenSize);
 	}
+	
 	
 	
 /** ---------------- METHODS ----------------- */	
         
 	
+	/** Retourne le ButtonType d'un ordre 
+	 * @param ordre
+	 * @throws Exception 
+	 */
+	public ButtonType ButtonTypeToButton(Order ordre) throws Exception {
+		switch (ordre.toString()) {
+		case "Move" :
+			return ButtonType.Move;
+		case "TurnRight" :
+			return ButtonType.TurnRight;
+		case "TurnLeft" :
+			return ButtonType.TurnLeft;
+		case "Jump" :
+			return ButtonType.Jump;
+		case "DoubleJump" :
+			return ButtonType.Jump;
+		case "Light" :
+			return ButtonType.Light;
+		case "For" :
+			return ButtonType.For;
+		case "MallocPointer" :
+			return ButtonType.PutP;
+		case "AccessPointer" :
+			return ButtonType.UseP;
+		case "getColor" :
+			return ButtonType.Paint;
+		case "RemoveColor" :
+			return ButtonType.RemoveColor;
+		case "Procedure1" :
+			return ButtonType.P1;
+		case "Procedure2" :
+			return ButtonType.P2;
+		default :
+				throw new Exception();
+		}
+	}
 	
 	
+	
+	/** Reload l'interface
+	 * @param screenSize
+	 */
 	public void reloadInterface(Vector2i screenSize) {
 		m_screenSize = screenSize;
+		Texture background = new Texture();
+		try {
+			background.loadFromFile(Paths.get(TILEPATHBACKGROUND));
+			m_background = new Sprite(background);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		m_decal = new Vector2f(1920.0f - m_screenSize.x,1080.0f - m_screenSize.y);
 		m_scale = new Vector2f(m_screenSize.x / 1920.0f, m_screenSize.y / 1080.0f);
 		
-		
+		m_background.setScale(m_scale);
 		// BackOrder & BackMain
 		m_backOrder = new Component(TILEPATHFRAME+"BackOrder.png",Vector2f.sub(POSINITBACKORDER,new Vector2f(0.0f,m_decal.y)));
 		m_backOrder.setScale(m_scale);
 		
 		if (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height < m_screenSize.y) {
-			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height))+10));
+			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getGlobalBounds().height))-10));
 		}
 		
 		Vector2f scaleFrame;
@@ -194,7 +249,7 @@ public class Controler {
 		b_p1.setScale(m_scale);
 		Button b_p2 = new Button(TILEPATHACTION, new Vector2f(realInitPosButton.x + ((realSizeButton.x + realDecalButton) * 11),realInitPosButton.y), ButtonType.P2, true); //P2
 		b_p2.setScale(m_scale);
-		
+				
 		// Boutons representants les Bots
 		Vector2f realInitPosOngletBot = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITONGLETBOT, POSINITBACKMAIN), m_scale));
 		Vector2f realSizeOngletBot = Vector2f.componentwiseMul(SIZEONGLETBOT, m_scale);
@@ -244,110 +299,69 @@ public class Controler {
 		m_orderBasicBot.clear();
 		m_orderSmartBot.clear();
 		
-		m_listButton.addElement(b_move); //#0
-		m_listButton.addElement(b_turnRight); //#1
-		m_listButton.addElement(b_turnLeft); //#2
-		m_listButton.addElement(b_jump); //#3
-		m_listButton.addElement(b_light); //#4
-		m_listButton.addElement(b_for); //#5
-		m_listButton.addElement(b_putP); //#6
-		m_listButton.addElement(b_useP); //#7 
-		m_listButton.addElement(b_paint); //#8
-		m_listButton.addElement(b_removeColor); //#9
-		m_listButton.addElement(b_p1); //#10
-		m_listButton.addElement(b_p2); //#11 
+		m_listButton.put(ButtonType.Move, b_move);
+		m_listButton.put(ButtonType.TurnRight, b_turnRight);
+		m_listButton.put(ButtonType.TurnLeft, b_turnLeft); 
+		m_listButton.put(ButtonType.Jump, b_jump); 
+		m_listButton.put(ButtonType.Light, b_light); 
+		m_listButton.put(ButtonType.For, b_for); 
+		m_listButton.put(ButtonType.PutP, b_putP);
+		m_listButton.put(ButtonType.UseP, b_useP); 
+		m_listButton.put(ButtonType.Paint, b_paint);
+		m_listButton.put(ButtonType.RemoveColor, b_removeColor);
+		m_listButton.put(ButtonType.P1, b_p1);
+		m_listButton.put(ButtonType.P2, b_p2);
 		
-		m_listButton.addElement(b_basicBot); //#12
-		m_listButton.addElement(b_smartBot); //#13
+		m_listButton.put(ButtonType.BasicBot, b_basicBot);
+		m_listButton.put(ButtonType.SmartBot, b_smartBot);
 		
-		m_listButton.addElement(b_green); //#14
-		m_listButton.addElement(b_yellow); //#15
-		m_listButton.addElement(b_red); //#16
-		m_listButton.addElement(b_blue); //#17
+		m_listButton.put(ButtonType.PushGreen, b_green); 
+		m_listButton.put(ButtonType.PushYellow, b_yellow); 
+		m_listButton.put(ButtonType.PushRed, b_red);
+		m_listButton.put(ButtonType.PushBlue,b_blue);
 		
-		m_listButton.addElement(b_grey); //#18
-		m_listButton.addElement(b_magenta); //#19
-		m_listButton.addElement(b_cyan); //#20
-		m_listButton.addElement(b_run); //#21
+		m_listButton.put(ButtonType.PushGrey, b_grey); 
+		m_listButton.put(ButtonType.PushMagenta, b_magenta); 
+		m_listButton.put(ButtonType.PushCyan, b_cyan);
+		m_listButton.put(ButtonType.Run, b_run);
 		
-		m_listFrame.addElement(f_main); //#0
-		m_listFrame.addElement(f_p1); //#1
-		m_listFrame.addElement(f_p2); //#2
-		m_listFrame.addElement(f_orderList); //#3
+		m_listFrame.put(FrameType.Main, f_main);
+		m_listFrame.put(FrameType.P1, f_p1);
+		m_listFrame.put(FrameType.P2, f_p2);
+		m_listFrame.put(FrameType.OrderList, f_orderList);
 	}
 	
-	
-	/** Retourne le ButtonType d'un ordre 
-	 * @throws Exception */
-	public ButtonType getBoutonType(Order ordre) throws Exception {
-		switch (ordre.toString()) {
-		case "Move" :
-			return ButtonType.Move;
-		case "TurnRight" :
-			return ButtonType.TurnRight;
-		case "TurnLeft" :
-			return ButtonType.TurnLeft;
-		case "Jump" :
-			return ButtonType.Jump;
-		case "DoubleJump" :
-			return ButtonType.Jump;
-		case "Light" :
-			return ButtonType.Light;
-		case "For" :
-			return ButtonType.For;
-		case "MallocPointer" :
-			return ButtonType.PutP;
-		case "AccessPointer" :
-			return ButtonType.UseP;
-		case "getColor" :
-			return ButtonType.Paint;
-		case "RemoveColor" :
-			return ButtonType.RemoveColor;
-		case "Procedure1" :
-			return ButtonType.P1;
-		case "Procedure2" :
-			return ButtonType.P2;
-		default :
-			throw new Exception();
-		}
-	}
-	
-	
-	
-/** ---------- Supervision de deux Bots ----------------- */
 	
 	
 	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
-	 * version avec deux bots
+	 *
 	 */
-	public void init(Character BasicBot, Character SmartBot/*, Map map*/){
-
-		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), m_scale));
-		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), m_scale));
-		Vector2f realInitPosCadreP2 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP2, POSINITBACKMAIN), m_scale));
-		Vector2f realdDecalCadre = Vector2f.componentwiseMul(DECALCADREORDER, m_scale);
-		Vector2f realSizeCadreOrder = Vector2f.componentwiseMul(SIZECADREORDER, m_scale);
+	public void init(){
+		Vector2f realScale = m_backMain.getScale();
+		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), realScale));
+		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), realScale));
+		Vector2f realInitPosCadreP2 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP2, POSINITBACKMAIN), realScale));
+		Vector2f realDecalCadreMain = Vector2f.componentwiseMul(DECALCADREORDER, realScale);
+		Vector2f realSizeCadreOrder = Vector2f.componentwiseMul(SIZECADREORDER, realScale);
 		Vector2f pos = realInitPosCadreMain;
 		Character currentChar;
 		for (int g = 0; g < 2 ; g++) {
-			pos = realInitPosCadreMain;
 			for (int j = 0; j < NUMBERFRAME; j++) {
 				switch(j) {
 				case 0:
-					pos = new Vector2f(pos.x,realInitPosCadreMain.y + (realdDecalCadre.y * j));
+					pos = new Vector2f(realInitPosCadreMain.x,realInitPosCadreMain.y);
 					break;
 				case 1:
-					pos = new Vector2f(pos.x,realInitPosCadreP1.y + (realdDecalCadre.y * j));
+					pos = new Vector2f(realInitPosCadreP1.x,realInitPosCadreP1.y);
 					break;
 				case 2:
-					pos = new Vector2f(pos.x,realInitPosCadreP2.y + (realdDecalCadre.y * j));
-
+					pos = new Vector2f(realInitPosCadreP2.x,realInitPosCadreP2.y);
 					break;
 				}
 				if (g == 0 ) {
-					currentChar = BasicBot; 	
+					currentChar = m_game.getCharacter().get("BasicBot"); 	
 				} else {
-					currentChar = SmartBot;
+					currentChar = m_game.getCharacter().get("SmartBot");
 				}
 				// initialisation des cadres dans le main du BasicBot
 				// initialisation des cadres dans p1 du BasicBot
@@ -356,11 +370,11 @@ public class Controler {
 				// initialisation des cadres dans p1 du SmartBot
 				// initialisation des cadres dans p2 du SmartBot
 				for (int i = 0 ; i < currentChar.getLimitOrder().get(j) ; i++) {
-					if(i % 7 == 1 && i != 1 ) {
-						pos = new Vector2f(realInitPosCadreMain.x,pos.y + realSizeCadreOrder.y + realdDecalCadre.y);
+					if((i % 8 == 0) && i != 0 ) {
+						pos = new Vector2f(realInitPosCadreMain.x,pos.y + realSizeCadreOrder.y + realDecalCadreMain.y);
 					}
 					else if (i != 0){
-						pos = new Vector2f(pos.x + realSizeCadreOrder.x + realdDecalCadre.x,pos.y);
+						pos = new Vector2f(pos.x + realSizeCadreOrder.x + realDecalCadreMain.x,pos.y);
 					}
 					Button cadre = new Button(TILEPATHACTION, pos , ButtonType.Cadre, false);
 					cadre.setScale(m_scale);
@@ -394,15 +408,15 @@ public class Controler {
 		}
 		// initialisation des ordres visibles du BasicBot
 		initOrder();
-		m_listFrame.get(0).ActiveFrame(0);
+		m_listFrame.get(FrameType.Main).ActiveFrame(false);
 		
 		/*TODO*/
 		// initialisation des ordres visibles du SmartBot
 		/*TODO*/
 	}
 	
-	/**
-	 * Initialise les Ordres disponible pour le niveau charge
+	
+	/** Initialise les Ordres disponible pour le niveau charge
 	 */
 	private void initOrder() {
 		/* TODO */
@@ -412,206 +426,263 @@ public class Controler {
 	}
 	
 	
-	/**
-	 * Dessine un vecteur de boutton
-	 * @param vec
-	 * @param window
+	/** Dessine une HashMap de boutons
+	 * @param hash
 	 */
-	private void drawButton(Vector<Button> vec, RenderWindow window) {
-		for(int i = 0; i < vec.size(); i++) {
-			vec.get(i).draw(window);
+	private void drawButton(HashMap<ButtonType, Button> hash) {
+		for (ButtonType mapKey : hash.keySet()) {
+			hash.get(mapKey).draw(m_game.getWindow());
 		}
 	}
 	
 	
-	/** Update le visuel de l'interface 
-	 * @param window courante, Character actif
+	/** Dessine un Vector de boutons
+	 * @param vec
 	 */
-	public void update(RenderWindow window){
+	private void drawButton(Vector<Button> vec) {
+		for(int i = 0; i < vec.size(); i++) {
+			vec.get(i).draw(m_game.getWindow());
+		}
+	}
+	
+	
+	/**
+	 * Notify pour l'interface
+	 */
+	//public void notify(){
+		
+	//}
+	
+	/** Update le visuel de l'interface 
+	 */
+	public void update(){
 		
         /** On affiche les components de fond */
-		m_backMain.draw(window);
-		m_backOrder.draw(window);
+
+		m_game.getWindow().draw(m_background);
+		m_backMain.draw(m_game.getWindow());
+		m_backOrder.draw(m_game.getWindow());
 		
 		/** On affiche les frames */
-		for(int i = 0; i < m_listFrame.size();i++) {
-			m_listFrame.get(i).draw(window);
+		for(FrameType mapkey : m_listFrame.keySet()) {
+			m_listFrame.get(mapkey).draw(m_game.getWindow());
 		}
 		/** On affiche les boutons ayant leur attribut m_visible a true */
-		drawButton(m_listButton,window);
+		drawButton(m_listButton);
 		
 		/** On affiche le bon nombre de cadre d'instructions dans main p1 et p2 a partir de getLimitOrder() */
 		/** On affiche les instructions contenu dans le main, p1 et p2 du Bot actif */
 		if(m_listButton.get(13).isActive()) {
-			drawButton(m_mainBasicBot, window);
-			drawButton(m_p1BasicBot, window);
-			drawButton(m_p2BasicBot, window);
-			drawButton(m_orderBasicBot, window);
+			drawButton(m_mainBasicBot);
+			drawButton(m_p1BasicBot);
+			drawButton(m_p2BasicBot);
+			drawButton(m_orderBasicBot);
 		} else {
-			drawButton(m_mainSmartBot, window);
-			drawButton(m_p1SmartBot, window);
-			drawButton(m_p2SmartBot, window);
-			drawButton(m_orderSmartBot, window);
+			drawButton(m_mainSmartBot);
+			drawButton(m_p1SmartBot);
+			drawButton(m_p2SmartBot);
+			drawButton(m_orderSmartBot);
 		}
 	}
 	
 	
+	/** Ajoute l'ordre dans la frame active & dans m_listOrder du Character 
+	 * @param type : type de bouton
+	 * @param color : couleur du bouton
+	 */
+	private void addOrder(ButtonType type, Color color) {
+		//si le BasicBot est active
+		if (m_listButton.get(ButtonType.BasicBot).isActive()) { 
+			//si main est active && on arrive a ajouter l'ordre
+			if (m_listFrame.get(FrameType.Main).isActive() && m_game.addOrder(0, "BasicBot", type, color)){ 
+				m_mainBasicBot.addElement(m_listButton.get(type));
+			}
+			//si p1 est active && on arrive a ajouter l'ordre
+			else if (m_listFrame.get(FrameType.P1).isActive() && m_game.addOrder(1, "BasicBot", type, color)){
+				m_p1BasicBot.addElement(m_listButton.get(type));
+			}
+			//si p2 est active && on arrive a ajouter l'ordre
+			else if (m_listFrame.get(FrameType.P2).isActive() && m_game.addOrder(2, "BasicBot", type, color)){ 
+				m_p2BasicBot.addElement(m_listButton.get(type));
+			}
+		}
+		//si le SmartBot est active
+		else if (m_listButton.get(ButtonType.SmartBot).isActive()){ 
+			//si main est active && on arrive a ajouter l'ordre
+			if (m_listFrame.get(FrameType.Main).isActive() && m_game.addOrder(0, "SmartBot", type, color)){ 
+				m_mainSmartBot.addElement(m_listButton.get(type));
+			}
+			//si p1 est active && on arrive a ajouter l'ordre
+			else if (m_listFrame.get(FrameType.P1).isActive() && m_game.addOrder(1, "SmartBot", type, color)){
+				m_p1SmartBot.addElement(m_listButton.get(type));
+			}
+			//si p2 est active && on arrive a ajouter l'ordre
+			else if (m_listFrame.get(FrameType.P2).isActive() && m_game.addOrder(2, "SmartBot", type, color)){ 
+				m_p2SmartBot.addElement(m_listButton.get(type));
+			}
+		}
+	}
+
+	
+	
+	
 	/** Traite tous les evenements qui ont ete emis dans la fenetre depuis la precedente iteration
-	 * @param window
 	 * @require la fenetre window doit etre ouverte
 	 */
 	public void supervise(){
-		for (Event event : window.pollEvents()) {
+		for (Event event : m_game.getWindow().pollEvents()) {
 			
-		
         	// Si l'utilisateur clique sur la croix rouge : on ferme la fenetre
             if (event.type == Event.Type.CLOSED) {
-                window.close();
+                m_game.getWindow().close();
             }
             
             // Si l'utilisateur clique on recupere la position et on regarde s'il s'agit d'un bouton ou d'une view
             if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
-            	Vector2i mouse_pos = Mouse.getPosition(window); 
-            	if (m_listButton.get(0).isClicked(mouse_pos)) { 
-            		//Move : on ajoute l'ordre dans la view active & dans m_listOrder (Character)
-            		if (m_listButton.get(10).getActive()){ //si le BasicBot est active
-	            		if (m_listFrame.get(0).getActive()){ //si main est active
-	            			m_mainBasicBot.addElement(ButtonType.Move);
-	            			game.addOrder(0, ButtonType.Move);
-	           
-	            		}
-	            		else if (m_listFrame.get(1).getActive()){ //si p1 est active
-	            			m_p1BasicBot.addElement(ButtonType.Move);
-	            		}
-	            		else if (m_listFrame.get(2).getActive()){ //si p2 est active
-							m_p2BasicBot.addElement(ButtonType.Move);
-						}
-            		} else if (m_listButton.get(11).getActive()){ //si le SmartBot est active
-	            }
-            	else if (m_listButton.get(1).isClicked(mouse_pos)) { 
-            		//TurnRight : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	Vector2i mouse_pos = Mouse.getPosition(m_game.getWindow()); 
+            	
+            	//Move : on ajoute l'ordre dans la view active & dans m_listOrder (Character)
+            	if (m_listButton.get(ButtonType.Move).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.Move, m_listButton.get(ButtonType.Move).getColor());
             	}
-            	else if (m_listButton.get(2).isClicked(mouse_pos)) { 
-            		//TurnLeft : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//TurnRight : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)	
+            	else if (m_listButton.get(ButtonType.TurnRight).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.TurnRight, m_listButton.get(ButtonType.TurnRight).getColor());
             	}
-            	else if (m_listButton.get(3).isClicked(mouse_pos)) { 
-            		//Jump : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//TurnLeft : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.TurnLeft).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.TurnLeft, m_listButton.get(ButtonType.TurnLeft).getColor());
             	}
-            	else if (m_listButton.get(4).isClicked(mouse_pos)) { 
-            		//putP : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//Jump : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.Jump).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.Jump, m_listButton.get(ButtonType.Jump).getColor());
             	}
-            	else if (m_listButton.get(5).isClicked(mouse_pos)) { 
-            		//useP : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//putP : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.PutP).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.PutP, m_listButton.get(ButtonType.PutP).getColor());
             	}
-            	else if (m_listButton.get(6).isClicked(mouse_pos)) { 
-            		//paint : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//useP : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.UseP).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.UseP, m_listButton.get(ButtonType.UseP).getColor());
             	}
-            	else if (m_listButton.get(7).isClicked(mouse_pos)) { 
-            		//removeColor : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//paint : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.Paint).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.Paint, m_listButton.get(ButtonType.Paint).getColor());
             	}
-            	else if (m_listButton.get(8).isClicked(mouse_pos)) { 
-            		//P1 : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//removeColor : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.RemoveColor).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.RemoveColor, m_listButton.get(ButtonType.RemoveColor).getColor());
             	}
-            	else if (m_listButton.get(9).isClicked(mouse_pos)) { 
-            		//P2 : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-            		/*TODO*/
+            	
+            	//P1 : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.P1).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.P1, m_listButton.get(ButtonType.P1).getColor());
             	}
-            	else if (m_listButton.get(10).isClicked(mouse_pos)) { 
-            		//BasicBot : on charge les procedures du BasicBot & on passe le BasicBot en actif
-            		/*TODO*/
+            	
+            	//P2 : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
+            	else if (m_listButton.get(ButtonType.P2).isClicked(mouse_pos)) { 
+            		addOrder(ButtonType.P2, m_listButton.get(ButtonType.P2).getColor());
             	}
-            	else if (m_listButton.get(11).isClicked(mouse_pos)) { 
-            		//SmartBot : on charge les procedures du SmartBot & on passe le BasicBot en non actif
-            		/*TODO*/
+            	
+            	//BasicBot : on passe le BasicBot en actif et le SmartBot en inactif
+            	else if (m_listButton.get(ButtonType.BasicBot).isClicked(mouse_pos)) { 
+            		m_listButton.get(ButtonType.BasicBot).ActiveButton(true);
+            		m_listButton.get(ButtonType.SmartBot).ActiveButton(false);
             	}
-            	else if (m_listButton.get(12).isClicked(mouse_pos)) { 
-            		//Yellow : on active le bouton et on desactive les autres (blue, green, red)
-            		m_listButton.get(12).ActiveButton(1);
-            		m_listButton.get(13).ActiveButton(0);
-            		m_listButton.get(14).ActiveButton(0);
-            		m_listButton.get(15).ActiveButton(0);
-            		//on affiche les pointeurs yellow
+            	
+            	//SmartBot : on passe le SmartBot en actif et le BasicBot en inactif
+            	else if (m_listButton.get(ButtonType.SmartBot).isClicked(mouse_pos)) { 
+            		m_listButton.get(ButtonType.BasicBot).ActiveButton(false);
+            		m_listButton.get(ButtonType.SmartBot).ActiveButton(true);
             	}
-            	else if (m_listButton.get(13).isClicked(mouse_pos)) { 
-            		//Blue : on active le bouton et on desactive les autres (yellow, green, red)
-            		m_listButton.get(12).ActiveButton(0);
-            		m_listButton.get(13).ActiveButton(1);
-            		m_listButton.get(14).ActiveButton(0);
-            		m_listButton.get(15).ActiveButton(0);
-            		//on affiche les pointeurs blue
+            	
+            	//Yellow : on active le bouton et on desactive les autres (blue, green, red)
+            	else if (m_listButton.get(ButtonType.PushYellow).isClicked(mouse_pos)) { 
+            		m_listButton.get(ButtonType.PushYellow).ActiveButton(true);
+            		m_listButton.get(ButtonType.PushBlue).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushGreen).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushRed).ActiveButton(false);
             	}
-            	else if (m_listButton.get(14).isClicked(mouse_pos)) { 
-            		//Green : on active le bouton et on desactive les autres (yellow, blue, red)
-            		m_listButton.get(12).ActiveButton(0);
-            		m_listButton.get(13).ActiveButton(0);
-            		m_listButton.get(14).ActiveButton(1);
-            		m_listButton.get(15).ActiveButton(0);
+            	
+            	//Blue : on active le bouton et on desactive les autres (yellow, green, red)
+            	else if (m_listButton.get(ButtonType.PushBlue).isClicked(mouse_pos)) { 
+            		m_listButton.get(ButtonType.PushYellow).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushBlue).ActiveButton(true);
+            		m_listButton.get(ButtonType.PushGreen).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushRed).ActiveButton(false);
             	}
-            	else if (m_listButton.get(15).isClicked(mouse_pos)) { 
-            		//Red : on active le bouton et on desactive les autres (yellow, blue, green)
-            		m_listButton.get(12).ActiveButton(0);
-            		m_listButton.get(13).ActiveButton(0);
-            		m_listButton.get(14).ActiveButton(0);
-            		m_listButton.get(15).ActiveButton(1);
-            		//on affiche les pointeurs red
+            	
+            	//Green : on active le bouton et on desactive les autres (yellow, blue, red)
+            	else if (m_listButton.get(ButtonType.PushGreen).isClicked(mouse_pos)) { 
+            		m_listButton.get(ButtonType.PushYellow).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushBlue).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushGreen).ActiveButton(true);
+            		m_listButton.get(ButtonType.PushRed).ActiveButton(false);
             	}
-            	else if (m_listButton.get(16).isClicked(mouse_pos)) { 
-            		//Grey : on active le bouton et on desactive les autres (magenta, cyan)
-            		m_listButton.get(16).ActiveButton(1);
-            		m_listButton.get(17).ActiveButton(0);
-            		m_listButton.get(18).ActiveButton(0);
-            		//on affiche les instructions grey
+            	 
+        		//Red : on active le bouton et on desactive les autres (yellow, blue, green)
+            	else if (m_listButton.get(ButtonType.PushRed).isClicked(mouse_pos)) {
+            		m_listButton.get(ButtonType.PushYellow).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushBlue).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushGreen).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushRed).ActiveButton(true);
             	}
-            	else if (m_listButton.get(17).isClicked(mouse_pos)) { 
-            		//Magenta : on active le bouton et on desactive les autres (grey, cyan)
-            		m_listButton.get(16).ActiveButton(0);
-            		m_listButton.get(17).ActiveButton(1);
-            		m_listButton.get(18).ActiveButton(0);
-            		//on affiche les instructions magenta
+
+        		//Grey : on active le bouton et on desactive les autres (magenta, cyan)
+            	else if (m_listButton.get(ButtonType.PushGrey).isClicked(mouse_pos)) { 
+            		m_listButton.get(ButtonType.PushGrey).ActiveButton(true);
+            		m_listButton.get(ButtonType.PushMagenta).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushCyan).ActiveButton(false);
             	}
-            	else if (m_listButton.get(18).isClicked(mouse_pos)) { 
-            		//Cyan : on active le bouton et on desactive les autres (grey, magenta)
-            		m_listButton.get(16).ActiveButton(0);
-            		m_listButton.get(17).ActiveButton(0);
-            		m_listButton.get(18).ActiveButton(1);
-            		//on affiche les instructions magenta
+            	 
+        		//Magenta : on active le bouton et on desactive les autres (grey, cyan)
+            	else if (m_listButton.get(17).isClicked(mouse_pos)) {
+            		m_listButton.get(ButtonType.PushGrey).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushMagenta).ActiveButton(true);
+            		m_listButton.get(ButtonType.PushCyan).ActiveButton(false);
             	}
-            	else if (m_listButton.get(19).isClicked(mouse_pos)){
-            		//Run : on active le Run qui se change alors en Stop
-            		m_listButton.get(19).ActiveButton(1);
-            		//on affiche le stop
+            	 
+        		//Cyan : on active le bouton et on desactive les autres (grey, magenta)
+            	else if (m_listButton.get(ButtonType.PushCyan).isClicked(mouse_pos)) {
+            		m_listButton.get(ButtonType.PushGrey).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushMagenta).ActiveButton(false);
+            		m_listButton.get(ButtonType.PushCyan).ActiveButton(true);
             	}
-            	else if (m_listFrame.get(0).isClicked(mouse_pos)) {
-            		//Main : on active la frame main et on desactive p1 et p2
-            		m_listFrame.get(0).ActiveFrame(1);
-            		m_listFrame.get(1).ActiveFrame(0);
-            		m_listFrame.get(2).ActiveFrame(0);
-            		//on affiche le main active avec ses composants
+
+        		//Run : on active le Run qui se change alors en Stop
+            	else if (m_listButton.get(ButtonType.Run).isClicked(mouse_pos)){
+            		m_listButton.get(ButtonType.Run).ActiveButton(true);
             	}
+
+        		//Main : on active la frame main et on desactive p1 et p2
+            	else if (m_listFrame.get(FrameType.Main).isClicked(mouse_pos)) {
+            		m_listFrame.get(FrameType.Main).ActiveFrame(true);
+            		m_listFrame.get(FrameType.P1).ActiveFrame(false);
+            		m_listFrame.get(FrameType.P2).ActiveFrame(false);
+            	}
+
+        		//P1 : on active la frame p1 et on desactive main et p2
             	else if (m_listFrame.get(1).isClicked(mouse_pos)) {
-            		//P1 : on active la frame p1 et on desactive main et p2
-            		m_listFrame.get(0).ActiveFrame(0);
-            		m_listFrame.get(1).ActiveFrame(1);
-            		m_listFrame.get(2).ActiveFrame(0);
-            		//on affiche P1 active avec ses composants
+            		m_listFrame.get(FrameType.Main).ActiveFrame(false);
+            		m_listFrame.get(FrameType.P1).ActiveFrame(true);
+            		m_listFrame.get(FrameType.P2).ActiveFrame(false);
             	}
+
+        		//P2 : on active la frame p2 et on desactive main et p1
             	else if (m_listFrame.get(2).isClicked(mouse_pos)) {
-            		//P2 : on active la frame p2 et on desactive main et p1
-            		m_listFrame.get(0).ActiveFrame(0);
-            		m_listFrame.get(1).ActiveFrame(0);
-            		m_listFrame.get(2).ActiveFrame(1);
-            		//on affiche P2 active avec ses composants
-            		}	
+            		m_listFrame.get(FrameType.Main).ActiveFrame(false);
+            		m_listFrame.get(FrameType.P1).ActiveFrame(false);
+            		m_listFrame.get(FrameType.P2).ActiveFrame(true);
             	}
             }
 		}
-	}	
+	}
 }
+

@@ -24,11 +24,16 @@ public class Component {
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
+	/** Constructeur de Component
+	 * @param tilePath
+	 * @param position
+	 */
 	public Component(String tilePath,Vector2f position) {
 		m_scale = new Vector2f(1.0f,1.0f);
 		m_tileSet = new Texture();
 		try {
         	m_tileSet.loadFromFile(Paths.get(tilePath));
+        	m_tileSet.setSmooth(true);
         } catch(IOException ex) {
             ex.printStackTrace();
         }
@@ -43,6 +48,7 @@ public class Component {
 		m_tileSet = new Texture();
 		try {
         	m_tileSet.loadFromFile(Paths.get(tilePath));
+        	m_tileSet.setSmooth(true);
         } catch(IOException ex) {
             ex.printStackTrace();
         }
@@ -53,41 +59,67 @@ public class Component {
 	
 /** ---------------- METHODS ----------------- */
 	
-	/** Retourne le sprite du component */
+	/** Retourne le sprite du component
+	 * @return m_prite
+	 */
 	public Sprite getSprite(){
 		return m_sprite;
 	}
 	
-	/** Assigne un nouveau sprite au component */
+	
+	/** Assigne un nouveau sprite au component
+	 * @param sprite
+	 */
 	public void setSprite(Sprite sprite){
 		m_sprite = sprite;
 	}
 	
-	/** Retourne la visibilite du component */
+	
+	/** Retourne la visibilite du component
+	 * @return m_visible
+	 */
 	public boolean getVisibility(){
 		return m_visible;
 	}
 	
-	/** Assigne une nouvelle visibilite au component */
+	
+	/** Assigne une nouvelle visibilite au component
+	 * @param visible
+	 */
 	public void setVisibility(boolean visible){
 		m_visible = visible;
 	}
 	
-	/** Assigne une nouvelle position au component */
+	
+	/** Assigne une nouvelle position au component
+	 * @param position
+	 */
 	public void setPosition(Vector2f position){
 		m_position = position;
 		m_sprite.setPosition(position);	
 	}
 	
+	
+	/** Retourne l'echelle du component
+	 * @return m_scale
+	 */
 	public Vector2f getScale(){
 		return m_scale;
 	}
 	
+	
+	/** Assigne une nouvelle echelle au component
+	 * @param scale
+	 */
 	public void setScale(Vector2f scale) {
 		m_scale = scale; 
 		m_sprite.setScale(m_scale);
 	}
 	
+	
+	/** Dessine le component dans la fenetre
+	 * @param window
+	 */
 	public void draw(RenderWindow window){
 		window.draw(getSprite());	
 	}
