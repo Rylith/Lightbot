@@ -30,6 +30,7 @@ public class Controler {
 	// EMPLACEMENT RESSOURCES GRAPHIQUE
 	private final static String TILEPATHACTION = "ressource/Sprite/action.png";
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
+	private final static String TILEPATHBACKGROUND = "ressource/Sprite/background.jpg";
 	
 	// POSITION DES ORDRES //
 	private final static Vector2f POSINITBUTTON = new Vector2f(58.0f,989.0f);
@@ -63,10 +64,10 @@ public class Controler {
 	
 	// POSITION CADRE ORDER //
 	private final static Vector2f POSINITCADREMAIN = new Vector2f(1215.0f,180.0f);
-	private final static Vector2f POSINITCADREP1 = new Vector2f(1215.0f,526.0f);
-	private final static Vector2f POSINITCADREP2 = new Vector2f(1215.0f,764.0f);
+	private final static Vector2f POSINITCADREP1 = new Vector2f(1215.0f,515.0f);
+	private final static Vector2f POSINITCADREP2 = new Vector2f(1215.0f,755.0f);
 	private final static Vector2f SIZECADREORDER = new Vector2f(70.0f,70.0f);
-	private final static Vector2f DECALCADREORDER = new Vector2f(11.0f,11.0f);
+	private final static Vector2f DECALCADREORDER = new Vector2f(11.0f,16.0f);
 
 	// POSITION BACK //
 	private final static Vector2f POSINITBACKORDER = new Vector2f(24.0f,949.0f);
@@ -87,6 +88,7 @@ public class Controler {
 	private Vector<Button> m_orderSmartBot = new Vector<Button>();
 	private Component m_backOrder;
 	private Component m_backMain;
+	private Sprite m_background;
 
 	private Game m_game;
 
@@ -157,16 +159,24 @@ public class Controler {
 	 */
 	public void reloadInterface(Vector2i screenSize) {
 		m_screenSize = screenSize;
+		Texture background = new Texture();
+		try {
+			background.loadFromFile(Paths.get(TILEPATHBACKGROUND));
+			m_background = new Sprite(background);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		m_decal = new Vector2f(1920.0f - m_screenSize.x,1080.0f - m_screenSize.y);
 		m_scale = new Vector2f(m_screenSize.x / 1920.0f, m_screenSize.y / 1080.0f);
 		
-		
+		m_background.setScale(m_scale);
 		// BackOrder & BackMain
 		m_backOrder = new Component(TILEPATHFRAME+"BackOrder.png",Vector2f.sub(POSINITBACKORDER,new Vector2f(0.0f,m_decal.y)));
 		m_backOrder.setScale(m_scale);
 		
 		if (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height < m_screenSize.y) {
-			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height))+10));
+			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getGlobalBounds().height))-10));
 		}
 		
 		Vector2f scaleFrame;
@@ -239,7 +249,7 @@ public class Controler {
 		b_p1.setScale(m_scale);
 		Button b_p2 = new Button(TILEPATHACTION, new Vector2f(realInitPosButton.x + ((realSizeButton.x + realDecalButton) * 11),realInitPosButton.y), ButtonType.P2, true); //P2
 		b_p2.setScale(m_scale);
-		
+				
 		// Boutons representants les Bots
 		Vector2f realInitPosOngletBot = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITONGLETBOT, POSINITBACKMAIN), m_scale));
 		Vector2f realSizeOngletBot = Vector2f.componentwiseMul(SIZEONGLETBOT, m_scale);
@@ -327,27 +337,25 @@ public class Controler {
 	 *
 	 */
 	public void init(){
-
-		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), m_scale));
-		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), m_scale));
-		Vector2f realInitPosCadreP2 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP2, POSINITBACKMAIN), m_scale));
-		Vector2f realdDecalCadre = Vector2f.componentwiseMul(DECALCADREORDER, m_scale);
-		Vector2f realSizeCadreOrder = Vector2f.componentwiseMul(SIZECADREORDER, m_scale);
+		Vector2f realScale = m_backMain.getScale();
+		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), realScale));
+		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), realScale));
+		Vector2f realInitPosCadreP2 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP2, POSINITBACKMAIN), realScale));
+		Vector2f realDecalCadreMain = Vector2f.componentwiseMul(DECALCADREORDER, realScale);
+		Vector2f realSizeCadreOrder = Vector2f.componentwiseMul(SIZECADREORDER, realScale);
 		Vector2f pos = realInitPosCadreMain;
 		Character currentChar;
 		for (int g = 0; g < 2 ; g++) {
-			pos = realInitPosCadreMain;
 			for (int j = 0; j < NUMBERFRAME; j++) {
 				switch(j) {
 				case 0:
-					pos = new Vector2f(pos.x,realInitPosCadreMain.y + (realdDecalCadre.y * j));
+					pos = new Vector2f(realInitPosCadreMain.x,realInitPosCadreMain.y);
 					break;
 				case 1:
-					pos = new Vector2f(pos.x,realInitPosCadreP1.y + (realdDecalCadre.y * j));
+					pos = new Vector2f(realInitPosCadreP1.x,realInitPosCadreP1.y);
 					break;
 				case 2:
-					pos = new Vector2f(pos.x,realInitPosCadreP2.y + (realdDecalCadre.y * j));
-
+					pos = new Vector2f(realInitPosCadreP2.x,realInitPosCadreP2.y);
 					break;
 				}
 				if (g == 0 ) {
@@ -362,11 +370,11 @@ public class Controler {
 				// initialisation des cadres dans p1 du SmartBot
 				// initialisation des cadres dans p2 du SmartBot
 				for (int i = 0 ; i < currentChar.getLimitOrder().get(j) ; i++) {
-					if(i % 7 == 1 && i != 1 ) {
-						pos = new Vector2f(realInitPosCadreMain.x,pos.y + realSizeCadreOrder.y + realdDecalCadre.y);
+					if((i % 8 == 0) && i != 0 ) {
+						pos = new Vector2f(realInitPosCadreMain.x,pos.y + realSizeCadreOrder.y + realDecalCadreMain.y);
 					}
 					else if (i != 0){
-						pos = new Vector2f(pos.x + realSizeCadreOrder.x + realdDecalCadre.x,pos.y);
+						pos = new Vector2f(pos.x + realSizeCadreOrder.x + realDecalCadreMain.x,pos.y);
 					}
 					Button cadre = new Button(TILEPATHACTION, pos , ButtonType.Cadre, false);
 					cadre.setScale(m_scale);
@@ -438,11 +446,20 @@ public class Controler {
 	}
 	
 	
+	/**
+	 * Notify pour l'interface
+	 */
+	//public void notify(){
+		
+	//}
+	
 	/** Update le visuel de l'interface 
 	 */
 	public void update(){
 		
         /** On affiche les components de fond */
+
+		m_game.getWindow().draw(m_background);
 		m_backMain.draw(m_game.getWindow());
 		m_backOrder.draw(m_game.getWindow());
 		
