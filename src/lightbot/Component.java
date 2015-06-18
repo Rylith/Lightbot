@@ -29,6 +29,7 @@ public class Component {
 		m_tileSet = new Texture();
 		try {
         	m_tileSet.loadFromFile(Paths.get(tilePath));
+        	m_tileSet.setSmooth(true);
         } catch(IOException ex) {
             ex.printStackTrace();
         }
@@ -43,6 +44,7 @@ public class Component {
 		m_tileSet = new Texture();
 		try {
         	m_tileSet.loadFromFile(Paths.get(tilePath));
+        	m_tileSet.setSmooth(true);
         } catch(IOException ex) {
             ex.printStackTrace();
         }
