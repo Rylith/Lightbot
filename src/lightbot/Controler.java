@@ -28,7 +28,7 @@ public class Controler {
 	// EMPLACEMENT RESSOURCES GRAPHIQUE
 	private final static String TILEPATHACTION = "ressource/Sprite/action.png";
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
-	private final static String TILEPATHBACKGROUND = "ressource/Sprite/background.png";
+	private final static String TILEPATHBACKGROUND = "ressource/Sprite/background.jpg";
 	
 	// POSITION DES ORDRES //
 	private final static Vector2f POSINITBUTTON = new Vector2f(58.0f,989.0f);
@@ -62,8 +62,8 @@ public class Controler {
 	
 	// POSITION CADRE ORDER //
 	private final static Vector2f POSINITCADREMAIN = new Vector2f(1215.0f,180.0f);
-	private final static Vector2f POSINITCADREP1 = new Vector2f(1215.0f,526.0f);
-	private final static Vector2f POSINITCADREP2 = new Vector2f(1215.0f,764.0f);
+	private final static Vector2f POSINITCADREP1 = new Vector2f(1215.0f,515.0f);
+	private final static Vector2f POSINITCADREP2 = new Vector2f(1215.0f,755.0f);
 	private final static Vector2f SIZECADREORDER = new Vector2f(70.0f,70.0f);
 	private final static Vector2f DECALCADREORDER = new Vector2f(11.0f,16.0f);
 
@@ -86,7 +86,7 @@ public class Controler {
 	private Vector<Button> m_orderSmartBot = new Vector<Button>();
 	private Component m_backOrder;
 	private Component m_backMain;
-	private Texture m_background;
+	private Sprite m_background;
 
 	//private Game m_game;
 	private RenderWindow m_window;
@@ -114,9 +114,10 @@ public class Controler {
 	
 	public void reloadInterface(Vector2i screenSize) {
 		m_screenSize = screenSize;
-		m_background = new Texture();
+		Texture background = new Texture();
 		try {
-			m_background.loadFromFile(Paths.get(TILEPATHBACKGROUND));
+			background.loadFromFile(Paths.get(TILEPATHBACKGROUND));
+			m_background = new Sprite(background);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,7 +130,7 @@ public class Controler {
 		m_backOrder.setScale(m_scale);
 		
 		if (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height < m_screenSize.y) {
-			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getLocalBounds().height))+10));
+			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getGlobalBounds().height))-10));
 		}
 		
 		Vector2f scaleFrame;
@@ -329,12 +330,12 @@ public class Controler {
 	 * version avec deux bots
 	 */
 	public void init(Character BasicBot, Character SmartBot/*, Map map*/){
-
-		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), m_scale));
-		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), m_scale));
-		Vector2f realInitPosCadreP2 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP2, POSINITBACKMAIN), m_scale));
-		Vector2f realDecalCadreMain = Vector2f.componentwiseMul(DECALCADREORDER, m_scale);
-		Vector2f realSizeCadreOrder = Vector2f.componentwiseMul(SIZECADREORDER, m_scale);
+		Vector2f realScale = m_backMain.getScale();
+		Vector2f realInitPosCadreMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREMAIN, POSINITBACKMAIN), realScale));
+		Vector2f realInitPosCadreP1 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP1, POSINITBACKMAIN), realScale));
+		Vector2f realInitPosCadreP2 = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITCADREP2, POSINITBACKMAIN), realScale));
+		Vector2f realDecalCadreMain = Vector2f.componentwiseMul(DECALCADREORDER, realScale);
+		Vector2f realSizeCadreOrder = Vector2f.componentwiseMul(SIZECADREORDER, realScale);
 		Vector2f pos = realInitPosCadreMain;
 		Character currentChar;
 		for (int g = 0; g < 2 ; g++) {
@@ -443,6 +444,7 @@ public class Controler {
 	public void update(RenderWindow window){
 		
         /** On affiche les components de fond */
+		window.draw(m_background);
 		m_backMain.draw(window);
 		m_backOrder.draw(window);
 		
