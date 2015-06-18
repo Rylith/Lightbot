@@ -11,6 +11,7 @@ import java.util.List;
 import org.jdom2.*;
 import org.jdom2.input.*;
 import org.jdom2.filter.*;
+import org.w3c.dom.NodeList;
 
 import lightbot.Case;
 import lightbot.MapLoader;
@@ -21,26 +22,23 @@ public class Map {
 /** --------------- ATTRIBUTES --------------- */
 	public Case m_map[][];
 	
-	private static int d_lampe = 2;
-	private static int d_paint = 1;
-	private static int d_for = 2;
-	private static int d_pointeur = 0;
+	private static int d_lampe = 3;
+	private static int d_paint = 0;
+	private static int d_for = 1;
+	private static int d_pointeur = 2;
 	private static int d_charac = 4;
 	
 /** -------------- CONSTRUCTORS -------------- */
-	public Map(Character rob){
+	public Map(Character robb, Character robs){
 		MapLoader ml = new MapLoader();
 		Vector2i size = MapLoader.mapSize();
-		String str = ml.getOrders();
-		String[] splited = str.split("\\s+");
-		//System.out.println(splited[0]);
-		//System.out.println(splited[1]);
-		//System.out.println(splited[2]);
 		m_map = new Case[size.x][size.y];
-		createMap(ml,rob);
+		ml.character(robb, robs);
+		System.out.println("MAIN : " +robb.getPosition().x + " "+robb.getPosition().y);
+		createMap(ml,robb,robs);
 	}
 /** ---------------- METHODS ----------------- */
-	public void createMap(MapLoader ml, Character rob){
+	public void createMap(MapLoader ml, Character robb, Character robs){
 		for (int i = 0; i < this.m_map.length; i++) {
 			int l = 0;
 			List<Element> listCases = ml.getCasesLine(i);
@@ -50,32 +48,55 @@ public class Map {
 				if (listCases.size() > 0 && l < listCases.size()) {
 					Element caseElement = (Element) listCases.get(l);
 					if (Integer.parseInt(caseElement.getAttributeValue("pos_y")) == j) {
-						int h =Integer.parseInt(caseElement.getAttributeValue("height"));
+						int h = Integer.parseInt(caseElement.getAttributeValue("height"));
 						/*------------------------------NEW VERSION------------------------------*/
-						//m_map[i][j] = new Case(new Vector2i(i,j), h, "case.png");
-						/*------------------------------NEW VERSION------------------------------*/
-				//---------------------------------------------------------------
-						switch (caseElement.getAttributeValue("type"))
-						{
-				           case "White":
-				        	   //System.out.println("White");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), h, "case.png");
-				           break;
-				           case "Basic":
-				        	   //System.out.println("Basic");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j),h, "case.png");
-				        	   rob.setPosition(new Vector2i(i,j));
-				        	   rob.setHeight(h);
-				        	   m_map[i][j].addObject(d_charac, rob);
-				           break;
-				           case "Lampe":
-				        	   //System.out.println("Lampe");
-				        	   m_map[i][j] = new Case(new Vector2i(i,j), Integer.parseInt(caseElement.getAttributeValue("height")), "case.png");
-				        	   //Lampadaire(Vector2i position, int height, Color color, String tilePath, int value)
-				        	   m_map[i][j].addObject(d_lampe, new Lampadaire(new Vector2i(i, j), h, Color.WHITE, "Object.png"));
-				           break;
+						Vector2i posi = new Vector2i(i,j);
+						m_map[i][j] = new Case(posi, h, "case.png");
+						
+						if (caseElement.getChild("paint") != null) {
+							ColorMark painter = new ColorMark(posi, h, "case.png",Color.CYAN);
+							if (caseElement.getChild("paint").getAttributeValue("color") == "magenta") {
+								painter.setColor(Color.MAGENTA);
+							}
+							m_map[i][j].addObject(d_paint, painter);
 						}
-				//-----------------------------------------------------------------
+						
+						if (caseElement.getChild("lampe") != null) {
+				        	   m_map[i][j].addObject(d_lampe, new Lampadaire(posi, h, Color.WHITE, "Object.png"));
+						}
+						
+						if (caseElement.getChild("pointeur") != null) {
+							Pointeur pointer = new Pointeur(posi, h, Color.BLUE, "case.png");
+							switch (caseElement.getChild("pointeur").getAttributeValue("color"))
+							{
+					           case "yellow":
+					        	   pointer.setColor(Color.YELLOW);
+					           break;
+					           case "red":
+					        	   pointer.setColor(Color.RED);
+					           break;
+					           case "green":
+					        	   pointer.setColor(Color.GREEN);
+					           break;
+							}
+							 m_map[i][j].addObject(d_pointeur, pointer);
+						}
+						
+						if (caseElement.getChild("character") != null) {
+							if (caseElement.getChild("character").getAttributeValue("type").equals("basic")) {
+								 m_map[i][j].addObject(d_charac, robb);
+							} else {
+								m_map[i][j].addObject(d_charac, robs);
+							}
+						}
+						
+						if (caseElement.getChild("for") != null) {
+							NumberMark repete = new NumberMark(posi, h, "case.png", 1);
+							repete.setValue(Integer.parseInt(caseElement.getChild("for").getAttributeValue("number")));
+							 m_map[i][j].addObject(d_for, repete);
+						}
+						
+						/*------------------------------NEW VERSION------------------------------*/
 						l++;
 					}
 				}
@@ -127,7 +148,6 @@ public class Map {
 			System.out.println("Length: " + this.m_map.length + "	Length colonne: " + this.m_map[0].length); 
 			if(this.m_map.length > new_x && this.m_map[0].length > new_y && new_x >=0 && new_y >=0) {
 				int current_height = this.m_map[pos.x][pos.y].getHeight();
-				System.out.println("Bijour");
 				return (current_height == this.m_map[new_x][new_y].getHeight());
 			}
 			else return false;

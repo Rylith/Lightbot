@@ -12,6 +12,7 @@ public class NumberMark extends DrawableObject {
 
 	private final static int SIZESPRITEX = 78;
 	private final static int SIZESPRITEY = 49;
+	private final static int SIZESPRITEE = 8;
 	
 	private int m_value;
 		
@@ -27,32 +28,32 @@ public class NumberMark extends DrawableObject {
 		m_value = value;
 		if (m_value == 5){
 			getSprite().setTextureRect(new IntRect(6*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - height*8;
 			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		}
 		else if (m_value == 4){
 			getSprite().setTextureRect(new IntRect(5*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - height*8;
 			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		}
 		else if (value == 3) {
 			getSprite().setTextureRect(new IntRect(4*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - height*8;
 			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		}
 		else if (value == 2){
 			getSprite().setTextureRect(new IntRect(3*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - height*8;
 			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		}
 		else { //value == 1 
 			getSprite().setTextureRect(new IntRect(2*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
-			float pos_x = 250 +  position.y * 41f - position.x * 41f;
-			float pos_y = 100 + position.y * 20.5f + position.x * 20.5f;
+			float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+			float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - height*8;
 			this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		}
 		
@@ -62,7 +63,24 @@ public class NumberMark extends DrawableObject {
 	
 /** ---------------- METHODS ----------------- */	
 
-	
+	public void setValue(int value){
+		m_value = value;
+		if (m_value == 5){
+			getSprite().setTextureRect(new IntRect(6*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (m_value == 4){
+			getSprite().setTextureRect(new IntRect(5*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (value == 3) {
+			getSprite().setTextureRect(new IntRect(4*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else if (value == 2){
+			getSprite().setTextureRect(new IntRect(3*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+		else { //value == 1 
+			getSprite().setTextureRect(new IntRect(2*SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
+		}
+	}
 	
 	
 }

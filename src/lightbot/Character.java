@@ -210,6 +210,12 @@ public class Character extends DrawableObject{
 		
 	}
 	
+	/** Assigne la hauteur a l'objet 
+	 * @param int hauteur*/
+	public void setHeight(int height){
+		this.getSprite().setPosition(this.getSprite().getPosition().x, this.getSprite().getPosition().y - (height - this.getHeight())*8);
+		super.setHeight(height);
+	}
 
 	/** Met a jours la position du sprite */
 	public void update(Vector2i dep){
@@ -219,7 +225,7 @@ public class Character extends DrawableObject{
 		float pos_x = tmp_x - (SIZESPRITEX*0.75f)/2;
 		float pos_y = tmp_y - (SIZESPRITEY*0.75f)+5;
 		float pox = pos_x + (dep.y - dep.x) * 78/2;
-		float poy = pos_y + (dep.x + dep.y)*(48-8)/2;// - (height-1)*8;
+		float poy = pos_y + (dep.x + dep.y)*(48-8)/2 - (this.getHeight()-1)*8;
 		this.getSprite().setPosition(pox, poy);
 	}
 	

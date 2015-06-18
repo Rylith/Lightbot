@@ -86,11 +86,7 @@ public class Case extends DrawableObject {
 		float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
 		
 		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
-		/*for (int i = 0; i < m_mapDrawableObject.size(); i++) {
-			if (m_mapDrawableObject.get(i) != null){
-				fenetre.draw(m_mapDrawableObject.get(i).getSprite());
-			}
-		}*/
+		
 		int obd = 0;
 		int testo = 0;
 		if (m_mapDrawableObject.size() > 0) {
