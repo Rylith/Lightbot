@@ -17,8 +17,6 @@ import org.jsfml.system.Vector2i;
 public class Button extends Component{
 	
 	
-	/* TODO : Position selon l'axe x des boutons poussoires et des boutons bots */
-	
 	
 /** --------------- ATTRIBUTES --------------- */	
 	
@@ -69,6 +67,12 @@ public class Button extends Component{
 	
 /** -------------- CONSTRUCTORS -------------- */	
 	
+	/** Constructeur de la class Button
+	 * @param tilePath
+	 * @param position
+	 * @param type
+	 * @param move
+	 */
 	public Button(String tilePath, Vector2f position, ButtonType type, boolean move) {
 		super(tilePath, position);
 		m_order = move;
@@ -187,24 +191,25 @@ public class Button extends Component{
 /** ---------------- METHODS ----------------- */
 	
 	
-	/** Indique si le bouton est clique 
+	/** Indique si l'on a clique sur le sprite du bouton 
 	 */
 	public boolean isClicked(Vector2i position){
 		return super.getSprite().getGlobalBounds().contains(position.x, position.y);
 	}
 	
-	/**
-	 * Indiqque si le bouton est pressse
+	
+	/** Indiqque si le bouton est pressse (active)
 	 */
 	public boolean isActive(){
 		return m_active;
 	}
 		
+	
 	/** Desactive/Active le bouton (mise a jours du sprite)
-	 * @throws Exception 
+	 * @info : false : bouton non enfonce | true : bouton enfonce
 	 */
-	public void ActiveButton(int i) {
-		if (i == 0) { //Bouton non enfonce
+	public void ActiveButton(boolean i) {
+		if (i == false) { //Bouton non enfonce
 			if (m_type == ButtonType.PushMagenta){
 				super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER), 3*SIZEORDER, SIZEPUSHX, SIZEPUSHY));
 				m_active = false; 
@@ -252,7 +257,7 @@ public class Button extends Component{
 				m_active = false;
 			}
 		}
-		else if (i == 1){ //Bouton enfonce
+		else if (i == true){ //Bouton enfonce
 			if (m_type == ButtonType.PushMagenta){
 				super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER), (3*SIZEORDER + SIZEPUSHY), SIZEPUSHX, SIZEPUSHY));
 				m_active = true; 
@@ -300,14 +305,6 @@ public class Button extends Component{
 				super.getSprite().setTextureRect(new IntRect(0, 3*SIZEORDER, SIZEONX, SIZEONY));
 				super.setVisibility(true); //Toujours visible
 				m_active = true;
-			}
-		}
-		else {
-			try {
-				throw new Exception();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}
