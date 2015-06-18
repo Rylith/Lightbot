@@ -22,11 +22,11 @@ public class Map {
 /** --------------- ATTRIBUTES --------------- */
 	public Case m_map[][];
 	
-	private static int d_lampe = 3;
-	private static int d_paint = 0;
-	private static int d_for = 1;
-	private static int d_pointeur = 2;
-	private static int d_charac = 4;
+	private static final int d_lampe = 3;
+	private static final int d_paint = 0;
+	private static final int d_for = 1;
+	private static final int d_pointeur = 2;
+	private static final int d_charac = 4;
 	
 /** -------------- CONSTRUCTORS -------------- */
 	public Map(Character robb, Character robs){
@@ -162,11 +162,11 @@ public Vector2i getPointer(Color c){
 		
 		for(int i=0; i<m_map.length; i++){
 			for(int j=0; j<m_map[i].length;j++){
-				
-				if((m_map[i][j].getMapDO().containsKey(1)) && (m_map[i][j].getMapDO().get(1).getColor()== c)){
-					
-					return m_map[i][j].getPosition();
-				}
+				if(m_map[i][j]!=null)
+					if((m_map[i][j].getMapDO().containsKey(d_pointeur)) && (m_map[i][j].getMapDO().get(d_pointeur).getColor()== c)){
+						
+						return m_map[i][j].getPosition();
+					}
 					
 			}
 		}
