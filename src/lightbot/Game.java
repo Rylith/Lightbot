@@ -6,6 +6,7 @@ import lightbot.Button.ButtonType;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.system.Vector2i;
 
 public class Game {
 
@@ -15,6 +16,7 @@ public class Game {
 	private HashMap<String, Character> m_character = new HashMap<String, Character>(); // "BasicBot" | "SmartBot"
 	private RenderWindow m_window;
 	private Engine m_engine;
+	private Map m_map;
 	
 	
 /** -------------- CONSTRUCTORS -------------- */		
@@ -31,6 +33,17 @@ public class Game {
 	}
 	
 	
+	public Game(RenderWindow window){
+		m_window = window;
+		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
+		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
+		m_map = new Map(m_character.get("BasicBot"));
+		m_engine = new Engine(m_map);
+		getCharacter("BasicBot").setLimitOrder(0, 17);
+		getCharacter("BasicBot").setLimitOrder(1, 3);
+		getCharacter("SmartBot").setLimitOrder(0, 6);
+	}
+	
 	/** Constructeur de Game
 	 * @param window
 	 * @param engine
@@ -39,9 +52,11 @@ public class Game {
 	 */
 	public Game(RenderWindow window, Engine engine, Character basicbot, Character smartbot){
 		m_window = window;
-		m_engine = engine;
+		m_map = new Map(basicbot);
+		m_engine = new Engine(m_map);
 		m_character.put("BasicBot", basicbot);
 		m_character.put("SmartBot", smartbot);
+		
 	}
 	
 	
@@ -54,6 +69,9 @@ public class Game {
 		return m_character;
 	}
 	
+	public Character getCharacter(String name){
+		return m_character.get(name);
+	}
 	
 	/** Retourne la fenetre
 	 * @return m_window
@@ -62,6 +80,9 @@ public class Game {
 		return m_window;
 	}
 	
+	public void draw(){
+		m_map.drawMap(m_window);
+	}
 	
 	/** Retourne engine
 	 * @return m_engine
@@ -138,21 +159,31 @@ public class Game {
 	 * @param car  "BasicBot" : BasicBot | "SmartBot" : SmartBot
 	 * @param order  ordre a ajouter
 	 */
-	public boolean addOrder(int proc, String car,  ButtonType type, Color color){
-		if (m_character.get(car).getListOrder().get(proc).size() < m_character.get(car).getLimitOrder().get(proc)){
+	public boolean addOrder(int proc, String character,  ButtonType type, Color color){
+		//System.out.println("Size listOrdre " + proc + " = " + m_character.get(character).getListOrder().get(proc).size() + " | LimitOrder = " + m_character.get(character).getLimitOrder().get(proc));
+		if (m_character.get(character).getListOrder().get(proc).size() < m_character.get(character).getLimitOrder().get(proc)){
 			Order order = null;
 			try {
-				order = ButtonToButtonType(type, m_character.get(car), color);
+				order = ButtonToButtonType(type, m_character.get(character), color);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			m_character.get(car).addOrder(proc, order);
+			m_character.get(character).addOrder(proc, order);
+			//System.out.println("Order ajoute");
 			return true;
 		}
 		else { //la limite d'ordre est atteinte
+			//System.out.println("Limit Ordre atteinte");
 			return false;
 		}	
+	}
+	
+	
+	public void removeOrder(int proc, String character, int posOrder) {
+		if (posOrder >= 0 && posOrder < m_character.get(character).getListOrder().get(proc).size()) {
+			m_character.get(character).removeOrder(proc, posOrder);
+		}
 	}
 	
 
