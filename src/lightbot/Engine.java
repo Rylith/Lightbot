@@ -13,11 +13,11 @@ public class Engine {
 	private Map monde;
 	private int nb_for;
 	private LinkedList <Lampadaire> liste_lampadaire; 
-
-	private static final int d_lampe = 2;
-	private static final int d_paint = 1;
-	private static final int d_for = 2;
-	private static final int d_pointeur = 0;
+	
+	private static final int d_lampe = 3;
+	private static final int d_paint = 0;
+	private static final int d_for = 1;
+	private static final int d_pointeur = 2;
 	private static final int d_charac = 4;
 
 	
@@ -418,6 +418,7 @@ public class Engine {
 
 					getCurrentCase(personne).delObject(d_charac);
 					personne.update(monde.getPointer(color_ptr));
+					personne.setHeight(getCurrentCase(personne).getHeight());
 					getCurrentCase(personne).addObject(d_charac,personne);
 
 					return true;

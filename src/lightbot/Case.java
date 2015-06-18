@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+import lightbot.Button.ButtonType;
+
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
@@ -77,14 +79,19 @@ public class Case extends DrawableObject {
 	
 	/** Dessine la case dans la fenetre */
 	public void drawCase(RenderWindow fenetre) {
+		
+		Vector2f ancient = new Vector2f(this.getSprite().getGlobalBounds().height , this.getSprite().getGlobalBounds().width);
+		Vector2f newS = new Vector2f(this.getSprite().getLocalBounds().height,this.getSprite().getLocalBounds().width);
+		Vector2f diff = Vector2f.componentwiseDiv(ancient, newS);
+		
 		for (int i = 0; i < this.getHeight(); i++) {
-			this.getSprite().move(0, - SIZESPRITEE);
+			this.getSprite().move(0, - SIZESPRITEE*diff.x);
 			fenetre.draw(this.getSprite());
 		}
 		
-		float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
-		float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2);
-		
+		float pos_x = 250 + this.getPosition().y * (SIZESPRITEX*diff.x)/2 - this.getPosition().x * (SIZESPRITEX*diff.x)/2;
+		float pos_y = 100 +(this.getPosition().x + this.getPosition().y) * (((SIZESPRITEY*diff.y) - (SIZESPRITEE*diff.y))/2);
+
 		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
 		
 		int obd = 0;
@@ -93,6 +100,7 @@ public class Case extends DrawableObject {
 			while (obd < m_mapDrawableObject.size()) {
 				DrawableObject dob = m_mapDrawableObject.get(testo);
 				if (dob != null){
+					//dob.getSprite().setPosition(this.getSprite().getPosition().x * diff.x, this.getSprite().getPosition().y * diff.y);
 					fenetre.draw(dob.getSprite());
 					obd++;
 				}
@@ -101,5 +109,19 @@ public class Case extends DrawableObject {
 		}
 	}
 
+	
+	public void setScaling(Vector2f scaling) {
+		super.setScaling(scaling);
+		//super.getSprite().setPosition(Vector2f.sub(new Vector2f(this.getSprite().getGlobalBounds().height , this.getSprite().getGlobalBounds().width),new Vector2f(this.getSprite().getLocalBounds().height,this.getSprite().getLocalBounds().width)));
+		Vector2f ancient = new Vector2f(this.getSprite().getGlobalBounds().height , this.getSprite().getGlobalBounds().width);
+		Vector2f newS = new Vector2f(this.getSprite().getLocalBounds().height,this.getSprite().getLocalBounds().width);
+		Vector2f.sub(ancient, newS);
+		Vector2f diff = Vector2f.sub(ancient, newS);
+		this.getSprite().setPosition(Vector2f.sub(this.getSprite().getPosition(), diff));
+		for (Integer mapKey : m_mapDrawableObject.keySet()) {
+			m_mapDrawableObject.get(mapKey).setScaling(scaling);
+		}
+
+	}
 	
 }

@@ -22,6 +22,9 @@ public class Map {
 /** --------------- ATTRIBUTES --------------- */
 	public Case m_map[][];
 	
+	private int m_lines;
+	private int m_colonnes;
+	
 	private static final int d_lampe = 3;
 	private static final int d_paint = 0;
 	private static final int d_for = 1;
@@ -32,9 +35,11 @@ public class Map {
 	public Map(Character robb, Character robs){
 		MapLoader ml = new MapLoader();
 		Vector2i size = MapLoader.mapSize();
+		this.m_lines = size.x;
+		this.m_colonnes = size.y;
 		m_map = new Case[size.x][size.y];
 		ml.character(robb, robs);
-		System.out.println("MAIN : " +robb.getPosition().x + " "+robb.getPosition().y);
+		System.out.println("MAIN : " + robb.getPosition().x + " " + robb.getPosition().y);
 		createMap(ml,robb,robs);
 	}
 /** ---------------- METHODS ----------------- */
@@ -160,7 +165,7 @@ public class Map {
 		return this.m_map;
 	}
 	
-public Vector2i getPointer(Color c){
+	public Vector2i getPointer(Color c){
 		
 		for(int i=0; i<m_map.length; i++){
 			for(int j=0; j<m_map[i].length;j++){
@@ -173,7 +178,22 @@ public Vector2i getPointer(Color c){
 			}
 		}
 
-		return null;
-		
+		return null;	
 	}
+	
+	public Vector2f getMapSize() {
+		return new Vector2f(250f - (m_lines-1) * 78/2f, 92);
+		//return new Vector2f(250, 92);
+	}
+	
+	public void setScale(Vector2f scaling) {
+		for (int i = 0; i < m_map.length; i++) {
+			for (int j = 0; j < m_map[i].length; j++) {
+				if (m_map[i][j] != null) {
+					m_map[i][j].setScaling(scaling);
+				}
+			}
+		}
+	}
+
 }

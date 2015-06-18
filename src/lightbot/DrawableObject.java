@@ -103,4 +103,13 @@ public abstract class DrawableObject {
 		this.getSprite().move(dep);
 	}
 	
+	public void setScaling(Vector2f scaling) {
+		this.getSprite().setScale(scaling);
+		//this.getSprite().s
+		/*Vector2f ancient = new Vector2f(this.getSprite().getGlobalBounds().height , this.getSprite().getGlobalBounds().width);
+		Vector2f newS = new Vector2f(this.getSprite().getLocalBounds().height,this.getSprite().getLocalBounds().width);
+		Vector2f diff = Vector2f.componentwiseDiv(ancient, newS);
+		this.getSprite().setPosition(this.getSprite().getPosition().x*diff.x, this.getSprite().getPosition().y * diff.y);
+		*/
+	}
 }

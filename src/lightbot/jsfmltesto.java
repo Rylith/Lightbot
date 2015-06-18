@@ -65,7 +65,17 @@ public class jsfmltesto {
         robs.setOrientation(Character.Orientation.Right);
         Map testo = new Map(robb,robs);
         Engine eng = new Engine(testo);
+        //testo.setScale(new Vector2f(0.75f, 0.75f));
         
+        Texture m_tileSet = new Texture();
+		try {
+			m_tileSet.loadFromFile(Paths.get("HautCarte.png"));
+			m_tileSet.setSmooth(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Sprite m_sprite = new Sprite(m_tileSet);
+		m_sprite.setPosition(testo.getMapSize());
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         /*Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
         robot.setOrientation(Character.Orientation.Up);
@@ -81,8 +91,9 @@ public class jsfmltesto {
             fenetre.draw(buttest.getSprite());
             fenetre.draw(butturn.getSprite());
             fenetre.draw(butallumer.getSprite());
-
+            
             testo.drawMap(fenetre);
+            fenetre.draw(m_sprite);
 
             // On gère les événements
             fenetre.display();
