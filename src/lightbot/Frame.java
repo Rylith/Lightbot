@@ -39,6 +39,12 @@ public class Frame extends Component {
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
+	
+	/** Constructeur de Frame
+	 * @param tilePath
+	 * @param position
+	 * @param type
+	 */
 	public Frame(String tilePath,Vector2f position, FrameType type) {
 		super(tilePath,position);
 		super.setVisibility(true); //Les frames sont visibles par default
@@ -64,7 +70,9 @@ public class Frame extends Component {
 	
 /** ---------------- METHODS ----------------- */	
 	
-	/** Ajout d'un component a la fin de la liste d'odre */
+	/** Ajout d'un component a la fin de la liste d'odre
+	 * @param c
+	 */
 	public void addComponent(Component c){
 		if (m_contain.isEmpty()) {
 			c.setPosition(new Vector2f(this.getSprite().getPosition().x + 46.0f , this.getSprite().getPosition().y + 8.0f));
@@ -81,13 +89,15 @@ public class Frame extends Component {
 	}
 	
 	
-	/** Supprime le component a la fin de la liste d'ordre */
+	/** Supprime le component a la fin de la liste d'ordre
+	 */
 	public void popComponent(){
 		m_contain.remove(m_contain.size()-1);
 	}
 	
 	
-	/** Draw l'ensemble des components contenu dans la liste d'ordre */
+	/** Draw l'ensemble des components contenu dans la liste d'ordre
+	 */
 	public void draw(RenderWindow window){
 		super.draw(window);
 		for (int i = 0 ; i < m_contain.size() ; i++){
@@ -96,20 +106,25 @@ public class Frame extends Component {
 	}
 	
 	
-	/** Indique si on a clique dans le sprite de la frame */
+	/** Indique si on a clique dans le sprite de la frame
+	 * @param position
+	 * @return
+	 */
 	public boolean isClicked(Vector2i position){
 		return super.getSprite().getGlobalBounds().contains(position.x, position.y);
 	}
 	
 	
-	/** Retourne l'etat d'activation de la frame */
+	/** Retourne l'etat d'activation de la frame
+	 * @return m_active
+	 */
 	public boolean isActive(){
 		return m_active;
 	}
 	
 	
 	/** Desactive/Active la frame
-	 * @info : false : Desactive | true : Active
+	 * @param i : false : Desactive | true : Active
 	 */
 	public void ActiveFrame(boolean i){
 		if (i == false) {

@@ -67,7 +67,7 @@ public class Button extends Component{
 	
 /** -------------- CONSTRUCTORS -------------- */	
 	
-	/** Constructeur de la class Button
+	/** Constructeur de Button
 	 * @param tilePath
 	 * @param position
 	 * @param type
@@ -193,14 +193,25 @@ public class Button extends Component{
 /** ---------------- METHODS ----------------- */
 	
 	
+	/** Retourne la couleur de l'objet
+	 * @return m_color
+	 */
+	public Color getColor() {
+		return m_color;
+	}
+	
+	
 	/** Indique si l'on a clique sur le sprite du bouton 
+	 * @param position
+	 * @return boolean
 	 */
 	public boolean isClicked(Vector2i position){
 		return super.getSprite().getGlobalBounds().contains(position.x, position.y);
 	}
 	
 	
-	/** Indiqque si le bouton est pressse (active)
+	/** Indique si le bouton est pressse (active)
+	 * @return m_active
 	 */
 	public boolean isActive(){
 		return m_active;
@@ -208,7 +219,7 @@ public class Button extends Component{
 		
 	
 	/** Desactive/Active le bouton (mise a jours du sprite)
-	 * @info : false : bouton non enfonce | true : bouton enfonce
+	 * @param i : false si bouton non enfonce | true si bouton enfonce
 	 */
 	public void ActiveButton(boolean i) {
 		if (i == false) { //Bouton non enfonce
@@ -313,7 +324,7 @@ public class Button extends Component{
 	
 	
 	/** Mise a jours des sprites en fonction de la couleur des instructions
-	 * Color.GREY / Color.MAGENTA / Color.CYAN
+	 * @param c : Color.GREY / Color.MAGENTA / Color.CYAN
 	 */
 	public void setColor(Color c){
 		m_color = c;
@@ -471,8 +482,8 @@ public class Button extends Component{
 	
 	
 	/** Mise a jours des sprites en fonction de la couleur des pointeurs
-	 * @param couleur du pointeur : Color.YELLOW , Color.RED , Color.BLUE , Color.GREEN
-	 * @param couleur de l'instruction : Color.GREY , Color.MAGENTA , Color.CYAN
+	 * @param colorPointeur : Color.YELLOW , Color.RED , Color.BLUE , Color.GREEN
+	 * @param colorOrder : Color.GREY , Color.MAGENTA , Color.CYAN
 	 */
 	public void setColorPointeur(Color colorPointeur , Color colorOrder){
 		if (colorOrder == Color.MAGENTA) {
