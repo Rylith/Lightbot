@@ -38,6 +38,7 @@ public abstract class DrawableObject {
 		m_tileSet = new Texture();
 		try {
 			m_tileSet.loadFromFile(Paths.get(tilePath));
+			m_tileSet.setSmooth(true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

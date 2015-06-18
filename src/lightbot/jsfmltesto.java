@@ -56,6 +56,7 @@ public class jsfmltesto {
         Button butturn = new Button("action.png", new Vector2f(50+72, 399), Button.ButtonType.TurnRight, true);
         Button butjump = new Button("action.png", new Vector2f(50+144, 399), Button.ButtonType.Jump, true);
         Button butallumer = new Button("action.png", new Vector2f(50+144+72, 399), Button.ButtonType.Light, true);
+        Button buttelep = new Button("action.png", new Vector2f(50+288, 399), Button.ButtonType.UseP, true);
 
         
         Character robb = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
@@ -111,6 +112,10 @@ public class jsfmltesto {
                 	if (butjump.isClicked(mouse_pos)) {
                 		Order jump = new Jump(robb, eng);
                 		jump.executer();
+                	}
+                	if (buttelep.isClicked(mouse_pos)) {
+                		Order usep = new AccessPointer(robb, eng, Color.BLUE);
+                		usep.executer();
                 	}
                 }
             }

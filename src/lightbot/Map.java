@@ -84,8 +84,10 @@ public class Map {
 						
 						if (caseElement.getChild("character") != null) {
 							if (caseElement.getChild("character").getAttributeValue("type").equals("basic")) {
+								robb.setHeight(h);
 								 m_map[i][j].addObject(d_charac, robb);
 							} else {
+								robs.setHeight(h);
 								m_map[i][j].addObject(d_charac, robs);
 							}
 						}

@@ -21,7 +21,7 @@ public class MapLoader {
 		//On crée une instance de SAXBuilder
 		SAXBuilder sxb = new SAXBuilder();
 		try {
-			document = sxb.build(new File("use_pointeur_lvl_1.xml"));
+			document = sxb.build(new File("test2.xml"));
 		}
 		catch(Exception e) {
 			
