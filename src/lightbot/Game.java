@@ -16,6 +16,19 @@ public class Game {
 	
 /** -------------- CONSTRUCTORS -------------- */		
 	
+	public Game(RenderWindow window, Engine engine, Character basicbot){
+		m_window = window;
+		m_engine = engine;
+		m_character.put("BasicBot", basicbot);
+	}
+	
+	public Game(RenderWindow window, Engine engine, Character basicbot, Character smartbot){
+		m_window = window;
+		m_engine = engine;
+		m_character.put("BasicBot", basicbot);
+		m_character.put("SmartBot", smartbot);
+	}
+	
 	
 /** ---------------- METHODS ----------------- */
 	
