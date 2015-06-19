@@ -248,7 +248,7 @@ public class Game {
 	public void setStateSimulation(boolean state) {
 		m_runSimulation = state;
 		if(!m_runSimulation) {
-		//	resetGame();
+			resetGame();
 		}
 	}
 	
