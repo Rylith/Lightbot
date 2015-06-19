@@ -11,13 +11,16 @@ import lightbot.Button.ButtonType;
 import lightbot.Frame.FrameType;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.FloatRect;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.graphics.View;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
+import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.Window;
@@ -30,7 +33,7 @@ public class Controler {
 	// EMPLACEMENT RESSOURCES GRAPHIQUE
 	private final static String TILEPATHACTION = "ressource/Sprite/action.png";
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
-	private final static String TILEPATHBACKGROUND = "ressource/Sprite/back.jpg";
+	private final static String TILEPATHBACKGROUND = "ressource/Sprite/backSur.jpg";
 	
 	// POSITION DES ORDRES //
 	private final static Vector2f POSINITBUTTON = new Vector2f(58.0f,989.0f);
@@ -72,6 +75,9 @@ public class Controler {
 	// POSITION BACK //
 	private final static Vector2f POSINITBACKORDER = new Vector2f(24.0f,949.0f);
 	private final static Vector2f POSINITBACKMAIN = new Vector2f(1197.0f,97.0f);	
+	
+	// TAILLE INITIAL DE LA FENETRE
+	private final static Vector2i SIZEINITWINDOW = new Vector2i(1920,1080);
 
 
 /** --------------- ATTRIBUTES --------------- */        
@@ -158,6 +164,8 @@ public class Controler {
 	 * @param screenSize
 	 */
 	public void reloadInterface(Vector2i screenSize) {
+		
+		
 		m_screenSize = screenSize;
 		Texture background = new Texture();
 		try {
@@ -167,10 +175,10 @@ public class Controler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		m_decal = new Vector2f(1920.0f - m_screenSize.x,1080.0f - m_screenSize.y);
-		m_scale = new Vector2f(m_screenSize.x / 1920.0f, m_screenSize.y / 1080.0f);
-		
+		m_decal = new Vector2f(((float)SIZEINITWINDOW.x) - m_screenSize.x,((float)SIZEINITWINDOW.y) - m_screenSize.y);
+		m_scale = new Vector2f(m_screenSize.x / ((float)SIZEINITWINDOW.x), m_screenSize.y / ((float)SIZEINITWINDOW.y));
 		m_background.setScale(m_scale);
+		
 		// BackOrder & BackMain
 		m_backOrder = new Component(TILEPATHFRAME+"BackOrder.png",Vector2f.sub(POSINITBACKORDER,new Vector2f(0.0f,m_decal.y)));
 		m_backOrder.setScale(m_scale);
@@ -462,7 +470,6 @@ public class Controler {
 	public void update(){
 		
         /** On affiche les components de fond */
-
 		m_game.getWindow().draw(m_background);
 		m_backMain.draw(m_game.getWindow());
 		m_backOrder.draw(m_game.getWindow());
@@ -628,6 +635,18 @@ public class Controler {
         	// Si l'utilisateur clique sur la croix rouge : on ferme la fenetre
             if (event.type == Event.Type.CLOSED) {
                 m_game.getWindow().close();
+            }
+            
+            if (event.type == Event.Type.RESIZED) {
+            	System.out.println("New Size x = " + event.asSizeEvent().size.x + " y = " + event.asSizeEvent().size.y);
+            	m_game.setView(event.asSizeEvent().size);
+            	reloadInterface(event.asSizeEvent().size);
+            }
+            
+            if (event.type == Event.Type.KEY_PRESSED) {
+            	if (event.asKeyEvent().key == Key.ESCAPE) {
+            		m_game.getWindow().close();
+            	}
             }
             
             // Si l'utilisateur clique on recupere la position et on regarde s'il s'agit d'un bouton ou d'une view

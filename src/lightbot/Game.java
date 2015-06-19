@@ -6,7 +6,11 @@ import lightbot.Button.ButtonType;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.View;
+import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
+import org.jsfml.window.VideoMode;
+import org.jsfml.window.WindowStyle;
 
 public class Game {
 
@@ -86,13 +90,20 @@ public class Game {
 		m_map.drawMap(m_window);
 	}
 	
+	public void setView(Vector2i size){
+		View view = new View();
+		view.setSize(new Vector2f(size.x,size.y));
+		view.setCenter(new Vector2f(size.x/2.0f,size.y/2.0f));
+		m_window.setView(view);
+	}
+	
 	/** Retourne engine
 	 * @return m_engine
 	 */
 	public Engine getEngine(){
 		return m_engine;
 	}
-	
+
 	
 	/** Creer un order a partir d'un ButtonType
 	 * @param type
