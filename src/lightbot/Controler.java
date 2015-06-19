@@ -382,6 +382,7 @@ public class Controler {
 				// initialisation des cadres dans le main du SmartBot
 				// initialisation des cadres dans p1 du SmartBot
 				// initialisation des cadres dans p2 du SmartBot
+				System.out.println("Limit de " + currentChar.toString() + " pour la frame " + j + "est de : " + currentChar.getLimitOrder().get(j) );
 				for (int i = 0 ; i < currentChar.getLimitOrder().get(j) ; i++) {
 					if((i % 8 == 0) && i != 0 ) {
 						pos = new Vector2f(realInitPosCadreMain.x,pos.y + realSizeCadreOrder.y + realDecalCadreMain.y);

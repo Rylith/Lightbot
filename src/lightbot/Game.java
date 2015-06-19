@@ -47,13 +47,16 @@ public class Game {
 		m_window = window;
 		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
 		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
-		m_map = new Map(m_character.get("BasicBot"),m_character.get("SmartBot"),LEVELPATH);
-		m_engine = new Engine(m_map);
-		//m_map = new Map();
-		//m_engine = new Engine();
-		getCharacter("BasicBot").setLimitOrder(0, 17);
-		getCharacter("BasicBot").setLimitOrder(1, 3);
-		getCharacter("SmartBot").setLimitOrder(0, 6);
+		//m_map = new Map(m_character.get("BasicBot"),m_character.get("SmartBot"),LEVELPATH);
+		//m_engine = new Engine(m_map);
+		m_map = new Map();
+		m_engine = new Engine();
+		
+		//TODO A CHANGER
+		//getCharacter("BasicBot").setLimitOrder(0, 18);
+		//getCharacter("BasicBot").setLimitOrder(1, 3);
+		//getCharacter("BasicBot").setLimitOrder(2, 4);
+		//getCharacter("SmartBot").setLimitOrder(0, 7);
 	}
 	
 	/** Constructeur de Game
@@ -64,7 +67,7 @@ public class Game {
 	 */
 	public Game(RenderWindow window, Engine engine, Character basicbot, Character smartbot){
 		m_window = window;
-		m_map = new Map(basicbot,smartbot,LEVELPATH);
+		m_map = new Map();
 		m_engine = new Engine(m_map);
 		m_character.put("SmartBot", smartbot);
 		m_character.put("BasicBot", basicbot);
@@ -101,6 +104,11 @@ public class Game {
 		view.setSize(new Vector2f(size.x,size.y));
 		view.setCenter(new Vector2f(size.x/2.0f,size.y/2.0f));
 		m_window.setView(view);
+	}
+	
+	public void setMap(String mapPath){
+		m_map.setLevel(m_character.get("BasicBot"), m_character.get("SmartBot"), mapPath);
+		m_engine.setMap(m_map);
 	}
 	
 	/** Retourne engine
@@ -193,7 +201,7 @@ public class Game {
 				e.printStackTrace();
 			}
 			m_character.get(character).addOrder(proc, order);
-			//System.out.println("Order ajoute");
+			System.out.println("On ajoute " + order.toString() + "à la proc" + proc);
 			return true;
 		}
 		else { //la limite d'ordre est atteinte

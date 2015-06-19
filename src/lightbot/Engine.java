@@ -223,6 +223,7 @@ public class Engine {
 			
 			getCurrentCase(p).delObject(d_charac);
 			updatePostion(p);
+			//p.animateMove();
 			getCurrentCase(p).addObject(d_charac, p);
 			return true;
 		}

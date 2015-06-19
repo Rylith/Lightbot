@@ -8,6 +8,7 @@ import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
@@ -46,6 +47,7 @@ public class Character extends DrawableObject{
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
 	private Vector<Boolean> m_currentProc; //vector indiquant la procedure active
 	private Color color;
+	private boolean m_animate = false;
 
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -227,6 +229,62 @@ public class Character extends DrawableObject{
     		}
     	}
 	}
+	
+	public void setAnimateState(boolean state){
+		m_animate = state;
+	}
+	
+	public boolean getAnimateState() {
+		return m_animate;
+	}
+	
+	/*public void animateMove() {
+		while(m_animate) {
+    		int animCount = 0;
+    		int frame = 3;
+    		Clock animClock = new Clock();
+    		while (animCount < 16) {
+    			if (animClock.getElapsedTime().asMilliseconds() >= 50) {
+               	 //Restart the clock
+                   animClock.restart();
+
+                   //Increase the frame counter by one
+                   frame--;
+
+                   if(frame == 0){
+                   	frame = 3;
+                   }
+                   switch (getOrientation())
+           			{
+                       case Up:
+                    	   update(, new Vector2f(2.5625f,-1.28125f));
+                       break;
+                       case Down:
+                    	   update(fenetre, new Vector2f(-2.5625f,1.28125f));
+                       break;
+                       case Left:
+                    	   update(fenetre, new Vector2f(-2.5625f,-1.28125f));
+                       break;
+                       case Right:
+                    	   update(fenetre, new Vector2f(2.5625f,1.28125f));
+                       break;
+                   }
+                   
+                   robot.getSprite().setTextureRect(new IntRect(frame * 80, robot.getSprite().getTextureRect().top, 80, 100));
+                   animCount++;
+                   testo.drawMap(fenetre,robot);
+                   fenetre.draw(buttest.getSprite());
+                   fenetre.draw(butturn.getSprite());
+                   fenetre.draw(butallumer.getSprite());
+                  // fenetre.draw(robot.getSprite());
+                   fenetre.display();
+                   fenetre.clear(Color.WHITE);
+    				}    
+    			}
+    		robot.updatePostion();
+    		}
+		}
+	}*/
 	
 	/** Dessine le caractere dans la fenetre */
 	public void drawCharac(RenderWindow window){

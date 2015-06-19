@@ -101,8 +101,9 @@ public class jsfmltesto {
     				int currentMain = 0;
     				int currentP1 = -1;
     				int currentP2 = -1;
+    				int nbFor = 0;
     				while(orderExist) {
-    					System.out.println("Current Simu = " + currentSimulation + " Main : " + currentMain + " P1 : " + currentP1 + " P2 : " + currentP2 + " BackProcP1 : " + backProcP1 + " BackProcP2" + backProcP2);
+    					
     					switch(game.getCharacter(mapKey).getProcActive()) {
     					case 0:
     						currentSimulation = currentMain;
@@ -113,6 +114,7 @@ public class jsfmltesto {
     					case 2:
     						currentSimulation = currentP2;
     					}
+    					System.out.println("Current Simu = " + currentSimulation + " Main : " + currentMain + " P1 : " + currentP1 + " P2 : " + currentP2 + " BackProcP1 : " + backProcP1 + " BackProcP2" + backProcP2);
     					game.getWindow().display();
 			        	game.getWindow().clear();
 						Clock clock = new Clock();
@@ -122,11 +124,49 @@ public class jsfmltesto {
 						//System.out.println("List proc active " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size());
 						if(game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof Procedure1) {
 							backProcP1 = game.getCharacter(mapKey).getProcActive();
+							currentP1 = -1;
+							switch(backProcP1) {
+							case 0:
+								currentMain++;
+								break;
+							case 1:
+								currentP1++;
+								break;
+							case 2:
+								currentP2++;
+								break;
+							}
 						} else if (game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof Procedure2) {
 							backProcP2 = game.getCharacter(mapKey).getProcActive();
+							currentP2 = -1;
+							switch(backProcP2) {
+							case 0:
+								currentMain++;
+								break;
+							case 1:
+								currentP1++;
+								break;
+							case 2:
+								currentP2++;
+								break;
+							}
+						} else if (game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof For) {
+							nbFor = game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).executer();
+							switch(game.getCharacter(mapKey).getProcActive()) {
+							case 0:
+								currentMain++;
+								break;
+							case 1:
+								
+								currentP1++;
+								break;
+							case 2:
+								currentP2++;
+								break;
+							}
 						}
+						System.out.println("On execute : " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).toString());
 						game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).executer();
-    					System.out.println("On execute : " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).toString());
     					control.update();
 						control.supervise();
 						if(!game.getStateSimulation()) {
@@ -135,29 +175,48 @@ public class jsfmltesto {
 						while(clock.getElapsedTime().asSeconds() < 0.5f ) {
 						}
     					
-    					switch(game.getCharacter(mapKey).getProcActive()) {
-    					case 0:
-    						currentMain++;
-    						//System.out.println("Size : " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size());
-    						if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    							orderExist = false;
-    						}
-    						break;
-    					case 1:
-    						currentP1++;
-    						if(currentP1 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    							currentP1 = 0;
-    							game.getCharacter(mapKey).activeProc(backProcP1);
-
-    						}
-    						break;
-    					case 2:
-    						currentP2++;
-    						if(currentP2 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    							currentP2 = 0;
-    							game.getCharacter(mapKey).activeProc(backProcP2);
-    						}
-    					}
+						if(nbFor > 0) {
+							nbFor--;
+						} else {
+	    					switch(game.getCharacter(mapKey).getProcActive()) {
+	    					case 0:
+	    						currentMain++;
+	    						if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
+	    							orderExist = false;
+	    						}
+	    						//System.out.println("Size : " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size());
+	    						break;
+	    					case 1:
+	    						currentP1++;
+	    						if(currentP1 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
+	    							currentP1 = -1;
+	    							System.out.println("Fin de P1 on revient en " + backProcP1);
+	    							game.getCharacter(mapKey).activeProc(backProcP1);
+	    							if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
+	        							orderExist = false;
+	        						}
+	    						}
+	    						break;
+	    					case 2:
+	    						currentP2++;
+	    						if(currentP2 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
+	    							currentP2 = -1;
+	    							System.out.println("Fin de P2 on revient en " + backProcP2);
+	    							game.getCharacter(mapKey).activeProc(backProcP2);
+	    							if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
+	        							orderExist = false;
+	        						}
+	    							if(currentP1 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
+	        							currentP1 = -1;
+	        							System.out.println("Fin de P1 on revient en " + backProcP1);
+	        							game.getCharacter(mapKey).activeProc(backProcP1);
+	        							if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
+	            							orderExist = false;
+	            						}
+	        						}
+	    						}
+	    					}
+	    				}
     				}
     			}
     			System.out.println("End of Simulation");
@@ -165,6 +224,10 @@ public class jsfmltesto {
     			//	System.out.println("FELICITATION !!");
     			//}
     			game.setStateSimulation(false);
+    			/*for(String mapKey : game.getCharacter().keySet()) {
+    				ListeOrdre listorder = new ListeOrdre(game.getCharacter(mapKey),game.getEngine(), game.getCharacter(mapKey).getListOrder());
+    				
+    			}*/
     		}
     		game.getWindow().display();
         	game.getWindow().clear();
