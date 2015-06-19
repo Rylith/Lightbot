@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import lightbot.Button.ButtonType;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.View;
 import org.jsfml.system.Clock;
@@ -201,6 +202,26 @@ public class Game {
 		}	
 	}
 	
+	/*public void animation(Order ordre,Character rob) {
+		int decale_y = 0;
+		switch (rob.getOrientation())
+		{
+	        case Down:
+	        	decale_y = 1;
+	        break;
+	        case Left:
+	        	decale_y = 2;
+	        break;
+	        case Right:
+	        	decale_y = 3;
+	        break;
+	        case Default:
+	        break;
+		}
+		
+		
+		
+	}*/
 	public void removeOrder(int proc, String character, int posOrder) {
 		if (posOrder >= 0 && posOrder < m_character.get(character).getListOrder().get(proc).size()) {
 			m_character.get(character).removeOrder(proc, posOrder);

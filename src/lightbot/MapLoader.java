@@ -47,13 +47,12 @@ public class MapLoader {
 		return racine.getChild("character").getChild("orders").getText();
 	}
 	
-	public void character(Character robb, Character robs){
-		int x = Integer.parseInt(racine.getChild("character").getAttributeValue("pos_x"));
-		int y = Integer.parseInt(racine.getChild("character").getAttributeValue("pos_y"));
+	public void character(Character robb, Character robs, Vector2i b_pos_init, Vector2i s_pos_init) {
 		List<Element> listChar = racine.getChildren("character");
 		for (int j = 0; j < listChar.size(); j++) {
 			if(listChar.get(j).getAttributeValue("type").equals("basic")) {
-				robb.update(new Vector2i(x,y));
+				b_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
+				robb.update(b_pos_init);
 				
 				switch (listChar.get(j).getAttributeValue("orientation")){
 				 case "up" : robb.setOrientation(Character.Orientation.Up); break;
@@ -61,21 +60,68 @@ public class MapLoader {
 				 case "left": robb.setOrientation(Character.Orientation.Left); break;
 				 default  : robb.setOrientation(Character.Orientation.Down); break;
 				}
-				String orders = listChar.get(j).getChild("orders").getText();
-				String[] parts = orders.split(" ");
-				System.out.println("Orders: ");
-				for (int k = 0; k < parts.length; k++) {
-					System.out.println(parts[k]);
-				}
+				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("main").getText()));
+				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
+				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
+				
 			} else {
-				robs.update(new Vector2i(x,y));
+				s_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
+				robs.update(s_pos_init);
 				switch (listChar.get(j).getAttributeValue("orientation")){
-				 case "Up" : robs.setOrientation(Character.Orientation.Up); break;
-				 case "Right": robs.setOrientation(Character.Orientation.Right); break;
-				 case "Left": robs.setOrientation(Character.Orientation.Left); break;
+				 case "up" : robs.setOrientation(Character.Orientation.Up); break;
+				 case "right": robs.setOrientation(Character.Orientation.Right); break;
+				 case "left": robs.setOrientation(Character.Orientation.Left); break;
 				 default  : robs.setOrientation(Character.Orientation.Down); break;
 				}
+				robs.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("main").getText()));
+				robs.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
+				robs.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
 				String orders = listChar.get(j).getChild("orders").getText();
+			}
+		}
+	}
+	
+	public void getPossibleOrders(List<Button.ButtonType> b_possible, List<Button.ButtonType> s_possible) {
+		List<Element> listChar = racine.getChildren("character");
+		for (int j = 0; j < listChar.size(); j++) {
+			if(listChar.get(j).getAttributeValue("type").equals("basic")) { 
+				String orders = listChar.get(j).getChild("orders").getText();
+				String parts[] = orders.split(" ");
+				for (int i = 0; i < parts.length; i++) {
+					switch (parts[i]){
+						 case "move": b_possible.add(Button.ButtonType.Move); break;
+						 case "turnr": b_possible.add(Button.ButtonType.TurnRight); break;
+						 case "turnl": b_possible.add(Button.ButtonType.TurnLeft); break;
+						 case "jump": b_possible.add(Button.ButtonType.Jump); break;
+						 case "light": b_possible.add(Button.ButtonType.Light); break;
+						 case "for": b_possible.add(Button.ButtonType.For); break;
+						 case "paint": b_possible.add(Button.ButtonType.Paint); break;
+						 case "douche": b_possible.add(Button.ButtonType.RemoveColor); break;
+						 case "p1": b_possible.add(Button.ButtonType.P1); break;
+						 case "p2": b_possible.add(Button.ButtonType.P2); break;
+						 case "p_pointeur": b_possible.add(Button.ButtonType.PutP); break;
+						 case "a_pointeur": b_possible.add(Button.ButtonType.UseP); break;
+					}
+				}
+			} else {
+			String orders = listChar.get(j).getChild("orders").getText();
+			String parts[] = orders.split(" ");
+				for (int i = 0; i < parts.length; i++) {
+					switch (parts[i]) {
+						 case "move": b_possible.add(Button.ButtonType.Move); break;
+						 case "turnr": b_possible.add(Button.ButtonType.TurnRight); break;
+						 case "turnl": b_possible.add(Button.ButtonType.TurnLeft); break;
+						 case "jump": b_possible.add(Button.ButtonType.Jump); break;
+						 case "light": b_possible.add(Button.ButtonType.Light); break;
+						 case "for": b_possible.add(Button.ButtonType.For); break;
+						 case "paint": b_possible.add(Button.ButtonType.Paint); break;
+						 case "douche": b_possible.add(Button.ButtonType.RemoveColor); break;
+						 case "p1": b_possible.add(Button.ButtonType.P1); break;
+						 case "p2": b_possible.add(Button.ButtonType.P2); break;
+						 case "p_pointeur": b_possible.add(Button.ButtonType.PutP); break;
+						 case "a_pointeur": b_possible.add(Button.ButtonType.UseP); break;
+					}
+				}	
 			}
 		}
 	}

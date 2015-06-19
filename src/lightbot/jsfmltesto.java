@@ -25,6 +25,9 @@ public class jsfmltesto {
 	public static void drawCase(RenderWindow fenetre,Case case1){                      
         fenetre.draw(case1.getSprite());
 	}
+	
+	private final static String LEVELPATH = "test2.xml";
+	
     public static void main(String[] args) {
  
         RenderWindow fenetre = new RenderWindow();
@@ -58,10 +61,10 @@ public class jsfmltesto {
         //Map testo = new Map(rob);
         //Engine eng = new Engine(testo);
         Game game = new Game(fenetre);
+        game.setMap(LEVELPATH);
         //Animation animate = new Animation:
         Controler control = new Controler(screenSize,game);
 
-        
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         /*Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
         robot.setOrientation(Character.Orientation.Up);
@@ -93,12 +96,13 @@ public class jsfmltesto {
     				}
     				//Vector<Vector<Order>> listOrder = game.getCharacter(mapKey).getListOrder();
     				int currentSimulation = 0;
-    				int backProc = 0;
+    				int backProcP1 = 0;
+    				int backProcP2 = 0;
     				int currentMain = 0;
     				int currentP1 = -1;
     				int currentP2 = -1;
     				while(orderExist) {
-    					System.out.println("Current Simu = " + currentSimulation + " Main : " + currentMain + " P1 : " + currentP1 + " P2 : " + currentP2);
+    					System.out.println("Current Simu = " + currentSimulation + " Main : " + currentMain + " P1 : " + currentP1 + " P2 : " + currentP2 + " BackProcP1 : " + backProcP1 + " BackProcP2" + backProcP2);
     					switch(game.getCharacter(mapKey).getProcActive()) {
     					case 0:
     						currentSimulation = currentMain;
@@ -113,10 +117,14 @@ public class jsfmltesto {
 			        	game.getWindow().clear();
 						Clock clock = new Clock();
 						clock.restart();
-						System.out.println("CurrentSimu : " + currentSimulation);
+						//System.out.println("CurrentSimu : " + currentSimulation);
 						System.out.println("Proc Active : " + game.getCharacter(mapKey).getProcActive());
 						//System.out.println("List proc active " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size());
-						backProc = game.getCharacter(mapKey).getProcActive();
+						if(game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof Procedure1) {
+							backProcP1 = game.getCharacter(mapKey).getProcActive();
+						} else if (game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof Procedure2) {
+							backProcP2 = game.getCharacter(mapKey).getProcActive();
+						}
 						game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).executer();
     					System.out.println("On execute : " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).toString());
     					control.update();
@@ -139,7 +147,7 @@ public class jsfmltesto {
     						currentP1++;
     						if(currentP1 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
     							currentP1 = 0;
-    							game.getCharacter(mapKey).activeProc(backProc);
+    							game.getCharacter(mapKey).activeProc(backProcP1);
 
     						}
     						break;
@@ -147,7 +155,7 @@ public class jsfmltesto {
     						currentP2++;
     						if(currentP2 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
     							currentP2 = 0;
-    							game.getCharacter(mapKey).activeProc(backProc);
+    							game.getCharacter(mapKey).activeProc(backProcP2);
     						}
     					}
     				}

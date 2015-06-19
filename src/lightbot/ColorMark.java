@@ -58,7 +58,7 @@ public class ColorMark extends DrawableObject{
 			getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
 		}
 		else if (color == Color.MAGENTA) {
-			getSprite().setTextureRect(new IntRect(SIZESPRITEX, SIZESPRITEY, SIZESPRITEX, SIZESPRITEY));
+			getSprite().setTextureRect(new IntRect(SIZESPRITEX, 0, SIZESPRITEX, SIZESPRITEY));
 		}
 		else {
 			try {
