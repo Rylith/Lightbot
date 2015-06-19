@@ -607,6 +607,7 @@ public class Controler {
 			Button newBut = new Button(TILEPATHACTION,getRealPosOrderAt(pos, frameType),listOrder.get(next).getType(),false);
 			newBut.setScale(m_backMain.getScale());
 			newBut.setColor(listOrder.get(next).getColor());
+			newBut.setColorPointeur(listOrder.get(next).getColorPointer());
 			listOrder.set(pos, newBut);
 			//System.out.println("On set " + listOrder.get(next).getType().name() + "a la pos " + pos);
 			pos++;
