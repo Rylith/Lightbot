@@ -35,18 +35,11 @@ public class For extends Order {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-					
-			}
-		//}
-		/*else {
-			try {
-				throw new Exception("Pas possible d'utiliser le for : couleurs  differentes");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 				
-		}*/
+				
+			}
+		
+		
 		return engine.get_nb_for();
 	}
 }

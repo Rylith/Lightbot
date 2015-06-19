@@ -24,6 +24,12 @@ public class Case extends DrawableObject {
 	
 	private int m_value; //valeur de la case
 	private HashMap<Integer,DrawableObject> m_mapDrawableObject ;
+	
+	private static final int d_lampe = 3;
+	private static final int d_paint = 0;
+	private static final int d_for = 1;
+	private static final int d_pointeur = 2;
+	private static final int d_charac = 4;
 
 	
 	
@@ -49,7 +55,12 @@ public class Case extends DrawableObject {
 
 	/** Retourne le nombre de la case */
 	public int getValue(){
-		return m_value;
+		
+			if((this.getMapDO().containsKey(d_for))){
+							
+				return  ((NumberMark) this.getMapDO().get(d_for)).getValue();
+			}				
+			return 0;
 	}
 	
 	/** Assigne le nombre a la case */
@@ -123,5 +134,18 @@ public class Case extends DrawableObject {
 		}
 
 	}
+	public Color getColor(){
+			
+		if(this!=null){
+			if((this.getMapDO().containsKey(d_paint))){
+							
+				return this.getMapDO().get(d_paint).getColor();
+			}				
+		}
+		
+		return null;	
+	}
+		
+	
 	
 }
