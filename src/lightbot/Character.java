@@ -13,6 +13,7 @@ import org.jsfml.system.Vector2i;
 
 import lightbot.Move;
 import lightbot.Engine;
+import lightbot.Button.ButtonType;
 
 
 public class Character extends DrawableObject{
@@ -71,6 +72,8 @@ public class Character extends DrawableObject{
 		m_limitOrder = new Vector<Integer>();
 		for(int i=0; i<3; i++){
 			m_limitOrder.add(0);
+			Vector<Order> vec = new Vector<Order>();
+			m_listOrder.add(vec);
 		}
 		m_listPointeur = new Vector<Pointeur>();
 		m_currentProc = new Vector<Boolean>();
@@ -167,6 +170,22 @@ public class Character extends DrawableObject{
 		int lastElem;
 		lastElem = m_listOrder.size();
 		m_listOrder.elementAt(numprocedure).removeElementAt(lastElem);
+	}
+	
+	public void removeOrder(int proc, int pos){
+		int next = pos + 1;
+		//System.out.println("SizeListOrder : " + listOrder.size());
+		while(pos < m_listOrder.get(proc).size() && next  < m_listOrder.get(proc).size()) {/*m_listOrder.get(proc).get(pos) != null && m_listOrder.get(proc).get(next) != null) {*/			
+			m_listOrder.get(proc).set(pos, m_listOrder.get(proc).get(next));
+			//System.out.println("On set " + listOrder.get(next).getType().name() + "a la pos " + pos);
+			pos++;
+			next++;
+		}
+		m_listOrder.get(proc).remove(pos);
+		//m_listOrder.elementAt(proc).removeElementAt(pos);
+		for(int i=0;i<m_listOrder.get(proc).size();i++){
+			System.out.println("Pos : " + i + "Order : " + m_listOrder.get(proc).get(i).toString());
+		}
 	}
 	
 	/** Retourne le pointeur correspondant a la couleur fournit en parametre */

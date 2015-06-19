@@ -33,7 +33,6 @@ public class Button extends Component{
 	
 	
 	public enum ButtonType{
-		Cadre,
 		Move,
 		TurnRight,
 		TurnLeft,
@@ -57,11 +56,13 @@ public class Button extends Component{
 		SmartBot,
 		Run,
 		Stop,
+		Cadre,
 	}
 	
 	private ButtonType m_type; //indique le type de bouton
 	private boolean m_order; //indique si le bouton represente un order
 	private Color m_color; //indique la couleur du bouton
+	private Color m_colorPointeur = Color.GREEN;
 	private boolean m_active; //indique si le bouton est presse
 	
 	
@@ -133,36 +134,43 @@ public class Button extends Component{
 		else if (m_type == ButtonType.PushMagenta){
 			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER), 3*SIZEORDER, SIZEPUSHX, SIZEPUSHY));
 			super.setVisibility(true); //Toujours visible
+			m_color = Color.MAGENTA;
 			m_active = false; 
 		}
 		else if (m_type == ButtonType.PushGrey){
 			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER + SIZEPUSHX), (3*SIZEORDER + SIZEPUSHY), SIZEPUSHX, SIZEPUSHY)); //Sprite bouton enfonce
 			super.setVisibility(true); //Toujours visible
+			m_color = Color.WHITE;
 			m_active = true;
 		}
 		else if (m_type == ButtonType.PushCyan){
 			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER + 2*SIZEPUSHX), 3*SIZEORDER, SIZEPUSHX, SIZEPUSHY));
 			super.setVisibility(true); //Toujours visible
+			m_color = Color.CYAN;
 			m_active = false;
 		}
 		else if (m_type == ButtonType.PushGreen){
 			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER + 3*SIZEPUSHX), (3*SIZEORDER + SIZEPUSHY), SIZEPUSHX, SIZEPUSHY)); //Sprite bouton enfonce
 			super.setVisibility(true); //Toujours visible
+			m_color = Color.GREEN;
 			m_active = true;
 		}
 		else if (m_type == ButtonType.PushYellow){
 			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER + 4*SIZEPUSHX), 3*SIZEORDER, SIZEPUSHX, SIZEPUSHY));
 			super.setVisibility(true); //Toujours visible
+			m_color = Color.YELLOW;
 			m_active = false;
 		}
 		else if (m_type == ButtonType.PushRed){
 			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER + 5*SIZEPUSHX), 3*SIZEORDER, SIZEPUSHX, SIZEPUSHY));
 			super.setVisibility(true); //Toujours visible
+			m_color = Color.RED;
 			m_active = false;
 		}
 		else if (m_type == ButtonType.PushBlue){
 			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER + 6*SIZEPUSHX), 3*SIZEORDER, SIZEPUSHX, SIZEPUSHY));
 			super.setVisibility(true); //Toujours visible
+			m_color = Color.BLUE;
 			m_active = false;
 		}
 		else if (m_type == ButtonType.BasicBot){
@@ -200,6 +208,13 @@ public class Button extends Component{
 		return m_color;
 	}
 	
+	public Color getColorPointer(){
+		return m_colorPointeur;
+	}
+	
+	public ButtonType getType(){
+		return m_type;
+	}
 	
 	/** Indique si l'on a clique sur le sprite du bouton 
 	 * @param position
@@ -371,10 +386,12 @@ public class Button extends Component{
 			}
 			else if (m_type == ButtonType.PutP){
 				super.getSprite().setTextureRect(new IntRect(10*SIZEORDER, 2*SIZEORDER, SIZEORDER, SIZEORDER)); //Sprite Pointeur vert
+				setColorPointeur(m_colorPointeur);
 				m_active = false;
 			}
 			else if (m_type == ButtonType.UseP){
 				super.getSprite().setTextureRect(new IntRect(14*SIZEORDER, 2*SIZEORDER, SIZEORDER, SIZEORDER)); //Sprite Pointeur vert
+				setColorPointeur(m_colorPointeur);
 				m_active = false;
 			}
 		}
@@ -421,10 +438,12 @@ public class Button extends Component{
 			}
 			else if (m_type == ButtonType.PutP){
 				super.getSprite().setTextureRect(new IntRect(10*SIZEORDER, SIZEORDER, SIZEORDER, SIZEORDER)); //Sprite Pointeur vert
+				setColorPointeur(m_colorPointeur);
 				m_active = false;
 			}
 			else if (m_type == ButtonType.UseP){
 				super.getSprite().setTextureRect(new IntRect(14*SIZEORDER, SIZEORDER, SIZEORDER, SIZEORDER)); //Sprite Pointeur vert
+				setColorPointeur(m_colorPointeur);
 				m_active = false;
 			}
 		}
@@ -471,10 +490,12 @@ public class Button extends Component{
 			}
 			else if (m_type == ButtonType.PutP){
 				super.getSprite().setTextureRect(new IntRect(10*SIZEORDER, 0, SIZEORDER, SIZEORDER)); //Sprite Pointeur vert
+				setColorPointeur(m_colorPointeur);
 				m_active = false;
 			}
 			else if (m_type == ButtonType.UseP){
 				super.getSprite().setTextureRect(new IntRect(14*SIZEORDER, 0, SIZEORDER, SIZEORDER)); //Sprite Pointeur vert
+				setColorPointeur(m_colorPointeur);
 				m_active = false;
 			}
 		}
@@ -485,9 +506,10 @@ public class Button extends Component{
 	 * @param colorPointeur : Color.YELLOW , Color.RED , Color.BLUE , Color.GREEN
 	 * @param colorOrder : Color.GREY , Color.MAGENTA , Color.CYAN
 	 */
-	public void setColorPointeur(Color colorPointeur , Color colorOrder){
-		if (colorOrder == Color.MAGENTA) {
-			if (colorPointeur == Color.YELLOW){
+	public void setColorPointeur(Color colorPointeur){
+		m_colorPointeur = colorPointeur;
+		if (getColor() == Color.MAGENTA) {
+			if (m_colorPointeur == Color.YELLOW){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(11*SIZEORDER, SIZEORDER, SIZEORDER, SIZEORDER)); 
 					m_active = false;
@@ -497,7 +519,7 @@ public class Button extends Component{
 					m_active = false;
 				}
 			}
-			else if (colorPointeur == Color.RED){
+			else if (m_colorPointeur == Color.RED){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(12*SIZEORDER, SIZEORDER, SIZEORDER, SIZEORDER)); 
 					m_active = false;
@@ -507,7 +529,7 @@ public class Button extends Component{
 					m_active = false;
 				}
 			}
-			else if (colorPointeur == Color.BLUE){
+			else if (m_colorPointeur == Color.BLUE){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(13*SIZEORDER, SIZEORDER, SIZEORDER, SIZEORDER)); 
 					m_active = false;
@@ -528,8 +550,8 @@ public class Button extends Component{
 				}
 			}
 		}
-		else if (colorOrder == Color.CYAN){
-			if (colorPointeur == Color.YELLOW){
+		else if (getColor() == Color.CYAN){
+			if (m_colorPointeur == Color.YELLOW){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(11*SIZEORDER, 2*SIZEORDER, SIZEORDER, SIZEORDER)); 
 					m_active = false;
@@ -539,7 +561,7 @@ public class Button extends Component{
 					m_active = false;
 				}
 			}
-			else if (colorPointeur == Color.RED){
+			else if (m_colorPointeur == Color.RED){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(12*SIZEORDER, 2*SIZEORDER, SIZEORDER, SIZEORDER)); 
 					m_active = false;
@@ -549,7 +571,7 @@ public class Button extends Component{
 					m_active = false;
 				}
 			}
-			else if (colorPointeur == Color.BLUE){
+			else if (m_colorPointeur == Color.BLUE){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(13*SIZEORDER, 2*SIZEORDER, SIZEORDER, SIZEORDER)); 
 					m_active = false;
@@ -571,7 +593,7 @@ public class Button extends Component{
 			}
 		}
 		else { // Instruction grise
-			if (colorPointeur == Color.YELLOW){
+			if (m_colorPointeur == Color.YELLOW){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(11*SIZEORDER, 0, SIZEORDER, SIZEORDER));
 					m_active = false;
@@ -581,7 +603,7 @@ public class Button extends Component{
 					m_active = false;
 				}
 			}
-			else if (colorPointeur == Color.RED){
+			else if (m_colorPointeur == Color.RED){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(12*SIZEORDER, 0, SIZEORDER, SIZEORDER));
 					m_active = false;
@@ -591,7 +613,7 @@ public class Button extends Component{
 					m_active = false;
 				}
 			}
-			else if (colorPointeur == Color.BLUE){
+			else if (m_colorPointeur == Color.BLUE){
 				if (m_type == ButtonType.PutP){
 					super.getSprite().setTextureRect(new IntRect(13*SIZEORDER, 0, SIZEORDER, SIZEORDER));
 					m_active = false;
