@@ -5,6 +5,7 @@ import java.util.HashMap;
 import lightbot.Button.ButtonType;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 
 public class Game {
@@ -155,7 +156,24 @@ public class Game {
 		}	
 	}
 	
-	/*public void animation(Order ordre) {
+	/*public void animation(Order ordre,Character rob) {
+		int decale_y = 0;
+		switch (rob.getOrientation())
+		{
+	        case Down:
+	        	decale_y = 1;
+	        break;
+	        case Left:
+	        	decale_y = 2;
+	        break;
+	        case Right:
+	        	decale_y = 3;
+	        break;
+	        case Default:
+	        break;
+		}
+		
+		
 		
 	}*/
 	

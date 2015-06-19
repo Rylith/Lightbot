@@ -60,10 +60,9 @@ public class jsfmltesto {
 
         
         Character robb = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
-        Character robs = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
-        robb.setOrientation(Character.Orientation.Right);
-        robs.setOrientation(Character.Orientation.Right);
-        Map testo = new Map(robb,robs,"test2.xml");
+        Character robs = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot-smart.png");
+        Map testo = new Map();
+        testo.setLevel(robb,robs,"test2.xml");
         Engine eng = new Engine(testo);
         //testo.setScale(new Vector2f(0.75f, 0.75f));
         
@@ -121,8 +120,11 @@ public class jsfmltesto {
                 		ordre_light.executer();
                 	}
                 	if (butjump.isClicked(mouse_pos)) {
-                		Order jump = new Jump(robb, eng);
-                		jump.executer();
+                		/*Order jump = new Jump(robb, eng);
+                		jump.executer();*/
+                		/*Order coloriser = new getColor(robb, eng);
+                		coloriser.executer();*/
+                		robb.setColor(Color.CYAN);
                 	}
                 	if (buttelep.isClicked(mouse_pos)) {
                 		Order usep = new AccessPointer(robb, eng, Color.BLUE);

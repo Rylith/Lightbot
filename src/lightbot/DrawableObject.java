@@ -112,4 +112,16 @@ public abstract class DrawableObject {
 		this.getSprite().setPosition(this.getSprite().getPosition().x*diff.x, this.getSprite().getPosition().y * diff.y);
 		*/
 	}
+	
+	public void setPath(String n_path) {
+		m_tilePath = n_path;
+		m_tileSet = new Texture();
+		try {
+			m_tileSet.loadFromFile(Paths.get(m_tilePath));
+			m_tileSet.setSmooth(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		m_sprite = new Sprite(m_tileSet);
+	}
 }

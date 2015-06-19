@@ -6,6 +6,7 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.*;
@@ -25,6 +26,14 @@ public class Map {
 	private int m_lines;
 	private int m_colonnes;
 	
+	private Vector2i b_pos_init;
+	private Vector2i s_pos_init;
+	
+	private List<Button.ButtonType> b_possible;
+	private List<Button.ButtonType> s_possible;
+	
+	private List<Lampadaire> listLampe;
+	
 	private static final int d_lampe = 3;
 	private static final int d_paint = 0;
 	private static final int d_for = 1;
@@ -32,18 +41,26 @@ public class Map {
 	private static final int d_charac = 4;
 	
 /** -------------- CONSTRUCTORS -------------- */
-	public Map(Character robb, Character robs,String map_path){
+	public Map() {
+		
+	}
+	
+	public void setLevel(Character robb, Character robs,String map_path) {
 		MapLoader ml = new MapLoader(map_path);
 		Vector2i size = MapLoader.mapSize();
 		this.m_lines = size.x;
 		this.m_colonnes = size.y;
 		m_map = new Case[size.x][size.y];
-		ml.character(robb, robs);
-		System.out.println("MAIN : " + robb.getPosition().x + " " + robb.getPosition().y);
-		createMap(ml,robb,robs);
+		ml.character(robb, robs,b_pos_init,s_pos_init);
+		b_possible = new ArrayList<Button.ButtonType>();
+		s_possible = new ArrayList<Button.ButtonType>();
+		ml.getPossibleOrders(b_possible, s_possible);
+		listLampe = new ArrayList<Lampadaire>();
+		createMap(ml,robb,robs,listLampe);
+		System.out.println("Number of lamp: " + listLampe.size());
 	}
 /** ---------------- METHODS ----------------- */
-	public void createMap(MapLoader ml, Character robb, Character robs){
+	public void createMap(MapLoader ml, Character robb, Character robs,List<Lampadaire> listLampe){
 		for (int i = 0; i < this.m_map.length; i++) {
 			int l = 0;
 			List<Element> listCases = ml.getCasesLine(i);
@@ -60,14 +77,16 @@ public class Map {
 						
 						if (caseElement.getChild("paint") != null) {
 							ColorMark painter = new ColorMark(posi, h, "case.png",Color.CYAN);
-							if (caseElement.getChild("paint").getAttributeValue("color") == "magenta") {
+							if (caseElement.getChild("paint").getAttributeValue("color").equals("magenta")) {
 								painter.setColor(Color.MAGENTA);
 							}
 							m_map[i][j].addObject(d_paint, painter);
 						}
 						
 						if (caseElement.getChild("lampe") != null) {
-				        	   m_map[i][j].addObject(d_lampe, new Lampadaire(posi, h, Color.WHITE, "Object.png"));
+							Lampadaire lampo = new Lampadaire(posi, h, Color.WHITE, "Object.png");
+							m_map[i][j].addObject(d_lampe, lampo);
+							listLampe.add(lampo);
 						}
 						
 						if (caseElement.getChild("pointeur") != null) {
@@ -195,5 +214,29 @@ public class Map {
 			}
 		}
 	}
+	
+	public List<Vector2i> getPosInit() {
+		List<Vector2i> listPos = new  ArrayList<Vector2i>();
+		listPos.add(s_pos_init);
+		listPos.add(b_pos_init);
+		return listPos;
+	}
 
+	public boolean isCompleted() {
+		boolean finish = true;
+		for (int i = 0; i < listLampe.size(); i++) {
+			if (!listLampe.get(i).getActive()) {
+				finish = false;
+			}
+		}
+		return finish;
+	}
+	
+	public List<Button.ButtonType> getPossibleOrders(String type) {
+		if (type.equals("basic")) {
+			return b_possible;
+		} else {
+			return s_possible;
+		}
+	}
 }
