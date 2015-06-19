@@ -12,7 +12,6 @@ public class Engine {
 	
 	private Map monde;
 	private int nb_for;
-	private LinkedList <Lampadaire> liste_lampadaire; 
 
 	private static final int d_lampe = 3;
 	private static final int d_paint = 0;
@@ -25,28 +24,18 @@ public class Engine {
 	public Engine (Map m){
 		
 		monde = m;
-		nb_for=1;
-		liste_lampadaire= new LinkedList<Lampadaire>();
-		
+		nb_for=1;		
 	}
 	
-	/**
-	 * ajoute un lampadaire � la liste 
-	 * 
-	 */
-	
-	private void  addLampadaire (Lampadaire l){
-		liste_lampadaire.add(l);
+	public Engine() {
 	}
 	
-	private boolean LampadairesAllumes(){
-		
-		for(int i=0; i<liste_lampadaire.size(); i++){
-			if(!liste_lampadaire.get(i).getActive())
-				return false;
-		}
-		return true;
+	
+	public void setMap(Map level) {
+		monde = level;
+		nb_for=1;		
 	}
+
 	/** 
 	 * 
 	 * @param clone: le clone deplace a la case de destination, hauteur inchangee
