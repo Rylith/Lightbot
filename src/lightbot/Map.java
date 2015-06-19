@@ -184,25 +184,21 @@ public class Map {
 		return this.m_map;
 	}
 	
-	public Vector2i getPointer(Color c){
-		
-		for(int i=0; i<m_map.length; i++){
-			for(int j=0; j<m_map[i].length;j++){
-				if(m_map[i][j]!=null)
-					if((m_map[i][j].getMapDO().containsKey(d_pointeur)) && (m_map[i][j].getMapDO().get(d_pointeur).getColor()== c)){
-						
+	public Vector2i getPointer(Color c) {	
+		for(int i=0; i<m_map.length; i++) {
+			for(int j=0; j<m_map[i].length;j++) {
+				if(m_map[i][j]!=null) {
+					if((m_map[i][j].getMapDO().containsKey(d_pointeur)) && (m_map[i][j].getMapDO().get(d_pointeur).getColor().equals(c))){
 						return m_map[i][j].getPosition();
 					}
-					
+				}
 			}
 		}
-
 		return null;	
 	}
 	
 	public Vector2f getMapSize() {
 		return new Vector2f(250f - (m_lines-1) * 78/2f, 92);
-		//return new Vector2f(250, 92);
 	}
 	
 	public void setScale(Vector2f scaling) {

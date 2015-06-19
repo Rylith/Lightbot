@@ -124,7 +124,7 @@ public class jsfmltesto {
                 		jump.executer();*/
                 		/*Order coloriser = new getColor(robb, eng);
                 		coloriser.executer();*/
-                		robb.setColor(Color.CYAN);
+                		//robb.setColor(Color.CYAN);
                 	}
                 	if (buttelep.isClicked(mouse_pos)) {
                 		Order usep = new AccessPointer(robb, eng, Color.BLUE);

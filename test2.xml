@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
-	<character type ="basic" pos_x="1" pos_y ="0" orientation = "right">
+	<character type ="basic" pos_x="2" pos_y ="1" orientation = "right">
+		<main>8</main>
+		<proc1>6</proc1>
+		<proc2>6</proc2>
+		<orders>move turnr light</orders>
+	</character>
+	<character type ="smart" pos_x="1" pos_y ="1" orientation = "right">
 		<main>8</main>
 		<proc1>6</proc1>
 		<proc2>6</proc2>
@@ -22,11 +28,12 @@
 	</line>
 
 	<line num="1">
-		<case height="1" pos_y="0">
+		<case height="3" pos_y="0">
 			<pointeur color="red"/>
-			<character type="basic"/>
 		</case>
-		<case height="1" pos_y="1"/>
+		<case height="1" pos_y="1">
+			<character type="smart"/>
+		</case>
 		<case height="1" pos_y="3"/>
 		<case height="1" pos_y="4"/>
 	</line>
@@ -37,20 +44,23 @@
 		</case>
 		<case height="2" pos_y="1">
 			<paint color="cyan"/>
+			<character type="basic"/>
 		</case>
 		<case height="2" pos_y="2">
 			<for number="4"/>
 		</case>
 		<case height="1" pos_y="3">
 			<lampe/>
+			<pointeur color="yellow"/>
 		</case>
 		<case height="1" pos_y="4">
-
+			<paint color="magenta"/>
 		</case>
 	</line>
 
 	<line num="3">
 		<case height="1" pos_y="0">
+			<lampe/>
 		</case>
 		<case height="1" pos_y="1">
 		</case>
