@@ -29,7 +29,7 @@ private Color color_ptr;
 		// TODO Auto-generated method stub
 				if(!engine.ExecAccess(personne, getColor_ptr() )){
 					try {
-						throw new Exception("Impossible de poser un pointeur");
+						throw new Exception("Impossible d'acceder au pointeur");
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

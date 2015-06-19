@@ -328,7 +328,7 @@ public class Engine {
 		return monde.get_m_mat()[x][y];
 	}
 	public boolean ExecGetColor(Character p) {
-		if (!(getCurrentCase(p).getColor() == Color.WHITE)){
+		if (!(getCurrentCase(p).getColor() == null)){
 			p.setColor(getCurrentCase(p).getColor());
 			return true;
 		} 
