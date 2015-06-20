@@ -104,6 +104,8 @@ public class Map {
 					           break;
 							}
 							 m_map[i][j].addObject(d_pointeur, pointer);
+							 robb.setPointeur(pointer.getColor(), pointer.getPosition());
+							 robs.setPointeur(pointer.getColor(), pointer.getPosition());
 						}
 						
 						if (caseElement.getChild("character") != null) {
@@ -145,7 +147,7 @@ public class Map {
 		for (int i = 0; i < this.m_map.length; i++) {
 			for (int j = 0; j < this.m_map[i].length; j++) {
 				if (m_map[i][j] != null) {
-					System.out.println("Case: " + i +","+j +" n'est pas nulle.");
+					//System.out.println("Case: " + i +","+j +" n'est pas nulle.");
 				}
 			}
 		}
@@ -170,8 +172,8 @@ public class Map {
 	        	   new_y = new_y+1;
 	           break;
 			}
-			System.out.println("New_x: " + new_x + "New_y: " + new_y);
-			System.out.println("Length: " + this.m_map.length + "	Length colonne: " + this.m_map[0].length); 
+			//System.out.println("New_x: " + new_x + "New_y: " + new_y);
+			//System.out.println("Length: " + this.m_map.length + "	Length colonne: " + this.m_map[0].length); 
 			if(this.m_map.length > new_x && this.m_map[0].length > new_y && new_x >=0 && new_y >=0) {
 				int current_height = this.m_map[pos.x][pos.y].getHeight();
 				return (current_height == this.m_map[new_x][new_y].getHeight());
@@ -185,15 +187,15 @@ public class Map {
 	}
 	
 	public Vector2i getPointer(Color c) {	
+		
 		for(int i=0; i<m_map.length; i++) {
 			for(int j=0; j<m_map[i].length;j++) {
-				if(m_map[i][j]!=null) {
+				if(m_map[i][j]!=null)
 					if((m_map[i][j].getMapDO().containsKey(d_pointeur)) && (m_map[i][j].getMapDO().get(d_pointeur).getColor().equals(c))){
 						return m_map[i][j].getPosition();
 					}
 				}
 			}
-		}
 		return null;	
 	}
 	

@@ -1,6 +1,7 @@
 package lightbot;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import lightbot.Button.ButtonType;
 
@@ -8,6 +9,7 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.View;
+import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.VideoMode;
@@ -24,7 +26,8 @@ public class Game {
 	private RenderWindow m_window;
 	private Engine m_engine;
 	private Map m_map;
-	
+	private boolean m_runSimulation = false;
+
 	
 /** -------------- CONSTRUCTORS -------------- */		
 	
@@ -44,11 +47,16 @@ public class Game {
 		m_window = window;
 		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
 		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
-		m_map = new Map(m_character.get("BasicBot"),m_character.get("SmartBot"),LEVELPATH);
-		m_engine = new Engine(m_map);
-		getCharacter("BasicBot").setLimitOrder(0, 17);
-		getCharacter("BasicBot").setLimitOrder(1, 3);
-		getCharacter("SmartBot").setLimitOrder(0, 6);
+		//m_map = new Map(m_character.get("BasicBot"),m_character.get("SmartBot"),LEVELPATH);
+		//m_engine = new Engine(m_map);
+		m_map = new Map();
+		m_engine = new Engine();
+		
+		//TODO A CHANGER
+		//getCharacter("BasicBot").setLimitOrder(0, 18);
+		//getCharacter("BasicBot").setLimitOrder(1, 3);
+		//getCharacter("BasicBot").setLimitOrder(2, 4);
+		//getCharacter("SmartBot").setLimitOrder(0, 7);
 	}
 	
 	/** Constructeur de Game
@@ -59,10 +67,10 @@ public class Game {
 	 */
 	public Game(RenderWindow window, Engine engine, Character basicbot, Character smartbot){
 		m_window = window;
-		m_map = new Map(basicbot,smartbot,LEVELPATH);
+		m_map = new Map();
 		m_engine = new Engine(m_map);
-		m_character.put("BasicBot", basicbot);
 		m_character.put("SmartBot", smartbot);
+		m_character.put("BasicBot", basicbot);
 		
 	}
 	
@@ -98,6 +106,11 @@ public class Game {
 		m_window.setView(view);
 	}
 	
+	public void setMap(String mapPath){
+		m_map.setLevel(m_character.get("BasicBot"), m_character.get("SmartBot"), mapPath);
+		m_engine.setMap(m_map);
+	}
+	
 	/** Retourne engine
 	 * @return m_engine
 	 */
@@ -105,6 +118,10 @@ public class Game {
 		return m_engine;
 	}
 
+	
+	public boolean levelIsCompleted(){
+		return m_map.isCompleted();
+	}
 	
 	/** Creer un order a partir d'un ButtonType
 	 * @param type
@@ -139,11 +156,13 @@ public class Game {
 			return order;
 		}
 		else if (type == ButtonType.PutP){
+			//TODO CHANGER LA COULEUR EN PARAM
 			Order order = new  MallocPointer(car, getEngine(), color);
 			return order;
 		}		
 		else if (type == ButtonType.UseP){
-			Order order = new  AccessPointer(car, getEngine(), color);
+			//TODO CHANGER LA COULEUR EN PARAM
+			Order order = new  AccessPointer(car, getEngine(), Color.BLUE);
 			return order;
 		}
 		else if (type == ButtonType.Paint){
@@ -184,7 +203,7 @@ public class Game {
 				e.printStackTrace();
 			}
 			m_character.get(character).addOrder(proc, order);
-			//System.out.println("Order ajoute");
+			System.out.println("On ajoute " + order.toString() + "a la proc" + proc);
 			return true;
 		}
 		else { //la limite d'ordre est atteinte
@@ -217,6 +236,26 @@ public class Game {
 		if (posOrder >= 0 && posOrder < m_character.get(character).getListOrder().get(proc).size()) {
 			m_character.get(character).removeOrder(proc, posOrder);
 		}
+	}
+	
+	public void resetGame() {
+		int i = 0;
+		for(String mapKey : m_character.keySet()) {
+			m_character.get(mapKey).setPosition(m_map.getPosInit().get(i));
+			i++;
+		}
+			//m_map.getPosInit()
+	}
+	
+	public void setStateSimulation(boolean state) {
+		m_runSimulation = state;
+		if(!m_runSimulation) {
+			resetGame();
+		}
+	}
+	
+	public boolean getStateSimulation() {
+		return m_runSimulation;
 	}
 	
 }

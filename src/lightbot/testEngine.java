@@ -15,7 +15,7 @@ public class testEngine {
 		Character p = new Character(new Vector2i(0,0), 1, Color.GREEN, "lightbot.png");
 		p.setOrientation(Orientation.Right);
 		
-		Map teste = new Map(p,p);
+		Map teste = new Map(p,p,"test2.xml");
 	
 		//teste.get_m_mat()[0][1].setHeight(2);
 		//teste.get_m_mat()[0][2].setHeight(4);
@@ -95,18 +95,35 @@ public class testEngine {
 		LinkedList <Order> l= new LinkedList <Order>();
 		System.out.println("position initiale du perso  :" + p.getPosition());
 		System.out.println("Vla lorientation initiale :" + p.getOrientation());
+		System.out.println("Vla la couleur initiale du perso :" + p.getColor());
 		l.add(ordre); //pose ptr
 		l.add(ordre2); //move  0 - 1
 		l.add(ordre1); // acess 0 - 0
-		l.add(ordre2); // 0 - 1 
+		l.add(ordre2); // MOVE 0 - 1 
 		l.add(ForOrder); // recup nb
 		l.add(ordre3); // ??
 		//l.add(ordre3);
+		
+		
+	//==========================TESTS GET COLOR============================================
+		Order GetColorO = new getColor(p, MonEngine,Color.WHITE);
+		l.add(GetColorO);
 		Order execAll = new ListeOrdre(p,MonEngine,l);
 		execAll.executer();
 		System.out.println("la case contient un pointeur?  :" + teste.get_m_mat()[0][0].getMapDO().containsKey(2));
+		System.out.println("la case contient un pot de peinture?  :" + teste.get_m_mat()[0][1].getMapDO().containsKey(0));
+		System.out.println("la case contient un nombre for?  :" + teste.get_m_mat()[0][1].getMapDO().containsKey(1));
+		System.out.println("le nbre for sur la case?  :" + ((NumberMark) (teste.get_m_mat()[0][1].getMapDO().get(1))).getValue());
+		
+		System.out.println("la case contient quelle couleur?  :" + teste.get_m_mat()[0][1].getMapDO().get(0).getColor());
 		System.out.println("le personnage a  la position apres execAccess  :" + p.getPosition());
 		System.out.println("Vla lorientation batard :" + p.getOrientation());
+		System.out.println("Vla la nvelle couleur du perso :" + p.getColor());
+		System.out.println("couleur magenta :" + Color.MAGENTA);
+		System.out.println(" couleur bleue :" + Color.BLUE);
+		
+		System.out.println(" test exec for" + ForOrder.executer());
+		System.out.println("la couleur cyan :" + Color.CYAN);
 		
 }
 		

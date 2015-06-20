@@ -323,7 +323,7 @@ public class Button extends Component{
 				m_active = true;
 			}
 			else if (m_type == ButtonType.Run){ // Le bouton Run devient un bouton Stop
-				m_type = ButtonType.Stop;
+				//m_type = ButtonType.Stop;
 				super.getSprite().setTextureRect(new IntRect(SIZEONX, 3*SIZEORDER, SIZEONX, SIZEONY));
 				super.setVisibility(true); //Toujours visible
 				m_active = true;

@@ -82,5 +82,8 @@ public class NumberMark extends DrawableObject {
 		}
 	}
 	
+	public int getValue(){
+		return this.m_value;
+	}
 	
 }

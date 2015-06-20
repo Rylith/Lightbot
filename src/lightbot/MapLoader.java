@@ -61,8 +61,8 @@ public class MapLoader {
 				 default  : robb.setOrientation(Character.Orientation.Down); break;
 				}
 				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("main").getText()));
-				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
-				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
+				robb.setLimitOrder(1,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
+				robb.setLimitOrder(2,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
 				
 			} else {
 				s_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
@@ -74,9 +74,8 @@ public class MapLoader {
 				 default  : robs.setOrientation(Character.Orientation.Down); break;
 				}
 				robs.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("main").getText()));
-				robs.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
-				robs.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
-				String orders = listChar.get(j).getChild("orders").getText();
+				robs.setLimitOrder(1,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
+				robs.setLimitOrder(2,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
 			}
 		}
 	}

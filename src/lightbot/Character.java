@@ -1,6 +1,7 @@
 package lightbot;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Vector;
 
 import org.jsfml.graphics.Color;
@@ -8,6 +9,7 @@ import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Clock;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
@@ -23,6 +25,8 @@ public class Character extends DrawableObject{
 	
 	private final static int SIZESPRITEX = 80;
 	private final static int SIZESPRITEY = 100;
+	
+	private final static String TILEPATHCASE = "ressource/Sprite/case.png";
 	
 	public enum Orientation{
 		Right,
@@ -44,7 +48,7 @@ public class Character extends DrawableObject{
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
 	private Vector<Boolean> m_currentProc; //vector indiquant la procedure active
 	private Color color;
-
+	private boolean m_animate = false;
 	
 /** -------------- CONSTRUCTORS -------------- */
 	
@@ -70,18 +74,20 @@ public class Character extends DrawableObject{
 
 		m_listOrder = new Vector<Vector<Order>>();
 		m_limitOrder = new Vector<Integer>();
+		m_listPointeur = new Vector<Pointeur>();
+		m_currentProc = new Vector<Boolean>();
 		for(int i=0; i<3; i++){
 			m_limitOrder.add(0);
 			Vector<Order> vec = new Vector<Order>();
 			m_listOrder.add(vec);
+			m_currentProc.add(false);
 		}
-		m_listPointeur = new Vector<Pointeur>();
-		m_currentProc = new Vector<Boolean>();
+		m_currentProc.set(0,true);
 		m_listPointeur= new Vector <Pointeur>();
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, "case.png"));
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.GREEN, "case.png"));
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.YELLOW, "case.png"));
-		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.RED, "case.png"));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.BLUE, TILEPATHCASE));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.GREEN, TILEPATHCASE));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.YELLOW, TILEPATHCASE));
+		m_listPointeur.add(new Pointeur(new Vector2i(0,0), 1, Color.RED, TILEPATHCASE));
 	}
 
 /** ---------------- METHODS ----------------- */	
@@ -127,6 +133,15 @@ public class Character extends DrawableObject{
 		m_currentProc.set(i, true);	
 	}	
 	
+	public int getProcActive(){
+		for(int i=0;i<m_listOrder.size();i++){
+			if(m_currentProc.get(i)) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
 	/** Retourne l'orientation du personnage */
 	public Orientation getOrientation(){
 		return m_orientation;
@@ -160,7 +175,8 @@ public class Character extends DrawableObject{
 	 * @param Order : Ordre a ajouter
 	 */
 	public void addOrder (int numprocedure, Order odr){
-		m_listOrder.elementAt(numprocedure).addElement(odr);
+		System.out.println("Ajout de l'ordre" + odr.toString() + "A la proc " + numprocedure);
+		m_listOrder.get(numprocedure).addElement(odr);
     }
     
     /** Supprime l'ordre a la fin de la liste d'ordre 
@@ -183,9 +199,9 @@ public class Character extends DrawableObject{
 		}
 		m_listOrder.get(proc).remove(pos);
 		//m_listOrder.elementAt(proc).removeElementAt(pos);
-		for(int i=0;i<m_listOrder.get(proc).size();i++){
-			System.out.println("Pos : " + i + "Order : " + m_listOrder.get(proc).get(i).toString());
-		}
+		//for(int i=0;i<m_listOrder.get(proc).size();i++){
+		//	System.out.println("Pos : " + i + "Order : " + m_listOrder.get(proc).get(i).toString());
+		//}
 	}
 	
 	/** Retourne le pointeur correspondant a la couleur fournit en parametre */
@@ -213,6 +229,62 @@ public class Character extends DrawableObject{
     		}
     	}
 	}
+	
+	public void setAnimateState(boolean state){
+		m_animate = state;
+	}
+	
+	public boolean getAnimateState() {
+		return m_animate;
+	}
+	
+	/*public void animateMove() {
+		while(m_animate) {
+    		int animCount = 0;
+    		int frame = 3;
+    		Clock animClock = new Clock();
+    		while (animCount < 16) {
+    			if (animClock.getElapsedTime().asMilliseconds() >= 50) {
+               	 //Restart the clock
+                   animClock.restart();
+
+                   //Increase the frame counter by one
+                   frame--;
+
+                   if(frame == 0){
+                   	frame = 3;
+                   }
+                   switch (getOrientation())
+           			{
+                       case Up:
+                    	   update(, new Vector2f(2.5625f,-1.28125f));
+                       break;
+                       case Down:
+                    	   update(fenetre, new Vector2f(-2.5625f,1.28125f));
+                       break;
+                       case Left:
+                    	   update(fenetre, new Vector2f(-2.5625f,-1.28125f));
+                       break;
+                       case Right:
+                    	   update(fenetre, new Vector2f(2.5625f,1.28125f));
+                       break;
+                   }
+                   
+                   robot.getSprite().setTextureRect(new IntRect(frame * 80, robot.getSprite().getTextureRect().top, 80, 100));
+                   animCount++;
+                   testo.drawMap(fenetre,robot);
+                   fenetre.draw(buttest.getSprite());
+                   fenetre.draw(butturn.getSprite());
+                   fenetre.draw(butallumer.getSprite());
+                  // fenetre.draw(robot.getSprite());
+                   fenetre.display();
+                   fenetre.clear(Color.WHITE);
+    				}    
+    			}
+    		robot.updatePostion();
+    		}
+		}
+	}*/
 	
 	/** Dessine le caractere dans la fenetre */
 	public void drawCharac(RenderWindow window){
@@ -265,5 +337,4 @@ public class Character extends DrawableObject{
 			this.setOrientation(this.getOrientation());
 		}
 	}
-
 }
