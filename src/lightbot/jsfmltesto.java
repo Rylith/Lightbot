@@ -91,6 +91,7 @@ public class jsfmltesto {
 			
     			while(game.getStateSimulation()) {
     				System.out.println("Start Simulation");
+    				
     				Ordonnanceur ordo = new Ordonnanceur(game);
     				for(String mapKey : game.getCharacter().keySet()) {
     					boolean orderExist;
@@ -99,146 +100,20 @@ public class jsfmltesto {
     					} else {
     						orderExist = false;
     					}
-    					//Vector<Vector<Order>> listOrder = game.getCharacter(mapKey).getListOrder();
-    					int currentSimulation = 0;
-    					int backProcP1 = 0;
-    					int backProcP2 = 0;
-    					int currentMain = 0;
-    					int currentP1 = -1;
-    					int currentP2 = -1;
-    					int nbFor = 0;
-    					
-    					/*System.out.println("MapKey: " + mapKey);
-    					Stack<Iterator<Order>> stack_exec = new Stack<Iterator<Order>>();
-    					stack_exec.push(game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).iterator());
-    					Iterator<Order> itest = stack_exec.peek();
-    					
-    					//Je boucle sur les bots
-    					while (itest.hasNext()) {
-    						System.out.println(itest.next().toString());
-    					}*/
-    					ordo.step();
-    					
+						Clock clock = new Clock();
     					while(orderExist) {
-    						
-    						switch(game.getCharacter(mapKey).getProcActive()) {
-    						case 0:
-    							currentSimulation = currentMain;
-    							break;
-    						case 1:
-    							currentSimulation = currentP1;
-    							break;
-    						case 2:
-    							currentSimulation = currentP2;
-    						}
-    						System.out.println("Current Simu = " + currentSimulation + " Main : " + currentMain + " P1 : " + currentP1 + " P2 : " + currentP2 + " BackProcP1 : " + backProcP1 + " BackProcP2" + backProcP2);
-    						
+    						clock.restart();
     						game.getWindow().display();
     			        	game.getWindow().clear();
-    			        	
-    						Clock clock = new Clock();
-    						clock.restart();
     						
-    						//System.out.println("CurrentSimu : " + currentSimulation);
-    						System.out.println("Proc Active : " + game.getCharacter(mapKey).getProcActive());
-    						//System.out.println("List proc active " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size());
-    						if(game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof Procedure1) {
-    							backProcP1 = game.getCharacter(mapKey).getProcActive();
-    							currentP1 = -1;
-    							switch(backProcP1) {
-    							case 0:
-    								currentMain++;
-    								break;
-    							case 1:
-    								currentP1++;
-    								break;
-    							case 2:
-    								currentP2++;
-    								break;
-    							}
-    						} else if (game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof Procedure2) {
-    							backProcP2 = game.getCharacter(mapKey).getProcActive();
-    							currentP2 = -1;
-    							switch(backProcP2) {
-    							case 0:
-    								currentMain++;
-    								break;
-    							case 1:
-    								currentP1++;
-    								break;
-    							case 2:
-    								currentP2++;
-    								break;
-    							}
-    						} else if (game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation) instanceof For) {
-    							nbFor = game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).executer();
-    							switch(game.getCharacter(mapKey).getProcActive()) {
-    							case 0:
-    								currentMain++;
-    								break;
-    							case 1:
-    								
-    								currentP1++;
-    								break;
-    							case 2:
-    								currentP2++;
-    								break;
-    							}
-    						}
-    						
-    						//game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(index)
-    						System.out.println("On execute : " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).toString());
-    						//LA LIGNE SUIVANTE PERMET DE RECUPERER L'ORDRE
-    						game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).get(currentSimulation).executer();
+        					if (!ordo.step()){
+        						orderExist = false;
+        					}
+        					
     						control.update();
     						control.supervise();
-    						if(!game.getStateSimulation()) {
-    							break;
-    						}
-    						while(clock.getElapsedTime().asSeconds() < 0.5f ) {
-    						}
-    						
-    						if(nbFor > 0) {
-    							nbFor--;
-    						} else {
-    							switch(game.getCharacter(mapKey).getProcActive()) {
-    							case 0:
-    								currentMain++;
-    								if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    									orderExist = false;
-    								}
-    								//System.out.println("Size : " + game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size());
-    								break;
-    							case 1:
-    								currentP1++;
-    								if(currentP1 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    									currentP1 = -1;
-    									System.out.println("Fin de P1 on revient en " + backProcP1);
-    									game.getCharacter(mapKey).activeProc(backProcP1);
-    									if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    		    							orderExist = false;
-    		    						}
-    								}
-    								break;
-    							case 2:
-    								currentP2++;
-    								if(currentP2 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    									currentP2 = -1;
-    									System.out.println("Fin de P2 on revient en " + backProcP2);
-    									game.getCharacter(mapKey).activeProc(backProcP2);
-    									if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    		    							orderExist = false;
-    		    						}
-    									if(currentP1 >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    		    							currentP1 = -1;
-    		    							System.out.println("Fin de P1 on revient en " + backProcP1);
-    		    							game.getCharacter(mapKey).activeProc(backProcP1);
-    		    							if(currentMain >= game.getCharacter(mapKey).getListOrder().get(game.getCharacter(mapKey).getProcActive()).size()) {
-    		        							orderExist = false;
-    		        						}
-    		    						}
-    								}
-    							}
+    						while(clock.getElapsedTime().asSeconds() < 0.5f){
+    							
     						}
     					}
     				}
@@ -247,48 +122,9 @@ public class jsfmltesto {
     					System.out.println("FELICITATION !!");
     				}
     				game.setStateSimulation(false);
-    				/*for(String mapKey : game.getCharacter().keySet()) {
-    					ListeOrdre listorder = new ListeOrdre(game.getCharacter(mapKey),game.getEngine(), game.getCharacter(mapKey).getListOrder());
-    					
-    				}*/
     			}
     		game.getWindow().display();
         	game.getWindow().clear();
-            /*for (Event event : fenetre.pollEvents()) {
-                if (event.type == Event.Type.CLOSED) {
-                    // Si l'utilisateur clique sur la croix rouge alors on ferme
-                    // la fenêtre
-                    fenetre.close();
-                }
-                if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
-                	Vector2i mouse_pos = Mouse.getPosition(fenetre);
-                	
-                	if (buttest.isClicked(mouse_pos)) {
-                		Order ordreMove = new Move(rob, eng);
-                		ordreMove.executer();
-                	}
-                	if (butturn.isClicked(mouse_pos)) {
-                		Order orderRight = new TurnRight(rob);
-                		orderRight.executer();
-                	}
-                	if (butallumer.isClicked(mouse_pos)) {
-                		Order ordre_light= new Light(rob, eng, Color.WHITE);
-                		ordre_light.executer();
-                	}
-                	
-                	if (butjump.isClicked(mouse_pos)) {
-                		/*Order jump = new Jump(robb, eng);
-                		jump.executer();*/
-                		/*Order coloriser = new getColor(robb, eng);
-                		coloriser.executer();*/
-                		//robb.setColor(Color.CYAN);
-                	/*}
-                	if (buttelep.isClicked(mouse_pos)) {
-                		Order usep = new AccessPointer(robb, eng, Color.BLUE);
-                		usep.executer();
-                	}
-                }
-            }*/
 
         } 
     }

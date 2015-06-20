@@ -26,6 +26,7 @@ public class Ordonnanceur {
 		this.pStacks = new LinkedList<Stack<Iterator<Order>>>();
 		for(String mapKey : pGame.getCharacter().keySet()) {
 			List<Order> main = pGame.getCharacter(mapKey).getListOrder().get(0);
+			System.out.println("Le main ajouté fait: " + main.size());
 			Stack<Iterator<Order>> wStack = new Stack<Iterator<Order>>();
 			wStack.push(main.iterator());
 			this.pStacks.add(wStack);
@@ -35,9 +36,8 @@ public class Ordonnanceur {
 	
 	public boolean step() {
 		String b_name = "basic";
-		
+		System.out.println("JE FAIS UNE STEP");
 		boolean action_done = false;
-		
 		for(Stack<Iterator<Order>> wStack : this.pStacks) {
 			Character c_bot = pGame.getCharacter(b_name);
 			if (stepOne(wStack, c_bot)) {
@@ -51,6 +51,7 @@ public class Ordonnanceur {
 	public boolean stepOne(Stack<Iterator<Order>> b_stack, Character c_bot) {
 		/* Recherche du premier élément non null dans la pile */
 		while (!b_stack.isEmpty() && b_stack.peek() == null) {
+			System.out.println("POP");
 			b_stack.pop();
 		}
 		/* Retourne faux si la pile est vide */
@@ -69,12 +70,21 @@ public class Ordonnanceur {
 			if (wIt.hasNext()) {
 				Order wAction = wIt.next();
 				if (wAction instanceof Procedure1) {
+					System.out.println("J'appele p1");
 					b_stack.push(pGame.getCharacter("basic").getListOrder().get(1).iterator());
 					return stepOne(b_stack, c_bot);
-				} else {
-					//this.pPrev.add(0, wAction);
-					//wAction.executer();
+				} else if (wAction instanceof For) {
+					wAction.executer();
+					wAction = wIt.next();
+					if(wAction != null) {
+						System.out.println("Mon for");
+						for (int i = 0; i < pGame.getEngine().get_nb_for(); i++) {
+							wAction.executer();
+						}
+					}
+				}else {
 					System.out.println("L'Ordo execute: " + wAction.toString());
+					wAction.executer();
 					this.nbCoups++;
 					return true;
 				}
