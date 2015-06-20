@@ -28,6 +28,9 @@ public class Button extends Component{
 	private final static int SIZEBOTX = 85;
 	private final static int SIZEBOTY = 83;
 	
+	private final static int SIZEMENUX = 85;
+	private final static int SIZEMENUY = 149;
+	
 	private final static int SIZEONX = 140;
 	private final static int SIZEONY = 70;
 	
@@ -57,6 +60,8 @@ public class Button extends Component{
 		Run,
 		Stop,
 		Cadre,
+		Level,
+		Menu,
 	}
 	
 	private ButtonType m_type; //indique le type de bouton
@@ -193,6 +198,14 @@ public class Button extends Component{
 			super.setVisibility(true); //Toujours visible
 			m_active = false;
 		}
+		else if (m_type == ButtonType.Level){
+			m_active = false;
+		}
+		else if (m_type == ButtonType.Menu){
+			super.getSprite().setTextureRect(new IntRect((2 * SIZEONX + SIZEORDER + 7*SIZEPUSHX + 4*SIZEBOTX), 3*SIZEORDER, SIZEMENUX, SIZEMENUY));
+			super.setVisibility(true); //Toujours visible
+			m_active = false;
+		}
 		
 		this.getSprite().setPosition(position);
 	}
@@ -215,6 +228,7 @@ public class Button extends Component{
 	public ButtonType getType(){
 		return m_type;
 	}
+	
 	
 	/** Indique si l'on a clique sur le sprite du bouton 
 	 * @param position
