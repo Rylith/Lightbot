@@ -17,5 +17,7 @@ public abstract class Order  {
 
 	protected abstract int executer();
 	
-	
+	public Color getColor() {
+		return color;
+	}
 }

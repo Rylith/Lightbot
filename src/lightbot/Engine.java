@@ -48,6 +48,7 @@ public class Engine {
 		Case [][] mat;
 		mat= monde.get_m_mat();
 		
+		//System.out.println("Position dans isAbleToMove " + p.getPosition());
 		int x = p.getPosition().x;
 		int y =p.getPosition().y;
 			
@@ -232,6 +233,15 @@ public class Engine {
 		
 	}
 	
+	
+	public void deleteCharacter(Character character) {
+		getCurrentCase(character).delObject(d_charac);
+	}
+	
+	public void resetCharacter(Character character) {
+		getCurrentCase(character).addObject(d_charac, character);
+	}
+	
 	/**
 	 * fait jumper le personnage d'une case vers le haut ou d'une case vers le bas
 	 * @param p: le personnage a fair jumper
@@ -382,10 +392,19 @@ public class Engine {
 				if(l.get(i).getColor()== cptr){
 					
 					//poser pointeur:
-						l.get(i).setActive(true); // on active le pointeur avant de le poser sur la case
+						if(!l.get(i).getActive()) {
+							l.get(i).setActive(true); // on active le pointeur avant de le poser sur la case
+						} else {
+							monde.get_m_mat()[monde.getPointer(l.get(i).getColor()).x][monde.getPointer(l.get(i).getColor()).y].delObject(d_pointeur);
+						}
+						l.get(i).setHeight(personne.getHeight());
 						personne.setPointeur(l.get(i).getColor(), personne.getPosition()); //change la position du pointeur 
+						//personne.getPointeur(l.get(i).getColor()).setHeight(personne.getHeight());
+						System.out.println("On recup la case : " + getCurrentCase(personne).getPosition());
 						getCurrentCase(personne).addObject(d_pointeur,l.get(i)); //ajoute le pointeur a la liste d'objets de la case
-						personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
+						System.out.println("Pos smart : " + personne.getPosition());
+						System.out.println("On met le pointeur : pos : " + l.get(i).getPosition() + " height : " + l.get(i).getHeight());
+						//personne.RemoveFromPtrList(l.get(i)); //supprimer le pointeur de la liste du perso
 						pursue = false;
 				}
 			}

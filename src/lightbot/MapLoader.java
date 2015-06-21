@@ -53,7 +53,6 @@ public class MapLoader {
 			if(listChar.get(j).getAttributeValue("type").equals("basic")) {
 				b_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
 				robb.update(b_pos_init);
-				
 				switch (listChar.get(j).getAttributeValue("orientation")){
 				 case "up" : robb.setOrientation(Character.Orientation.Up); break;
 				 case "right": robb.setOrientation(Character.Orientation.Right); break;
