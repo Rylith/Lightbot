@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
+import org.jsfml.graphics.Color;
+
 public class Ordonnanceur {
 	
 	private int nbCoups;
@@ -27,6 +29,7 @@ public class Ordonnanceur {
 		for(String mapKey : pGame.getCharacter().keySet()) {
 			List<Order> main = pGame.getCharacter(mapKey).getListOrder().get(0);
 			System.out.println("Le main ajouté fait: " + main.size());
+			System.out.println("La p1 fait: " + pGame.getCharacter(mapKey).getListOrder().get(1).size());
 			Stack<Iterator<Order>> wStack = new Stack<Iterator<Order>>();
 			wStack.push(main.iterator());
 			this.pStacks.add(wStack);
@@ -39,8 +42,7 @@ public class Ordonnanceur {
 		System.out.println("JE FAIS UNE STEP");
 		boolean action_done = false;
 		for(Stack<Iterator<Order>> wStack : this.pStacks) {
-			Character c_bot = pGame.getCharacter(b_name);
-			if (stepOne(wStack, c_bot)) {
+			if (stepOne(wStack, b_name)) {
 				action_done = true;
 			}
 			b_name = "SmartBot";
@@ -48,9 +50,9 @@ public class Ordonnanceur {
 		return action_done;
 	}
 	
-	public boolean stepOne(Stack<Iterator<Order>> b_stack, Character c_bot) {
+	public boolean stepOne(Stack<Iterator<Order>> b_stack, String c_bot) {
 		/* Recherche du premier élément non null dans la pile */
-		while (!b_stack.isEmpty() && b_stack.peek() == null) {
+		while (!b_stack.isEmpty() && !b_stack.peek().hasNext()) {
 			System.out.println("POP");
 			b_stack.pop();
 		}
@@ -69,24 +71,27 @@ public class Ordonnanceur {
 			/* Vérifie que l'itérator à un élément suivant */
 			if (wIt.hasNext()) {
 				Order wAction = wIt.next();
-				if (wAction instanceof Procedure1) {
-					System.out.println("J'appele p1 " + c_bot.getListOrder().get(1).size());
-					b_stack.push(c_bot.getListOrder().get(1).iterator());
-					return stepOne(b_stack, c_bot);
-				} else if (wAction instanceof For) {
-					wAction.executer();
-					wAction = wIt.next();
-					if(wAction != null) {
-						System.out.println("Mon for");
-						for (int i = 0; i < pGame.getEngine().get_nb_for(); i++) {
-							wAction.executer();
+				if (wAction.getColor() == Color.WHITE || wAction.getColor() == pGame.getCharacter("BasicBot").getColor()) {
+					if (wAction instanceof Procedure1) {
+						System.out.println("J'appele p1 " + pGame.getCharacter(c_bot).getListOrder().get(1).size() + "du bot: " + c_bot);
+						wAction.executer();
+						b_stack.push(pGame.getCharacter(c_bot).getListOrder().get(1).iterator());
+						return stepOne(b_stack, c_bot);
+					} else if (wAction instanceof For) {
+						wAction.executer();
+						wAction = wIt.next();
+						if(wAction != null) {
+							System.out.println("Mon for");
+							for (int i = 0; i < pGame.getEngine().get_nb_for(); i++) {
+								wAction.executer();
+							}
 						}
+					}else {
+						System.out.println("L'Ordo execute: " + wAction.toString());
+						wAction.executer();
+						this.nbCoups++;
+						return true;
 					}
-				}else {
-					System.out.println("L'Ordo execute: " + wAction.toString());
-					wAction.executer();
-					this.nbCoups++;
-					return true;
 				}
 			}
 		}
