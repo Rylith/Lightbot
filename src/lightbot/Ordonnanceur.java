@@ -1,6 +1,5 @@
 package lightbot;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,8 +25,6 @@ public class Ordonnanceur {
 		this.pStacks = new LinkedList<Stack<Iterator<Order>>>();
 		for(String mapKey : pGame.getCharacter().keySet()) {
 			List<Order> main = pGame.getCharacter(mapKey).getListOrder().get(0);
-			System.out.println("La p1 fait: " + pGame.getCharacter(mapKey).getListOrder().get(1).size());
-			System.out.println("Le main ajoute de " + mapKey +  " fait: " + main.size());
 			Stack<Iterator<Order>> wStack = new Stack<Iterator<Order>>();
 			wStack.push(main.iterator());
 			this.pStacks.add(wStack);
@@ -41,7 +38,6 @@ public class Ordonnanceur {
 	public boolean step() {
 		//Character c_bot;
 		String b_name = "SmartBot";
-		System.out.println("JE FAIS UNE STEP");
 		boolean action_done = false;
 		for(Stack<Iterator<Order>> wStack : this.pStacks) {
 			if (stepOne(wStack, b_name)) {
