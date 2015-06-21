@@ -1,8 +1,12 @@
 package lightbot;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.text.Position;
@@ -34,6 +38,8 @@ public class Controler {
 	private final static String TILEPATHACTION = "ressource/Sprite/action.png";
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
 	private final static String TILEPATHBACKGROUND = "ressource/Sprite/back.png";
+	private final static String TILEPATHDONE = "ressource/Sprite/done.png";
+	private final static String TILELOAD = "ressource/Sprite/load";
 	
 	// POSITION BOUTTON MENU //
 	private final static Vector2f POSINITBUTTONMENU = new Vector2f(0,0);
@@ -168,7 +174,7 @@ public class Controler {
 	 */
 	public void reloadInterface(Vector2i screenSize) {
 		
-		
+		m_game.getWindow().clear();
 		m_screenSize = screenSize;
 		Texture background = new Texture();
 		try {
@@ -182,6 +188,30 @@ public class Controler {
 		m_scale = new Vector2f(m_screenSize.x / ((float)SIZEINITWINDOW.x), m_screenSize.y / ((float)SIZEINITWINDOW.y));
 		m_background.setScale(m_scale);
 		
+		List<Texture> listTexture = new ArrayList<Texture>();
+		List<Sprite> listLoad = new ArrayList<Sprite>();
+		for(int i = 0;i < 6; i++) {
+			listTexture.add(new Texture());
+			try {
+				listTexture.get(i).loadFromFile(Paths.get(TILELOAD+i+".png"));
+				//System.out.println("On charge : " + TILELOAD+i+".png");
+				//sp.setScale(m_scale);
+				listLoad.add(new Sprite(listTexture.get(i)));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		
+		
+		for(int i = 0; i < listLoad.size(); i++) {
+			listLoad.get(i).setScale(m_scale);
+		}
+		
+		m_game.getWindow().draw(listLoad.get(0));
+		m_game.getWindow().display();
+		
 		// BackOrder & BackMain
 		m_backOrder = new Component(TILEPATHFRAME+"BackOrder.png",Vector2f.sub(POSINITBACKORDER,new Vector2f(0.0f,m_decal.y)));
 		m_backOrder.setScale(m_scale);
@@ -189,6 +219,7 @@ public class Controler {
 		if (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getGlobalBounds().height < m_screenSize.y) {
 			m_backOrder.getSprite().setPosition(new Vector2f(m_backOrder.getSprite().getPosition().x,m_backOrder.getSprite().getPosition().y + ( m_screenSize.y - (m_backOrder.getSprite().getPosition().y + m_backOrder.getSprite().getGlobalBounds().height))-10));
 		}
+		
 		
 		Vector2f scaleFrame;
 		float scaleFramex;
@@ -216,7 +247,10 @@ public class Controler {
 			m_backMain.setScale(scaleFrame);
 		}
 
-		
+		m_game.getWindow().clear();
+		m_game.getWindow().draw(listLoad.get(0));
+		m_game.getWindow().draw(listLoad.get(1));
+		m_game.getWindow().display();
 		// Frames
 		Vector2f realInitFrameMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITFRAMEMAIN, POSINITBACKMAIN), scaleFrame));
 		float realDecalFrame = DECALFRAME * scaleFrame.y;
@@ -232,6 +266,8 @@ public class Controler {
 		f_orderList.setScale(m_scale);
 		
 		
+		
+
 		//Boutons representant les ordres
 		Vector2f realInitPosButton = Vector2f.add(m_backOrder.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITBUTTON, POSINITBACKORDER), m_scale));
 		float realDecalButton = DECALBUTTON * m_scale.x;
@@ -248,6 +284,11 @@ public class Controler {
 		b_light.setScale(m_scale);
 		Button b_for = new Button(TILEPATHACTION, new Vector2f(realInitPosButton.x + ((realSizeButton.x + realDecalButton) * 5),realInitPosButton.y), ButtonType.For, true); //For
 		b_for.setScale(m_scale);
+		m_game.getWindow().clear();
+		m_game.getWindow().draw(listLoad.get(0));
+		m_game.getWindow().draw(listLoad.get(1));
+		m_game.getWindow().draw(listLoad.get(2));
+		m_game.getWindow().display();
 		Button b_putP = new Button(TILEPATHACTION, new Vector2f(realInitPosButton.x + ((realSizeButton.x + realDecalButton) * 6),realInitPosButton.y), ButtonType.PutP, true); //Poser pointeur
 		b_putP.setScale(m_scale);
 		Button b_useP = new Button(TILEPATHACTION, new Vector2f(realInitPosButton.x + ((realSizeButton.x + realDecalButton) * 7),realInitPosButton.y), ButtonType.UseP, true); //Utiliser pointeur
@@ -269,6 +310,14 @@ public class Controler {
 		Button b_smartBot = new Button(TILEPATHACTION, new Vector2f(realInitPosOngletBot.x + realSizeOngletBot.x, realInitPosOngletBot.y), ButtonType.SmartBot, false); //BasicBot [non presse]
 		b_smartBot.setScale(m_scale);
 		
+		m_game.getWindow().clear();
+		m_game.getWindow().draw(listLoad.get(0));
+		m_game.getWindow().draw(listLoad.get(1));
+		m_game.getWindow().draw(listLoad.get(2));
+		m_game.getWindow().draw(listLoad.get(3));
+		m_game.getWindow().display();
+		
+		
 		// Boutons representants les couleurs des pointeurs et instructions
 		Vector2f realInitPosButtonPointer = Vector2f.add(m_backOrder.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITBUTTONPOINTER, POSINITBACKORDER), m_scale));
 		Vector2f realSizeButtonPointer = Vector2f.componentwiseMul(SIZEBUTTONCOLOR, m_scale);
@@ -281,6 +330,7 @@ public class Controler {
 		b_red.setScale(m_scale);
 		Button b_blue = new Button(TILEPATHACTION, new Vector2f(realInitPosButtonPointer.x + ((realSizeButtonPointer.x + realDecalButtonPointer) * 3) , realInitPosButtonPointer.y), ButtonType.PushBlue, false); //Bouton bleue [non presse]
 		b_blue.setScale(m_scale);
+
 		
 		Vector2f realInitPosButtonColor = Vector2f.add(m_backOrder.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITBUTTONCOLOR, POSINITBACKORDER), m_scale));
 		Vector2f realSizeButtonColor = Vector2f.componentwiseMul(SIZEBUTTONCOLOR, m_scale);
@@ -291,6 +341,7 @@ public class Controler {
 		Button b_cyan = new Button(TILEPATHACTION, new Vector2f(realInitPosButtonColor.x , realInitPosButtonColor.y + (realSizeButtonColor.y * 2)), ButtonType.PushCyan, false); //Bouton cyan [non presse]
 		b_cyan.setScale(m_scale);
 		
+
 		//Boutons run
 		Vector2f realInitPosButtonStartStop = Vector2f.add(m_backOrder.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITBUTTONSTARTSTOP, POSINITBACKORDER), m_scale));
 		Button b_run = new Button(TILEPATHACTION, realInitPosButtonStartStop, ButtonType.Run, false); //Bouton run
@@ -303,6 +354,13 @@ public class Controler {
 		Button b_menu = new Button(TILEPATHACTION, POSINITBUTTONMENU, ButtonType.Menu, false); //Bouton Menu
 		b_menu.setScale(m_scale);
 
+		m_game.getWindow().clear();
+		m_game.getWindow().draw(listLoad.get(0));
+		m_game.getWindow().draw(listLoad.get(1));
+		m_game.getWindow().draw(listLoad.get(2));
+		m_game.getWindow().draw(listLoad.get(3));
+		m_game.getWindow().draw(listLoad.get(4));
+		m_game.getWindow().display();
 		
 		// Clear des Vector
 		m_listButton.clear();
@@ -337,6 +395,15 @@ public class Controler {
 		m_listButton.put(ButtonType.PushRed, b_red);
 		m_listButton.put(ButtonType.PushBlue,b_blue);
 		
+		m_game.getWindow().clear();
+		m_game.getWindow().draw(listLoad.get(0));
+		m_game.getWindow().draw(listLoad.get(1));
+		m_game.getWindow().draw(listLoad.get(2));
+		m_game.getWindow().draw(listLoad.get(3));
+		m_game.getWindow().draw(listLoad.get(4));
+		m_game.getWindow().draw(listLoad.get(5));
+		m_game.getWindow().display();
+		
 		m_listButton.put(ButtonType.PushGrey, b_grey); 
 		m_listButton.put(ButtonType.PushMagenta, b_magenta); 
 		m_listButton.put(ButtonType.PushCyan, b_cyan);
@@ -350,9 +417,59 @@ public class Controler {
 		m_listFrame.put(FrameType.P2, f_p2);
 		m_listFrame.put(FrameType.OrderList, f_orderList);
 		init();
+		
 	}
 	
 	
+	
+	public void completedLevel() {
+
+		Texture doneText = new Texture();
+		Sprite done = new Sprite();
+		try {
+			doneText.loadFromFile(Paths.get(TILEPATHDONE));
+			done.setTexture(doneText);
+			System.out.println("On a charger : " + TILEPATHDONE);
+			//done = new Sprite(doneText);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		done.setScale(m_scale);
+		done.setOrigin(done.getLocalBounds().width/2,done.getLocalBounds().height/2);
+		//done.setOrigin(m_screenSize.x,m_screenSize.y);
+		Random r = new Random();
+		done.setPosition(m_screenSize.x/2,m_screenSize.y/2);
+		boolean levelCompleted = true;
+		Clock clock = new Clock();
+		int frame = 0;
+		while(levelCompleted) {
+			clock.restart();
+			
+			supervise();
+			update();
+			m_game.getWindow().draw(done);
+			m_game.getWindow().display();
+			System.out.println("On dessine la victoire !");
+			while(clock.getElapsedTime().asSeconds() < 0.2f){
+				
+			}
+			//rot = Random.
+			done.setRotation(r.nextFloat() * 360.0f);
+			//done.setPosition(m_screenSize.x/2-done.getGlobalBounds().height,m_screenSize.y/2-done.getGlobalBounds().height);
+			frame++;
+			if (frame > 7) {
+				m_game.getWindow().clear();
+				update();
+				m_game.getWindow().display();
+				levelCompleted = false;
+			}
+			
+
+		}
+		m_game.getLevel().nextLevel();
+		reloadInterface(m_screenSize);
+	}
 	
 	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
 	 *
@@ -390,7 +507,7 @@ public class Controler {
 				// initialisation des cadres dans le main du SmartBot
 				// initialisation des cadres dans p1 du SmartBot
 				// initialisation des cadres dans p2 du SmartBot
-				System.out.println("Limit de " + currentChar.toString() + " pour la frame " + j + "est de : " + currentChar.getLimitOrder().get(j) );
+				//System.out.println("Limit de " + currentChar.toString() + " pour la frame " + j + "est de : " + currentChar.getLimitOrder().get(j) );
 				for (int i = 0 ; i < currentChar.getLimitOrder().get(j) ; i++) {
 					if((i % 8 == 0) && i != 0 ) {
 						pos = new Vector2f(realInitPosCadreMain.x,pos.y + realSizeCadreOrder.y + realDecalCadreMain.y);
@@ -429,7 +546,7 @@ public class Controler {
 			}
 		}
 		// initialisation des ordres visibles du BasicBot
-		initOrder();
+		initOrder("basic");
 		m_listFrame.get(FrameType.Main).ActiveFrame(true);
 		
 		/*TODO*/
@@ -440,13 +557,20 @@ public class Controler {
 	
 	/** Initialise les Ordres disponible pour le niveau charge
 	 */
-	private void initOrder() {
+	private void initOrder(String bot) {
 		/* TODO */
 		for(ButtonType mapkey : m_listButton.keySet()) {
-			if(mapkey.ordinal() > ButtonType.P2.ordinal()) {
-				break;
+			if(mapkey.ordinal() <= ButtonType.P2.ordinal()) {
+				m_listButton.get(mapkey).setVisibility(false);
+				System.out.println("On met invisible : " + mapkey.name());
 			}
-			m_listButton.get(mapkey).setVisibility(true);
+			
+		}
+		
+		List<Button.ButtonType> orderAvailable = m_game.getPossibleOrders(bot);
+		for(int i = 0 ; i < orderAvailable.size(); i++) {
+			m_listButton.get(orderAvailable.get(i)).setVisibility(true);
+			System.out.println("On met visible : " + orderAvailable.get(i).name());
 		}
 	}
 	
@@ -456,7 +580,9 @@ public class Controler {
 	 */
 	private void drawButton(HashMap<ButtonType, Button> hash) {
 		for (ButtonType mapKey : hash.keySet()) {
-			hash.get(mapKey).draw(m_game.getWindow());
+			if(hash.get(mapKey).getVisibility()) {
+				hash.get(mapKey).draw(m_game.getWindow());
+			}
 		}
 	}
 	
@@ -466,7 +592,9 @@ public class Controler {
 	 */
 	private void drawButton(Vector<Button> vec) {
 		for(int i = 0; i < vec.size(); i++) {
-			vec.get(i).draw(m_game.getWindow());
+			//if(vec.get(i).getVisibility()) {
+				vec.get(i).draw(m_game.getWindow());
+			//}
 		}
 	}
 	
@@ -643,8 +771,16 @@ public class Controler {
 	 * @require la fenetre window doit etre ouverte
 	 */
 	public void supervise(){
+		
+		if(m_game.needToReload()) {
+			//m_game.getWindow().draw(m_background);
+			//m_game.getWindow().display();
+			reloadInterface(m_screenSize);
+			m_game.reloadDone();
+		}
+		
 		if(!m_game.getStateSimulation() && m_listButton.get(ButtonType.Run).isActive()) {
-			System.out.println("Break SImulation");
+			System.out.println("Break Simulation");
 			m_listButton.get(ButtonType.Run).ActiveButton(false);
 		}
 		for (Event event : m_game.getWindow().pollEvents()) {
@@ -655,7 +791,7 @@ public class Controler {
             }
             
             if (event.type == Event.Type.RESIZED) {
-            	System.out.println("New Size x = " + event.asSizeEvent().size.x + " y = " + event.asSizeEvent().size.y);
+            	//System.out.println("New Size x = " + event.asSizeEvent().size.x + " y = " + event.asSizeEvent().size.y);
             	m_game.setView(event.asSizeEvent().size);
             	reloadInterface(event.asSizeEvent().size);
             }
@@ -693,62 +829,62 @@ public class Controler {
 	            	}
             		            	
 	            	//Move : on ajoute l'ordre dans la view active & dans m_listOrder (Character)
-	            	if (m_listButton.get(ButtonType.Move).isClicked(mouse_pos)) { 
+	            	if (m_listButton.get(ButtonType.Move).isClicked(mouse_pos) && m_listButton.get(ButtonType.Move).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.Move), m_listButton.get(ButtonType.Move).getColor());
 	            	}
 	            	
 	            	//TurnRight : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)	
-	            	else if (m_listButton.get(ButtonType.TurnRight).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.TurnRight).isClicked(mouse_pos) && m_listButton.get(ButtonType.TurnRight).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.TurnRight), m_listButton.get(ButtonType.TurnRight).getColor());
 	            	}
 	            	
 	            	//TurnLeft : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.TurnLeft).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.TurnLeft).isClicked(mouse_pos) && m_listButton.get(ButtonType.TurnLeft).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.TurnLeft), m_listButton.get(ButtonType.TurnLeft).getColor());
 	            	}
 	            	
 	            	//Jump : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.Jump).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.Jump).isClicked(mouse_pos) && m_listButton.get(ButtonType.Jump).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.Jump), m_listButton.get(ButtonType.Jump).getColor());
 	            	}
 	            	
 	            	//Light : On ajoute l'ordre dans la frame active & dans m_listeOrder (Character)
-	            	else if (m_listButton.get(ButtonType.Light).isClicked(mouse_pos)){
+	            	else if (m_listButton.get(ButtonType.Light).isClicked(mouse_pos) && m_listButton.get(ButtonType.Light).getVisibility()){
 	            		addOrder(m_listButton.get(ButtonType.Light), m_listButton.get(ButtonType.Light).getColor());
 	            	}
 	            	
 	            	//For : On ajoute l'ordre dans la frame active & dans m_listeOrder (Character)
-	            	else if (m_listButton.get(ButtonType.For).isClicked(mouse_pos)){
+	            	else if (m_listButton.get(ButtonType.For).isClicked(mouse_pos) && m_listButton.get(ButtonType.For).getVisibility()){
 	            		addOrder(m_listButton.get(ButtonType.For), m_listButton.get(ButtonType.For).getColor());
 	            	}
 	            	
 	            	//putP : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.PutP).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.PutP).isClicked(mouse_pos) && m_listButton.get(ButtonType.PutP).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.PutP), m_listButton.get(ButtonType.PutP).getColor());
 	            	}
 	            	
 	            	//useP : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.UseP).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.UseP).isClicked(mouse_pos) && m_listButton.get(ButtonType.UseP).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.UseP), m_listButton.get(ButtonType.UseP).getColor());
 	            	}
 	            	
 	            	//paint : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.Paint).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.Paint).isClicked(mouse_pos) && m_listButton.get(ButtonType.Paint).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.Paint), m_listButton.get(ButtonType.Paint).getColor());
 	            	}
 	            	
 	            	//removeColor : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.RemoveColor).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.RemoveColor).isClicked(mouse_pos) && m_listButton.get(ButtonType.RemoveColor).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.RemoveColor), m_listButton.get(ButtonType.RemoveColor).getColor());
 	            	}
 	            	
 	            	//P1 : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.P1).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.P1).isClicked(mouse_pos) && m_listButton.get(ButtonType.P1).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.P1), m_listButton.get(ButtonType.P1).getColor());
 	            	}
 	            	
 	            	//P2 : on ajoute l'ordre dans la frame active & dans m_listOrder (Character)
-	            	else if (m_listButton.get(ButtonType.P2).isClicked(mouse_pos)) { 
+	            	else if (m_listButton.get(ButtonType.P2).isClicked(mouse_pos) && m_listButton.get(ButtonType.P2).getVisibility()) { 
 	            		addOrder(m_listButton.get(ButtonType.P2), m_listButton.get(ButtonType.P2).getColor());
 	            	}
 	            	
@@ -759,6 +895,8 @@ public class Controler {
 	            		m_listFrame.get(FrameType.Main).ActiveFrame(true);
 	            		m_listFrame.get(FrameType.P1).ActiveFrame(false);
 	            		m_listFrame.get(FrameType.P2).ActiveFrame(false);
+	            		initOrder("basic");
+	            		//update();
 	            	}
 	            	
 	            	//SmartBot : on passe le SmartBot en actif et le BasicBot en inactif
@@ -768,6 +906,8 @@ public class Controler {
 	            		m_listFrame.get(FrameType.Main).ActiveFrame(true);
 	            		m_listFrame.get(FrameType.P1).ActiveFrame(false);
 	            		m_listFrame.get(FrameType.P2).ActiveFrame(false);
+	            		initOrder("smart");
+	            		//update();
 	            	}
 	            	
 	            	//Yellow : on active le bouton et on desactive les autres (blue, green, red)

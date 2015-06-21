@@ -52,11 +52,11 @@ public class jsfmltesto {
         }*/
         //Sprite back_sprite = new Sprite(back_text);
         //Vector2i screenSize = new Vector2i(900,600);
-        //Vector2i screenSize = new Vector2i(1600,900);
-        Vector2i screenSize = new Vector2i(1280,720);
+        Vector2i screenSize = new Vector2i(1600,900);
+        //Vector2i screenSize = new Vector2i(1280,720);
         //Vector2i screenSize = new Vector2i(1440,900);
         //Vector2i screenSize = new Vector2i(1920,1080);
-        fenetre.create(new VideoMode(screenSize.x,screenSize.y), "LightBot",WindowStyle.CLOSE); //,WindowStyle.FULLSCREEN);
+        fenetre.create(new VideoMode(screenSize.x,screenSize.y), "LightBot"/*,WindowStyle.CLOSE*/); //,WindowStyle.FULLSCREEN);
 
 /*        int frame = 3;
         int frameElec = 1;
@@ -78,7 +78,7 @@ public class jsfmltesto {
         Level level = new Level(game, TILEPATHLEVEL, 4, 4, screenSize);
         level.reload(screenSize);
         level.addXML(LEVELPATH);
-        level.addXML("use_pointeur_lvl_1.xml");
+        level.addXML("level/use_pointeur_lvl_2.xml");
         level.addXML("test2.xml");
         System.out.println("Chemin : " + level.getListXML().get(0));
         
@@ -147,11 +147,12 @@ public class jsfmltesto {
 	    					}
 	    				}
 	    				System.out.println("End of Simulation");
-	    				if(game.levelIsCompleted()){
-	    					control.completedLevel();
-	    					System.out.println("FELICITATION !!");
-	    				}
 	    				game.setStateSimulation(false);
+	    				if(game.levelIsCompleted()){
+	    					System.out.println("FELICITATION !!");
+	    					control.completedLevel(); // On affiche un WIN
+	    				}
+	    				
 	    			}
 	    	game.getWindow().clear();
         }

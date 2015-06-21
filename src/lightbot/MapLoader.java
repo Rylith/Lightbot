@@ -109,18 +109,18 @@ public class MapLoader {
 			String parts[] = orders.split(" ");
 				for (int i = 0; i < parts.length; i++) {
 					switch (parts[i]) {
-						 case "move": b_possible.add(Button.ButtonType.Move); break;
-						 case "turnr": b_possible.add(Button.ButtonType.TurnRight); break;
-						 case "turnl": b_possible.add(Button.ButtonType.TurnLeft); break;
-						 case "jump": b_possible.add(Button.ButtonType.Jump); break;
-						 case "light": b_possible.add(Button.ButtonType.Light); break;
-						 case "for": b_possible.add(Button.ButtonType.For); break;
-						 case "paint": b_possible.add(Button.ButtonType.Paint); break;
-						 case "douche": b_possible.add(Button.ButtonType.RemoveColor); break;
-						 case "p1": b_possible.add(Button.ButtonType.P1); break;
-						 case "p2": b_possible.add(Button.ButtonType.P2); break;
-						 case "p_pointeur": b_possible.add(Button.ButtonType.PutP); break;
-						 case "a_pointeur": b_possible.add(Button.ButtonType.UseP); break;
+						 case "move": s_possible.add(Button.ButtonType.Move); break;
+						 case "turnr": s_possible.add(Button.ButtonType.TurnRight); break;
+						 case "turnl": s_possible.add(Button.ButtonType.TurnLeft); break;
+						 case "jump": s_possible.add(Button.ButtonType.Jump); break;
+						 case "light": s_possible.add(Button.ButtonType.Light); break;
+						 case "for": s_possible.add(Button.ButtonType.For); break;
+						 case "paint": s_possible.add(Button.ButtonType.Paint); break;
+						 case "douche": s_possible.add(Button.ButtonType.RemoveColor); break;
+						 case "p1": s_possible.add(Button.ButtonType.P1); break;
+						 case "p2": s_possible.add(Button.ButtonType.P2); break;
+						 case "p_pointeur": s_possible.add(Button.ButtonType.PutP); break;
+						 case "a_pointeur": s_possible.add(Button.ButtonType.UseP); break;
 					}
 				}	
 			}

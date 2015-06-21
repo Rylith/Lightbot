@@ -1,5 +1,6 @@
 package lightbot;
 
+import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -28,6 +29,7 @@ public class Game {
 	private Engine m_engine;
 	private Map m_map;
 	private boolean m_runSimulation = false;
+	private boolean m_needToReload = false;
 	private Level m_level;
 
 	
@@ -105,6 +107,10 @@ public class Game {
 		m_map.drawMap(m_window);
 	}
 	
+	public List<Button.ButtonType> getPossibleOrders(String name) {
+		return m_map.getPossibleOrders(name);
+	}
+	
 	public void setView(Vector2i size){
 		View view = new View();
 		view.setSize(new Vector2f(size.x,size.y));
@@ -112,7 +118,19 @@ public class Game {
 		m_window.setView(view);
 	}
 	
+	public boolean needToReload() {
+		return m_needToReload;
+	}
+	
+	public void reloadDone() {
+		m_needToReload = false;
+	}
+	
 	public void setMap(String mapPath){
+		m_needToReload = true;
+		m_character.clear();
+		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, TILEPATHBasicBot));
+		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, TILEPATHSmartBot));
 		m_map.setLevel(m_character.get("BasicBot"), m_character.get("SmartBot"), mapPath);
 		m_engine.setMap(m_map);
 	}

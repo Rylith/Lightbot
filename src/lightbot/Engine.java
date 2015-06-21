@@ -235,7 +235,10 @@ public class Engine {
 	
 	
 	public void deleteCharacter(Character character) {
-		getCurrentCase(character).delObject(d_charac);
+		if(getCurrentCase(character) != null) {
+			getCurrentCase(character).delObject(d_charac);
+		}
+		
 	}
 	
 	public void resetCharacter(Character character) {

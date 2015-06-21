@@ -69,6 +69,7 @@ public class Button extends Component{
 	private Color m_color; //indique la couleur du bouton
 	private Color m_colorPointeur = Color.GREEN;
 	private boolean m_active; //indique si le bouton est presse
+	private boolean m_enable;
 	
 	
 /** -------------- CONSTRUCTORS -------------- */	
@@ -84,6 +85,7 @@ public class Button extends Component{
 		m_order = move;
 		m_color = Color.WHITE;
 		m_type = type;
+		m_enable = false;
 		if (m_type == ButtonType.Cadre){
 			super.getSprite().setTextureRect(new IntRect(2*SIZEONX, 3*SIZEORDER, SIZEORDER, SIZEORDER));
 			m_active = false;
@@ -229,6 +231,13 @@ public class Button extends Component{
 		return m_type;
 	}
 	
+	public void enable() {
+		m_enable = true;
+	}
+	
+	public void disable() {
+		m_enable = false;
+	}
 	
 	/** Indique si l'on a clique sur le sprite du bouton 
 	 * @param position

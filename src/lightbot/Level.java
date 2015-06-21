@@ -95,11 +95,7 @@ public class Level {
 	public HashMap<Integer, Button> getListLevel(){
 		return m_listLevel;
 	}
-	
-	public int getCurrentLevel() {
-		return m_currentLevel;
-	}
-	
+
 	/** Getter de la HashMap de fichier XML
 	 * @return m_listXML
 	 */
@@ -285,6 +281,10 @@ public class Level {
 	}
 
 
+	public void nextLevel() {
+		m_currentLevel++;
+		m_game.setMap(m_listXML.get(m_currentLevel));
+	}
 
 	public boolean getMakeChoice() {
 		return m_makechoice;

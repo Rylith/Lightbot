@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<character type ="basic" pos_x="2" pos_y ="1" orientation = "right">
+		<main>16</main>
+		<proc1>10</proc1>
+		<proc2>8</proc2>
+		<orders>move turnr light</orders>
+	</character>
+	<character type ="smart" pos_x="1" pos_y ="1" orientation = "right">
+		<main>3</main>
+		<proc1>2</proc1>
+		<proc2>2</proc2>
+		<orders>move turnr</orders>
+	</character>
+
+	<size>
+		<lines>4</lines>
+		<colonnes>5</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="1" pos_y="0">
+		</case>
+		<case height="1" pos_y="1">
+		</case>
+		<case height="1" pos_y="3"/>
+		<case height="1" pos_y="4"/>
+	</line>
+
+	<line num="1">
+		<case height="3" pos_y="0">
+			<pointeur color="red"/>
+		</case>
+		<case height="1" pos_y="1">
+			<character type="smart"/>
+		</case>
+		<case height="1" pos_y="3"/>
+		<case height="1" pos_y="4"/>
+	</line>
+
+	<line num="2">
+		<case height="4" pos_y="0">
+			<pointeur color="blue"/>
+		</case>
+		<case height="2" pos_y="1">
+			<paint color="cyan"/>
+			<character type="basic"/>
+		</case>
+		<case height="2" pos_y="2">
+			<for number="4"/>
+		</case>
+		<case height="1" pos_y="3">
+			<pointeur color="yellow"/>
+		</case>
+		<case height="1" pos_y="4">
+			<paint color="magenta"/>
+		</case>
+	</line>
+
+	<line num="3">
+		<case height="1" pos_y="0">
+			<lampe/>
+		</case>
+		<case height="1" pos_y="1">
+		</case>
+		<case height="1" pos_y="3">
+		</case>
+		<case height="1" pos_y="4">
+		</case>
+	</line>
+</map>

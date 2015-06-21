@@ -71,7 +71,7 @@ public class Map {
 		m_initOrientation.put("BasicBot",robb.getOrientation());
 		m_initHeight.put("SmartBot",robs.getHeight());
 		m_initHeight.put("BasicBot",robb.getHeight());
-		System.out.println("Number of lamp: " + listLampe.size());
+		//System.out.println("Number of lamp: " + listLampe.size());
 	}
 /** ---------------- METHODS ----------------- */
 	public void createMap(MapLoader ml, Character robb, Character robs,List<Lampadaire> listLampe){
