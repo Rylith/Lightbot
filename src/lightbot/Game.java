@@ -123,61 +123,64 @@ public class Game {
 		return m_map.isCompleted();
 	}
 	
-	/** Creer un order a partir d'un ButtonType
+	
+	/** Creer un order a partir d'un Button
 	 * @param type
 	 * @param car
 	 * @param color
 	 * @return Order
 	 * @throws Exception 
 	 */
-	public Order ButtonToButtonType(ButtonType type, Character car, Color color) throws Exception{
-		if (type == ButtonType.Move){
+	public Order ButtonToOrder(Button button, Character car, Color color) throws Exception{
+		if (button.getType() == ButtonType.Move){
 			Order order = new  Move(car, getEngine(), color);
 			return order;
 		}
-		else if (type == ButtonType.TurnRight){
+		else if (button.getType() == ButtonType.TurnRight){
 			Order order = new  TurnRight(car, color);
 			return order;
 		}
-		else if (type == ButtonType.TurnLeft){
+		else if (button.getType() == ButtonType.TurnLeft){
 			Order order = new  TurnLeft(car, color);
 			return order;
 		}
-		else if (type == ButtonType.Jump){
+		else if (button.getType() == ButtonType.Jump){
 			Order order = new  Jump(car, getEngine(), color);
 			return order;
 		}
-		else if (type == ButtonType.Light){
+		else if (button.getType() == ButtonType.Light){
 			Order order = new  Light(car, getEngine(), color);
 			return order;
 		}
-		else if (type == ButtonType.For){
+		else if (button.getType() == ButtonType.For){
 			Order order = new  For(car, getEngine(), color);
 			return order;
 		}
-		else if (type == ButtonType.PutP){
+		else if (button.getType() == ButtonType.PutP){
 			//TODO CHANGER LA COULEUR EN PARAM
-			Order order = new  MallocPointer(car, getEngine(), color);
+			Color cptr = button.getColorPointer();
+			Order order = new  MallocPointer(car, getEngine(), color, cptr);
 			return order;
 		}		
-		else if (type == ButtonType.UseP){
+		else if (button.getType() == ButtonType.UseP){
 			//TODO CHANGER LA COULEUR EN PARAM
-			Order order = new  AccessPointer(car, getEngine(), Color.BLUE);
+			Color cptr = button.getColorPointer();
+			Order order = new  AccessPointer(car, getEngine(), color, cptr);
 			return order;
 		}
-		else if (type == ButtonType.Paint){
+		else if (button.getType() == ButtonType.Paint){
 			Order order = new  getColor(car, getEngine(), color);
 			return order;
 		}
-		else if (type == ButtonType.RemoveColor){
+		else if (button.getType() == ButtonType.RemoveColor){
 			Order order = new  RemoveColor(car, color);
 			return order;
 		}
-		else if (type == ButtonType.P1){
+		else if (button.getType() == ButtonType.P1){
 			Order order = new  Procedure1(car, color);
 			return order;
 		}
-		else if (type == ButtonType.P2){
+		else if (button.getType() == ButtonType.P2){
 			Order order = new  Procedure2(car, color);
 			return order;
 		}
@@ -189,15 +192,16 @@ public class Game {
 	
 	/** Ajoute un ordre dans m_listOrder du Character
 	 * @param proc  0 : main | 1 : p1 | 2 : P2 
-	 * @param car  "BasicBot" : BasicBot | "SmartBot" : SmartBot
-	 * @param order  ordre a ajouter
+	 * @param character  "BasicBot" : BasicBot | "SmartBot" : SmartBot
+	 * @param button  bouton correspondant a l'ordre a ajouter
+	 * @param color couleur de l'instruction
 	 */
-	public boolean addOrder(int proc, String character,  ButtonType type, Color color){
+	public boolean addOrder(int proc, String character,  Button button, Color color){
 		//System.out.println("Size listOrdre " + proc + " = " + m_character.get(character).getListOrder().get(proc).size() + " | LimitOrder = " + m_character.get(character).getLimitOrder().get(proc));
 		if (m_character.get(character).getListOrder().get(proc).size() < m_character.get(character).getLimitOrder().get(proc)){
 			Order order = null;
 			try {
-				order = ButtonToButtonType(type, m_character.get(character), color);
+				order = ButtonToOrder(button, m_character.get(character), color);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
