@@ -29,6 +29,8 @@ public class jsfmltesto {
 	}
 	
 	private final static String LEVELPATH = "test2.xml";
+	private final static String TILEPATHLEVEL = "ressource/Sprite/Level.png";
+
 	
     public static void main(String[] args) {
  
@@ -63,7 +65,36 @@ public class jsfmltesto {
         //Map testo = new Map(rob);
         //Engine eng = new Engine(testo);
         Game game = new Game(fenetre);
-        game.setMap(LEVELPATH);
+        
+ 
+        
+//ADD BY CORALIE:
+/*---------------------------Génération de l'interface des levels------------------------------------*/ 
+
+        
+        
+        Level level = new Level(game, TILEPATHLEVEL, 4, 4, screenSize);
+        level.reload(screenSize);
+        level.addXML(LEVELPATH);
+        
+        game.getWindow().setFramerateLimit(30);
+        level.draw();
+    	game.getWindow().display();
+        game.getWindow().clear();
+        
+        // Boucle principale qui s’exécute tant que la fenêtre est ouverte
+        while (game.getWindow().isOpen()) {
+        	while ((level.getMakeChoice() == false)) {
+        		level.launchLevel();
+        	}
+        	
+        
+        
+
+        
+        
+//REMOVE BY CORALIE:        game.setMap(LEVELPATH);
+        	
         //Animation animate = new Animation:
         Controler control = new Controler(screenSize,game);
 
@@ -75,9 +106,12 @@ public class jsfmltesto {
         control.init(robot,robot);*/
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         
-        game.getWindow().setFramerateLimit(30);
+//REMOVE BY CORALIE:        game.getWindow().setFramerateLimit(30);
+        
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
-        while (game.getWindow().isOpen()) {
+
+//REMOVE BY CORALIE:        while (game.getWindow().isOpen()) {
+        
         	//fenetre.draw(back_sprite);
 
             //fenetre.draw(buttest.getSprite());

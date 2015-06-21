@@ -33,7 +33,7 @@ public class Controler {
 	// EMPLACEMENT RESSOURCES GRAPHIQUE
 	private final static String TILEPATHACTION = "ressource/Sprite/action.png";
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
-	private final static String TILEPATHBACKGROUND = "ressource/Sprite/back.jpg";
+	private final static String TILEPATHBACKGROUND = "ressource/Sprite/back.png";
 	
 	// POSITION DES ORDRES //
 	private final static Vector2f POSINITBUTTON = new Vector2f(58.0f,989.0f);

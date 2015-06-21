@@ -19,6 +19,8 @@ public class Game {
 
 
 	private final static String LEVELPATH = "test2.xml";
+	private static String TILEPATHBasicBot = "ressource/Sprite/lightbot.png";
+	private static String TILEPATHSmartBot = "ressource/Sprite/lightbot-smart.png";
 	
 /** --------------- ATTRIBUTES --------------- */	
 
@@ -31,22 +33,11 @@ public class Game {
 	
 /** -------------- CONSTRUCTORS -------------- */		
 	
-	/** Constructeur de Game
-	 * @param window
-	 * @param engine
-	 * @param basicbot
-	 */
-	public Game(RenderWindow window, Engine engine, Character basicbot){
-		m_window = window;
-		m_engine = engine;
-		m_character.put("BasicBot", basicbot);
-	}
-	
 	
 	public Game(RenderWindow window){
 		m_window = window;
-		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
-		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
+		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, TILEPATHBasicBot));
+		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, TILEPATHSmartBot));
 		//m_map = new Map(m_character.get("BasicBot"),m_character.get("SmartBot"),LEVELPATH);
 		//m_engine = new Engine(m_map);
 		m_map = new Map();
@@ -59,13 +50,27 @@ public class Game {
 		//getCharacter("SmartBot").setLimitOrder(0, 7);
 	}
 	
+	
+	/** Constructeur de Game
+	 * @param window
+	 * @param engine
+	 * @param basicbot
+	 */
+	public Game(RenderWindow window, Character basicbot){
+		m_window = window;
+		m_map = new Map();
+		m_engine = new Engine(m_map);
+		m_character.put("BasicBot", basicbot);
+	}
+
+	
 	/** Constructeur de Game
 	 * @param window
 	 * @param engine
 	 * @param basicbot
 	 * @param smartbot
 	 */
-	public Game(RenderWindow window, Engine engine, Character basicbot, Character smartbot){
+	public Game(RenderWindow window, Character basicbot, Character smartbot){
 		m_window = window;
 		m_map = new Map();
 		m_engine = new Engine(m_map);
@@ -157,13 +162,11 @@ public class Game {
 			return order;
 		}
 		else if (button.getType() == ButtonType.PutP){
-			//TODO CHANGER LA COULEUR EN PARAM
 			Color cptr = button.getColorPointer();
 			Order order = new  MallocPointer(car, getEngine(), color, cptr);
 			return order;
 		}		
 		else if (button.getType() == ButtonType.UseP){
-			//TODO CHANGER LA COULEUR EN PARAM
 			Color cptr = button.getColorPointer();
 			Order order = new  AccessPointer(car, getEngine(), color, cptr);
 			return order;
