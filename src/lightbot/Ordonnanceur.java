@@ -27,14 +27,12 @@ public class Ordonnanceur {
 		this.pGame = game;
 		this.pStacks = new LinkedList<Stack<Iterator<Order>>>();
 		for(String mapKey : pGame.getCharacter().keySet()) {
-			if (pGame.getCharacter(mapKey).getActif()) {
-				List<Order> main = pGame.getCharacter(mapKey).getListOrder().get(0);
-				System.out.println("La p1 fait: " + pGame.getCharacter(mapKey).getListOrder().get(1).size());
-				System.out.println("Le main ajoute de " + mapKey +  " fait: " + main.size());
-				Stack<Iterator<Order>> wStack = new Stack<Iterator<Order>>();
-				wStack.push(main.iterator());
-				this.pStacks.add(wStack);
-			}
+			List<Order> main = pGame.getCharacter(mapKey).getListOrder().get(0);
+			System.out.println("La p1 fait: " + pGame.getCharacter(mapKey).getListOrder().get(1).size());
+			System.out.println("Le main ajoute de " + mapKey +  " fait: " + main.size());
+			Stack<Iterator<Order>> wStack = new Stack<Iterator<Order>>();
+			wStack.push(main.iterator());
+			this.pStacks.add(wStack);
 		}
 		this.pPrev = new ArrayList<>();
 	}
@@ -62,7 +60,10 @@ public class Ordonnanceur {
 		}
 		/* Retourne faux si la pile est vide */
 		if (b_stack.isEmpty()) {
-			System.out.println("Stack vide");
+			System.out.println("ACTION TERMINEES");
+			if (c_bot.equals("SmartBot")) {
+				pGame.getCharacter().get("BasicBot").setActif(true);
+			}
 			return false;
 		}
 		
@@ -77,7 +78,7 @@ public class Ordonnanceur {
 			if (wIt.hasNext()) {
 				Order wAction = wIt.next();
 				
-				if (wAction.getColor() == Color.WHITE || wAction.getColor() == pGame.getCharacter(c_bot).getColor()) {
+				if ((wAction.getColor() == Color.WHITE || wAction.getColor() == pGame.getCharacter(c_bot).getColor()) && pGame.getCharacter(c_bot).getActif()) {
 					if (wAction instanceof Procedure1) {
 						System.out.println("J'appele p1 : name " + c_bot + " = " + pGame.getCharacter(c_bot) + " size " + pGame.getCharacter(c_bot).getListOrder().get(1).size());
 						b_stack.push(pGame.getCharacter(c_bot).getListOrder().get(1).iterator());
