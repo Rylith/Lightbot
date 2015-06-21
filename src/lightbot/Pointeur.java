@@ -97,4 +97,11 @@ public class Pointeur extends DrawableObject{
 			}
 		}
 	}
+	
+	public void update(Vector2i posi) {
+		this.setPosition(posi);
+		float pos_x = 250 +  this.getPosition().y * SIZESPRITEX/2 - this.getPosition().x * SIZESPRITEX/2;
+		float pos_y = 100 + (this.getPosition().x + this.getPosition().y) * ((SIZESPRITEY - SIZESPRITEE)/2) - this.getHeight()*8;
+		this.getSprite().setPosition(new Vector2f(pos_x,pos_y));
+	}
 }

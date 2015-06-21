@@ -215,7 +215,7 @@ public class Character extends DrawableObject{
 	public void setPointeur(Color color, Vector2i position){
     	for (int i = 0; i< m_listPointeur.size(); i++){
     		if (m_listPointeur.get(i).getColor() == color){
-    			m_listPointeur.get(i).setPosition(position);
+    			m_listPointeur.get(i).update(position);
     			break;
     		}
     	}
