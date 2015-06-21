@@ -357,7 +357,7 @@ public class Engine {
 	public boolean ExecFor(Character personne) {
 		// TODO Auto-generated method stub
 		
-		if(getCurrentCase(personne).getValue() > 1 && getCurrentCase(personne).getValue() <= 6){ //tests  conditions for
+		if(getCurrentCase(personne).getValue() >= 1 && getCurrentCase(personne).getValue() <= 6){ //tests  conditions for
 			
 			set_nb_for(getCurrentCase(personne).getValue());
 			return true;
