@@ -28,6 +28,7 @@ public class Game {
 	private Engine m_engine;
 	private Map m_map;
 	private boolean m_runSimulation = false;
+	private Level m_level;
 
 	
 /** -------------- CONSTRUCTORS -------------- */		
@@ -271,6 +272,16 @@ public class Game {
 	
 	public boolean getStateSimulation() {
 		return m_runSimulation;
+	}
+
+
+	public Level getLevel() {
+		return m_level;
+	}
+
+
+	public void setLevel(Level m_level) {
+		this.m_level = m_level;
 	}
 	
 }

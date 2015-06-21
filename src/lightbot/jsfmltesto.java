@@ -77,6 +77,8 @@ public class jsfmltesto {
         level.reload(screenSize);
         level.addXML(LEVELPATH);
         
+        game.setLevel(level); //On ajoute le level dans game pour pouvoir revenir au choix des niveaux plus tard
+        
         game.getWindow().setFramerateLimit(30);
         level.draw();
     	game.getWindow().display();

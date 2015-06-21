@@ -679,7 +679,19 @@ public class Controler {
                 	}
             		//m_listButton.get(ButtonType.Run).ActiveButton(true);
             	} else {
-	            	
+            		
+            		//MENU : on revient au menu de depart
+	            	if (m_listButton.get(ButtonType.Menu).isClicked(mouse_pos)) { 
+	            		/*TODO : Réinitialiser le jeux ? */
+	            		m_game.getLevel().draw();
+	            		m_game.getWindow().display();
+	                    m_game.getWindow().clear();
+	            		m_game.getLevel().setMakeChoice(false);
+                        while ((m_game.getLevel().getMakeChoice() == false)) {
+                        	m_game.getLevel().launchLevel();
+                        }
+	            	}
+            		            	
 	            	//Move : on ajoute l'ordre dans la view active & dans m_listOrder (Character)
 	            	if (m_listButton.get(ButtonType.Move).isClicked(mouse_pos)) { 
 	            		addOrder(m_listButton.get(ButtonType.Move), m_listButton.get(ButtonType.Move).getColor());
