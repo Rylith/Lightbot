@@ -37,7 +37,7 @@ public class Character extends DrawableObject{
 	
 	private Orientation m_orientation;
 	
-	private String tilePath;
+	private String m_tilePath;
 	private Texture tileTexture;
 	
 	private boolean m_fall; //indique si le personnage chute
@@ -59,7 +59,7 @@ public class Character extends DrawableObject{
 	public Character(Vector2i position, int height, Color color, String tilePath){
 		super(position, height, color, tilePath);
 		//m_listOrder = ;
-		
+		m_tilePath = tilePath;
 		this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
 
 		float tmp_x = 250 + 78/2;
@@ -222,8 +222,8 @@ public class Character extends DrawableObject{
 	/** Assigne la position au pointeur correspondant a la couleur fournit en parametre */
 	public void setPointeur(Color color, Vector2i position){
     	for (int i = 0; i< m_listPointeur.size(); i++){
-    		if (m_listPointeur.elementAt(i).getColor() == color){
-    			m_listPointeur.elementAt(i).setPosition(position);
+    		if (m_listPointeur.get(i).getColor() == color){
+    			m_listPointeur.get(i).setPosition(position);
     			break;
     		}
     	}
@@ -323,7 +323,7 @@ public class Character extends DrawableObject{
 	public void setColor(Color color){
 		super.setColor(color);
 		if (color == Color.CYAN) {
-			this.setPath("lightbot-cyan.png");
+			this.setPath("ressource/Sprite/lightbotCyan.png");
 			this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
 			float tmp_x = 250 + 78/2;
 			float tmp_y = 100 + (48-8)/2;
@@ -336,7 +336,7 @@ public class Character extends DrawableObject{
 			this.setOrientation(this.getOrientation());
 		}
 		else if (color == Color.MAGENTA) {
-			this.setPath("lightbot-magenta.png");
+			this.setPath("ressource/Sprite/lightbotMagenta.png");
 			this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
 			float tmp_x = 250 + 78/2;
 			float tmp_y = 100 + (48-8)/2;
@@ -349,7 +349,7 @@ public class Character extends DrawableObject{
 			this.setOrientation(this.getOrientation());
 		}
 		else {
-			this.setPath("lightbot.png");
+			this.setPath(m_tilePath);
 			this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
 			float tmp_x = 250 + 78/2;
 			float tmp_y = 100 + (48-8)/2;

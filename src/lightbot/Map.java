@@ -7,6 +7,7 @@ import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.jdom2.*;
@@ -28,6 +29,9 @@ public class Map {
 	
 	private Vector2i b_pos_init;
 	private Vector2i s_pos_init;
+	private HashMap<String,Vector2i> m_initPos;
+	private HashMap<String,Character.Orientation> m_initOrientation;
+	private HashMap<String,Integer> m_initHeight;
 	
 	private List<Button.ButtonType> b_possible;
 	private List<Button.ButtonType> s_possible;
@@ -52,11 +56,21 @@ public class Map {
 		this.m_colonnes = size.y;
 		m_map = new Case[size.x][size.y];
 		ml.character(robb, robs,b_pos_init,s_pos_init);
+		//System.out.println("Pos init : " + b_pos_init + " " + s_pos_init + "\n" + robb.getPosition() + "  " + robs.getPosition());
 		b_possible = new ArrayList<Button.ButtonType>();
 		s_possible = new ArrayList<Button.ButtonType>();
 		ml.getPossibleOrders(b_possible, s_possible);
 		listLampe = new ArrayList<Lampadaire>();
 		createMap(ml,robb,robs,listLampe);
+		m_initPos = new  HashMap<String,Vector2i>();
+		m_initOrientation = new  HashMap<String,Character.Orientation>();
+		m_initHeight = new HashMap<String,Integer>();
+		m_initPos.put("SmartBot",robs.getPosition());
+		m_initPos.put("BasicBot",robb.getPosition());
+		m_initOrientation.put("SmartBot",robs.getOrientation());
+		m_initOrientation.put("BasicBot",robb.getOrientation());
+		m_initHeight.put("SmartBot",robs.getHeight());
+		m_initHeight.put("BasicBot",robb.getHeight());
 		System.out.println("Number of lamp: " + listLampe.size());
 	}
 /** ---------------- METHODS ----------------- */
@@ -213,12 +227,18 @@ public class Map {
 		}
 	}
 	
-	public List<Vector2i> getPosInit() {
-		List<Vector2i> listPos = new  ArrayList<Vector2i>();
-		listPos.add(s_pos_init);
-		listPos.add(b_pos_init);
-		return listPos;
+	public HashMap<String,Vector2i> getPosInit() {
+		return m_initPos;
 	}
+	
+	public HashMap<String,Character.Orientation> getOrientationInit(){
+		return m_initOrientation;
+	}
+	
+	public HashMap<String,Integer> getHeightInit() {
+		return m_initHeight;
+	}
+	
 
 	public boolean isCompleted() {
 		boolean finish = true;

@@ -90,7 +90,7 @@ public class jsfmltesto {
             control.supervise();
 			
     			while(game.getStateSimulation()) {
-    				System.out.println("Start Simulation");
+    				System.out.println("Start Simulation : " + game.getCharacter("BasicBot").getPosition());
     				
     				Ordonnanceur ordo = new Ordonnanceur(game);
     				for(String mapKey : game.getCharacter().keySet()) {
@@ -101,7 +101,7 @@ public class jsfmltesto {
     						orderExist = false;
     					}
 						Clock clock = new Clock();
-    					while(orderExist) {
+    					while(orderExist && game.getStateSimulation()) {
     						clock.restart();
     						game.getWindow().display();
     			        	game.getWindow().clear();
