@@ -249,11 +249,11 @@ public class Level {
             }
             
             // Si l'utilisateur modifie la taille de la fenetre : on reload l'interface
-            if (event.type == Event.Type.RESIZED) {
+            /*if (event.type == Event.Type.RESIZED) {
             	System.out.println("New Size x = " + event.asSizeEvent().size.x + " y = " + event.asSizeEvent().size.y);
             	m_game.setView(event.asSizeEvent().size);
             	reload(event.asSizeEvent().size);
-            }
+            }*/
             
             // Si l'utilisateur clique sur la touche echape : on ferme la fenetre
             if (event.type == Event.Type.KEY_PRESSED) {

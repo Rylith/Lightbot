@@ -27,12 +27,14 @@ public class Ordonnanceur {
 		this.pGame = game;
 		this.pStacks = new LinkedList<Stack<Iterator<Order>>>();
 		for(String mapKey : pGame.getCharacter().keySet()) {
-			List<Order> main = pGame.getCharacter(mapKey).getListOrder().get(0);
-			System.out.println("La p1 fait: " + pGame.getCharacter(mapKey).getListOrder().get(1).size());
-			System.out.println("Le main ajoute de " + mapKey +  " fait: " + main.size());
-			Stack<Iterator<Order>> wStack = new Stack<Iterator<Order>>();
-			wStack.push(main.iterator());
-			this.pStacks.add(wStack);
+			if (pGame.getCharacter(mapKey).getActif()) {
+				List<Order> main = pGame.getCharacter(mapKey).getListOrder().get(0);
+				System.out.println("La p1 fait: " + pGame.getCharacter(mapKey).getListOrder().get(1).size());
+				System.out.println("Le main ajoute de " + mapKey +  " fait: " + main.size());
+				Stack<Iterator<Order>> wStack = new Stack<Iterator<Order>>();
+				wStack.push(main.iterator());
+				this.pStacks.add(wStack);
+			}
 		}
 		this.pPrev = new ArrayList<>();
 	}
@@ -43,7 +45,6 @@ public class Ordonnanceur {
 		System.out.println("JE FAIS UNE STEP");
 		boolean action_done = false;
 		for(Stack<Iterator<Order>> wStack : this.pStacks) {
-			//c_bot = pGame.getCharacter(b_name);
 			if (stepOne(wStack, b_name)) {
 				action_done = true;
 			}
