@@ -35,6 +35,9 @@ public class Controler {
 	private final static String TILEPATHFRAME = "ressource/Sprite/";
 	private final static String TILEPATHBACKGROUND = "ressource/Sprite/back.png";
 	
+	// POSITION BOUTTON MENU //
+	private final static Vector2f POSINITBUTTONMENU = new Vector2f(0,0);
+	
 	// POSITION DES ORDRES //
 	private final static Vector2f POSINITBUTTON = new Vector2f(58.0f,989.0f);
 	private final static Vector2f SIZEBUTTONORDER = new Vector2f(70.0f,70.0f);
@@ -296,6 +299,11 @@ public class Controler {
 		//b_stop.setScale(m_scale);
 
 		
+		//Bouton Menu
+		Button b_menu = new Button(TILEPATHACTION, POSINITBUTTONMENU, ButtonType.Menu, false); //Bouton Menu
+		b_menu.setScale(m_scale);
+
+		
 		// Clear des Vector
 		m_listButton.clear();
 		m_listFrame.clear();
@@ -334,6 +342,8 @@ public class Controler {
 		m_listButton.put(ButtonType.PushCyan, b_cyan);
 		m_listButton.put(ButtonType.Run, b_run);
 		//m_listButton.put(ButtonType.Stop, b_stop);
+		
+		m_listButton.put(ButtonType.Menu, b_menu);
 		
 		m_listFrame.put(FrameType.Main, f_main);
 		m_listFrame.put(FrameType.P1, f_p1);
