@@ -46,6 +46,7 @@ public class Level {
 
 	private HashMap<Integer, Button> m_listLevel = new HashMap<Integer, Button>();
 	private HashMap<Integer, String> m_listXML = new HashMap<Integer, String>();
+	private int m_currentLevel;
 	private int m_world;
 	private int m_level;
 	private String m_tilePath;
@@ -78,6 +79,7 @@ public class Level {
 		m_level = level;
 		m_tilePath = tilePath;
 		m_screenSize = screenSize;
+		m_currentLevel = 0;
 		m_makechoice = false;
 		
 		
@@ -95,6 +97,9 @@ public class Level {
 		return m_listLevel;
 	}
 	
+	public int getCurrentLevel() {
+		return m_currentLevel;
+	}
 	
 	/** Getter de la HashMap de fichier XML
 	 * @return m_listXML
@@ -232,7 +237,6 @@ public class Level {
 				m_listLevel.put(i, button);
 				//System.out.println("Creation bouton Level : " + i);
 				}
-			
 	        }
 	}
 	
@@ -270,6 +274,7 @@ public class Level {
                    	if (m_listLevel.get(i).isClicked(mouse_pos)) {  
                    			System.out.println("Chemin xml : " + m_listXML.get(i));
     	            		m_game.setMap(m_listXML.get(i));
+    	            		m_currentLevel = i;
     	            		System.out.println("Lancement du niveau : " + i);
     	            		setMakeChoice(true);
     	            		//m_game.getWindow().close();
