@@ -22,8 +22,13 @@ import org.jsfml.window.WindowStyle;
 import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.event.Event;
 
-import lightbot.Button;
-import lightbot.Character;
+import DrawableObject.Case;
+import DrawableObject.Character;
+import Game.Button;
+import Game.Controler;
+import Game.Game;
+import Game.Level;
+import Game.Ordonnanceur;
 
 public class jsfmltesto {
 	

@@ -11,7 +11,7 @@
 		<main>4</main>
 		<proc1>0</proc1>
 		<proc2>0</proc2>
-		<orders>move turnr turnl maloc djump </orders>
+		<orders>move turnr turnl malloc jump</orders>
 	</character>
 
 	<size>
