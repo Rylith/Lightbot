@@ -19,6 +19,7 @@ import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
+import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.event.Event;
 
 import lightbot.Button;
@@ -30,8 +31,11 @@ public class jsfmltesto {
         fenetre.draw(case1.getSprite());
 	}
 	
-	private final static String LEVELPATH = "level/test2.xml";
+	private final static String LEVELPATH1 = "level/test2.xml";
+	private final static String LEVELPATH2 = "level/maloc_lvl_1.xml";
+	private final static String LEVELPATH3 = "level/maloc_lvl_2.xml";
 	private final static String TILEPATHLEVEL = "ressource/Sprite/Level.png";
+
 
 	
     public static void main(String[] args) {
@@ -76,21 +80,34 @@ public class jsfmltesto {
 /*---------------------------Génération de l'interface des levels------------------------------------*/ 
 
         Level level = new Level(game, TILEPATHLEVEL, 4, 4, screenSize);
-        level.reload(screenSize);
-        level.addXML(LEVELPATH);
-        level.addXML("level/use_pointeur_lvl_2.xml");
-        level.addXML("test2.xml");
-        System.out.println("Chemin : " + level.getListXML().get(0));
-        
+        level.reload(screenSize);     
+        level.addXML(LEVELPATH1);
+        level.addXML(LEVELPATH2);
+        level.addXML(LEVELPATH3);
+        //System.out.println("Chemin : " + level.getListXML().get(0));
+
         game.setLevel(level); //On ajoute le level dans game pour pouvoir revenir au choix des niveaux plus tard
         
         game.getWindow().setFramerateLimit(30);
-        level.draw();
+        
+        level.drawLogo();
     	game.getWindow().display();
         game.getWindow().clear();
         
+
+        while ((level.getLaunch() == false)) {
+    		level.launchGame();
+        }
+        
+        level.reload(screenSize);
+        game.getWindow().clear();
+        level.draw();
+    	game.getWindow().display();
+    	
+
         Clock bug_clock = new Clock();
  
+
         while ((level.getMakeChoice() == false)) {
         	bug_clock.restart();
             while(bug_clock.getElapsedTime().asSeconds() < 0.5f){

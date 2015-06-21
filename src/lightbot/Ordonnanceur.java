@@ -15,12 +15,6 @@ public class Ordonnanceur {
 	
 	/** Liste de pile d'itérateur d'Action. Utilisé pour conserver la position des bots dans les fonctions */
 	List<Stack<Iterator<Order>>> pStacks;
-	
-	/**
-	 * Liste contenant la dernière Action effectuée par chancun des Bots. Utilisée pour les affichages
-	 * "Action courante"
-	 */
-	private List<Order> pPrev;
 
 	public Ordonnanceur(Game game) {
 		this.nbCoups = 0;
@@ -34,7 +28,6 @@ public class Ordonnanceur {
 			wStack.push(main.iterator());
 			this.pStacks.add(wStack);
 		}
-		this.pPrev = new ArrayList<>();
 	}
 	
 	public boolean step() {
@@ -75,10 +68,10 @@ public class Ordonnanceur {
 			return false;
 		} else { 
 			/* Vérifie que l'itérator à un élément suivant */
-			if (wIt.hasNext()) {
+			if (wIt.hasNext()  && pGame.getCharacter(c_bot).getActif()) {
 				Order wAction = wIt.next();
 				
-				if ((wAction.getColor() == Color.WHITE || wAction.getColor() == pGame.getCharacter(c_bot).getColor()) && pGame.getCharacter(c_bot).getActif()) {
+				if ((wAction.getColor() == Color.WHITE || wAction.getColor() == pGame.getCharacter(c_bot).getColor())) {
 					if (wAction instanceof Procedure1) {
 						System.out.println("J'appele p1 : name " + c_bot + " = " + pGame.getCharacter(c_bot) + " size " + pGame.getCharacter(c_bot).getListOrder().get(1).size());
 						b_stack.push(pGame.getCharacter(c_bot).getListOrder().get(1).iterator());

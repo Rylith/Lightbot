@@ -54,7 +54,7 @@ public class MapLoader {
 			if(listChar.get(j).getAttributeValue("type").equals("basic")) {
 				b_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
 				robb.update(b_pos_init);
-				switch (listChar.get(j).getAttributeValue("orientation")){
+				switch (listChar.get(j).getAttributeValue("orientation")) {
 				 case "up" : robb.setOrientation(Character.Orientation.Up); break;
 				 case "right": robb.setOrientation(Character.Orientation.Right); break;
 				 case "left": robb.setOrientation(Character.Orientation.Left); break;
@@ -63,7 +63,7 @@ public class MapLoader {
 				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("main").getText()));
 				robb.setLimitOrder(1,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
 				robb.setLimitOrder(2,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
-				robb.setActif(true);
+				robb.setActif(false);
 				
 			} else {
 				s_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
@@ -89,41 +89,32 @@ public class MapLoader {
 				String orders = listChar.get(j).getChild("orders").getText();
 				String parts[] = orders.split(" ");
 				for (int i = 0; i < parts.length; i++) {
-					switch (parts[i]){
-						 case "move": b_possible.add(Button.ButtonType.Move); break;
-						 case "turnr": b_possible.add(Button.ButtonType.TurnRight); break;
-						 case "turnl": b_possible.add(Button.ButtonType.TurnLeft); break;
-						 case "jump": b_possible.add(Button.ButtonType.Jump); break;
-						 case "light": b_possible.add(Button.ButtonType.Light); break;
-						 case "for": b_possible.add(Button.ButtonType.For); break;
-						 case "paint": b_possible.add(Button.ButtonType.Paint); break;
-						 case "douche": b_possible.add(Button.ButtonType.RemoveColor); break;
-						 case "p1": b_possible.add(Button.ButtonType.P1); break;
-						 case "p2": b_possible.add(Button.ButtonType.P2); break;
-						 case "p_pointeur": b_possible.add(Button.ButtonType.PutP); break;
-						 case "a_pointeur": b_possible.add(Button.ButtonType.UseP); break;
-					}
+					addPossibleOrder(s_possible, parts[i]);
 				}
 			} else {
 			String orders = listChar.get(j).getChild("orders").getText();
 			String parts[] = orders.split(" ");
 				for (int i = 0; i < parts.length; i++) {
-					switch (parts[i]) {
-						 case "move": s_possible.add(Button.ButtonType.Move); break;
-						 case "turnr": s_possible.add(Button.ButtonType.TurnRight); break;
-						 case "turnl": s_possible.add(Button.ButtonType.TurnLeft); break;
-						 case "jump": s_possible.add(Button.ButtonType.Jump); break;
-						 case "light": s_possible.add(Button.ButtonType.Light); break;
-						 case "for": s_possible.add(Button.ButtonType.For); break;
-						 case "paint": s_possible.add(Button.ButtonType.Paint); break;
-						 case "douche": s_possible.add(Button.ButtonType.RemoveColor); break;
-						 case "p1": s_possible.add(Button.ButtonType.P1); break;
-						 case "p2": s_possible.add(Button.ButtonType.P2); break;
-						 case "p_pointeur": s_possible.add(Button.ButtonType.PutP); break;
-						 case "a_pointeur": s_possible.add(Button.ButtonType.UseP); break;
-					}
+					addPossibleOrder(s_possible, parts[i]);
 				}	
 			}
+		}
+	}
+	
+	public void addPossibleOrder(List<Button.ButtonType> list_possible, String order) {
+		switch (order) {
+		 case "move": list_possible.add(Button.ButtonType.Move); break;
+		 case "turnr": list_possible.add(Button.ButtonType.TurnRight); break;
+		 case "turnl": list_possible.add(Button.ButtonType.TurnLeft); break;
+		 case "jump": list_possible.add(Button.ButtonType.Jump); break;
+		 case "light": list_possible.add(Button.ButtonType.Light); break;
+		 case "for": list_possible.add(Button.ButtonType.For); break;
+		 case "paint": list_possible.add(Button.ButtonType.Paint); break;
+		 case "douche": list_possible.add(Button.ButtonType.RemoveColor); break;
+		 case "p1": list_possible.add(Button.ButtonType.P1); break;
+		 case "p2": list_possible.add(Button.ButtonType.P2); break;
+		 case "malloc": list_possible.add(Button.ButtonType.PutP); break;
+		 case "telep": list_possible.add(Button.ButtonType.UseP); break;
 		}
 	}
 }
