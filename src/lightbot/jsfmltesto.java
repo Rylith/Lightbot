@@ -28,7 +28,7 @@ public class jsfmltesto {
         fenetre.draw(case1.getSprite());
 	}
 	
-	private final static String LEVELPATH = "test2.xml";
+	private final static String LEVELPATH = "level/use_pointeur_lvl_2.xml";
 	private final static String TILEPATHLEVEL = "ressource/Sprite/Level.png";
 
 	
@@ -60,10 +60,12 @@ public class jsfmltesto {
         int frameElec = 1;
         Clock animClock = new Clock();*/
 
-        Character rob = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
-        rob.setOrientation(Character.Orientation.Right);
+        //Character rob = new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png");
+        //rob.setOrientation(Character.Orientation.Right);
         //Map testo = new Map(rob);
         //Engine eng = new Engine(testo);
+        
+        
         Game game = new Game(fenetre);
         
  
@@ -77,6 +79,7 @@ public class jsfmltesto {
         level.reload(screenSize);
         level.addXML(LEVELPATH);
         level.addXML("use_pointeur_lvl_1.xml");
+        //System.out.println("Chemin : " + level.getListXML().get(0));
         
         game.setLevel(level); //On ajoute le level dans game pour pouvoir revenir au choix des niveaux plus tard
         

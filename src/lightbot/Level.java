@@ -27,10 +27,13 @@ public class Level {
 	
 	//TITLE
 	private static String TILEPATHTITLE = "ressource/Sprite/Menu.png";
-	private final static float DECALTITLE = 100 ;
+	private static float DECALTITLE = 100;
+	
+	//LOGO
+	private static String TILEPATHLOGO = "ressource/Sprite/Logo.png";
 
 	// LEVEL
-	private static Vector2f POSINITLEVEL = new Vector2f(100,50);
+	private static Vector2f POSINITLEVEL = new Vector2f(400,50);
 	private static Vector2f POSINITBACK = new Vector2f(0,0);
 	
 	private final static float DECALEVEL = 2 ;
@@ -53,6 +56,7 @@ public class Level {
 	
 	private static Sprite m_background;
 	private static Sprite m_title;
+	private static Sprite m_logo;
 	
 	private boolean m_makechoice;
 	
@@ -133,8 +137,11 @@ public class Level {
         // On affiche le background
 		m_game.getWindow().draw(m_background);
 		
+		// On affiche le logo
+		m_game.getWindow().draw(m_logo);
+		
 		// On affiche le titre
-		m_game.getWindow().draw(m_title);
+		//m_game.getWindow().draw(m_title);
 		
 		// On affiche les boutons
 		for(Integer mapkey : m_listLevel.keySet()) {
@@ -172,9 +179,21 @@ public class Level {
 		Vector2f realInitPosLevel = Vector2f.add(m_background.getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITLEVEL, POSINITBACK), realScale));
 		Vector2f position = realInitPosLevel;
 		
+	
+		// Generation du logo
+		Texture logo = new Texture();
+		try {
+			logo.loadFromFile(Paths.get(TILEPATHLOGO));
+			m_logo = new Sprite(logo);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_logo.setPosition(new Vector2f(0,0));
+		
 		
 		// Generation du titre
-		Texture title = new Texture();
+/*		Texture title = new Texture();
 		try {
 			title.loadFromFile(Paths.get(TILEPATHTITLE));
 			m_title = new Sprite(title);
@@ -184,7 +203,7 @@ public class Level {
 		}
 		m_title.setPosition(realInitPosLevel);
 		
-		
+*/		
 		
 		// Generation des boutons Levels
 		for (int i = 0 ; i < m_world*m_level ; i++){
@@ -247,8 +266,9 @@ public class Level {
             if (event.type == Event.Type.MOUSE_BUTTON_PRESSED && getMakeChoice() == false) {
             	Vector2i mouse_pos = Mouse.getPosition(m_game.getWindow()); 
             	for (int i = 0; i < m_world*m_level; i++) {
-                   	if (m_listLevel.get(i).isClicked(mouse_pos)) {
-                   		System.out.println("On tente de lancer le niveau: " + m_listXML.get(i) + ". Size de la list " + m_listXML.size());
+                   	if (m_listLevel.get(i).isClicked(mouse_pos)) {  
+                   			System.out.println("On tente de lancer le niveau: " + m_listXML.get(i) + ". Size de la list " + m_listXML.size());
+                   			System.out.println("Chemin xml : " + m_listXML.get(i));
     	            		m_game.setMap(m_listXML.get(i));
     	            		System.out.println("Lancement du niveau : " + i);
     	            		setMakeChoice(true);
