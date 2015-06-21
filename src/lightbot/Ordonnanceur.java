@@ -85,10 +85,13 @@ public class Ordonnanceur {
 						wAction.executer();
 						wAction = wIt.next();
 						if(wAction != null) {
-							System.out.println("Mon for");
+							System.out.println("Mon for est: " + pGame.getEngine().get_nb_for());
+							List<Order> for_list = new LinkedList<Order>();
 							for (int i = 0; i < pGame.getEngine().get_nb_for(); i++) {
-								wAction.executer();
+								for_list.add(i, wAction);
 							}
+							b_stack.push(for_list.iterator());
+							return stepOne(b_stack, c_bot);
 						}
 					}else if (wAction instanceof Procedure2){
 						System.out.println("J'appele p2");
