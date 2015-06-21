@@ -21,6 +21,7 @@ public class MapLoader {
 		//On crée une instance de SAXBuilder
 		SAXBuilder sxb = new SAXBuilder();
 		try {
+			System.out.println("Chargement fichier: " + map_path);
 			document = sxb.build(new File(map_path));
 		}
 		catch(Exception e) {
@@ -62,6 +63,7 @@ public class MapLoader {
 				robb.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("main").getText()));
 				robb.setLimitOrder(1,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
 				robb.setLimitOrder(2,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
+				robb.setActif(true);
 				
 			} else {
 				s_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
@@ -75,6 +77,7 @@ public class MapLoader {
 				robs.setLimitOrder(0,Integer.parseInt(listChar.get(j).getChild("main").getText()));
 				robs.setLimitOrder(1,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
 				robs.setLimitOrder(2,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
+				robs.setActif(true);
 			}
 		}
 	}

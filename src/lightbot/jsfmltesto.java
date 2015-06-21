@@ -58,7 +58,7 @@ public class jsfmltesto {
         Vector2i screenSize = new Vector2i(1280,720);
         //Vector2i screenSize = new Vector2i(1440,900);
         //Vector2i screenSize = new Vector2i(1920,1080);
-        fenetre.create(new VideoMode(screenSize.x,screenSize.y), "Prototype"); //,WindowStyle.FULLSCREEN);
+        fenetre.create(new VideoMode(screenSize.x,screenSize.y), "LightBot",WindowStyle.CLOSE); //,WindowStyle.FULLSCREEN);
 
 /*        int frame = 3;
         int frameElec = 1;
@@ -77,14 +77,14 @@ public class jsfmltesto {
 //ADD BY CORALIE:
 /*---------------------------Génération de l'interface des levels------------------------------------*/ 
 
-        
-      
         Level level = new Level(game, TILEPATHLEVEL, 4, 4, screenSize);
         level.reload(screenSize);
+        
         level.addXML(LEVELPATH1);
         level.addXML(LEVELPATH2);
         level.addXML(LEVELPATH3);
         //System.out.println("Chemin : " + level.getListXML().get(0));
+
         
         game.setLevel(level); //On ajoute le level dans game pour pouvoir revenir au choix des niveaux plus tard
         
@@ -94,6 +94,7 @@ public class jsfmltesto {
     	game.getWindow().display();
         game.getWindow().clear();
         
+
         while ((level.getLaunch() == false)) {
     		level.launchGame();
         }
@@ -103,54 +104,37 @@ public class jsfmltesto {
         level.draw();
     	game.getWindow().display();
     	
+
+        Clock bug_clock = new Clock();
+ 
+
         while ((level.getMakeChoice() == false)) {
-        		level.launchLevel();
+        	bug_clock.restart();
+            while(bug_clock.getElapsedTime().asSeconds() < 0.5f){
+    			
+    		}
+        	level.launchLevel();
         }
         
         System.out.println("Chargement de l'interface");
-        
-
-        
-        
 
 /*--------------------Génération de l'interface de jeux et de son controleur-------------------------*/ 
-        
-        
-        
-//        game.setMap(LEVELPATH);
         	
         //Animation animate = new Animation:
         Controler control = new Controler(screenSize,game);
-
-/*----------------------------------------Génération du robot----------------------------------------*/ 
-        /*Character robot = new Character(new Vector2i(2,0), 1, Color.GREEN, "ressource/Sprite/lightbot.png");
-        robot.setOrientation(Character.Orientation.Up);
-        robot.setLimitOrder(0, 17);
-        //robot.drawCharac(fenetre);
-        control.init(robot,robot);*/
-/*----------------------------------------Génération du robot----------------------------------------*/ 
-        
-//        game.getWindow().setFramerateLimit(30);
         
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
 
 
         while (game.getWindow().isOpen()) {
-        
-        	//fenetre.draw(back_sprite);
 
-            //fenetre.draw(buttest.getSprite());
-            //fenetre.draw(butturn.getSprite());
-            //fenetre.draw(butallumer.getSprite());
         	control.update();
-            //testo.drawMap(fenetre);
         	
             // On gère les événements
             control.supervise();
-			
-            
-            
-            
+
+    		game.getWindow().display();
+    		
 	    			while(game.getStateSimulation()) {
 	    				System.out.println("Start Simulation : " + game.getCharacter("BasicBot").getPosition());
 	    				
@@ -185,10 +169,7 @@ public class jsfmltesto {
 	    				}
 	    				game.setStateSimulation(false);
 	    			}
-	    			
-    			
-    		game.getWindow().display();
-        	game.getWindow().clear();
+	    	game.getWindow().clear();
         }
     }
 }

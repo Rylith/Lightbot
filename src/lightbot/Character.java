@@ -1,21 +1,11 @@
 package lightbot;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Vector;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
-import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
-import org.jsfml.system.Clock;
-import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
-
-import lightbot.Move;
-import lightbot.Engine;
-import lightbot.Button.ButtonType;
 
 
 public class Character extends DrawableObject{
@@ -42,6 +32,8 @@ public class Character extends DrawableObject{
 	
 	private boolean m_fall; //indique si le personnage chute
 	private boolean m_death; //indique si le personnage est mort
+	
+	private boolean m_actif;
 	
 	private Vector<Vector<Order>> m_listOrder;
 	private Vector<Integer> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
@@ -361,5 +353,13 @@ public class Character extends DrawableObject{
 			m_sprite.scale(0.75f,0.75f);
 			this.setOrientation(this.getOrientation());
 		}
+	}
+	
+	public boolean getActif() {
+		return this.m_actif;
+	}
+	
+	public void setActif(boolean status) {
+		this.m_actif = status;
 	}
 }

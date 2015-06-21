@@ -80,7 +80,6 @@ public class Level {
 		m_makechoice = false;
 		m_launch = false;
 		
-		
 	}
 	
 	
@@ -126,7 +125,7 @@ public class Level {
 	public void addXML(String chemin){
 		int i = m_listXML.size();
 		m_listXML.put(i, chemin);
-		System.out.println("Ajout du fichier .xml du Level : " + i);
+		System.out.println("Ajout du fichier "+ chemin +  " pour le Level : " + i);
 		
 	}
 	
@@ -323,11 +322,11 @@ public class Level {
             }
             
             // Si l'utilisateur modifie la taille de la fenetre : on reload l'interface
-            if (event.type == Event.Type.RESIZED) {
+            /*if (event.type == Event.Type.RESIZED) {
             	System.out.println("New Size x = " + event.asSizeEvent().size.x + " y = " + event.asSizeEvent().size.y);
             	m_game.setView(event.asSizeEvent().size);
             	reload(event.asSizeEvent().size);
-            }
+            }*/
             
             // Si l'utilisateur clique sur la touche echape : on ferme la fenetre
             if (event.type == Event.Type.KEY_PRESSED) {
@@ -341,6 +340,7 @@ public class Level {
             	Vector2i mouse_pos = Mouse.getPosition(m_game.getWindow()); 
             	for (int i = 0; i < m_world*m_level; i++) {
                    	if (m_listLevel.get(i).isClicked(mouse_pos)) {  
+                   			System.out.println("On tente de lancer le niveau: " + m_listXML.get(i) + ". Size de la list " + m_listXML.size());
                    			System.out.println("Chemin xml : " + m_listXML.get(i));
     	            		m_game.setMap(m_listXML.get(i));
     	            		System.out.println("Lancement du niveau : " + i);
