@@ -57,6 +57,11 @@ public class Map {
 		m_map = new Case[size.x][size.y];
 		ml.character(robb, robs,b_pos_init,s_pos_init);
 		//System.out.println("Pos init : " + b_pos_init + " " + s_pos_init + "\n" + robb.getPosition() + "  " + robs.getPosition());
+		b_possible = new ArrayList<Button.ButtonType>();
+		s_possible = new ArrayList<Button.ButtonType>();
+		ml.getPossibleOrders(b_possible, s_possible);
+		listLampe = new ArrayList<Lampadaire>();
+		createMap(ml,robb,robs,listLampe);
 		m_initPos = new  HashMap<String,Vector2i>();
 		m_initOrientation = new  HashMap<String,Character.Orientation>();
 		m_initHeight = new HashMap<String,Integer>();
@@ -66,13 +71,6 @@ public class Map {
 		m_initOrientation.put("BasicBot",robb.getOrientation());
 		m_initHeight.put("SmartBot",robs.getHeight());
 		m_initHeight.put("BasicBot",robb.getHeight());
-		
-		
-		b_possible = new ArrayList<Button.ButtonType>();
-		s_possible = new ArrayList<Button.ButtonType>();
-		ml.getPossibleOrders(b_possible, s_possible);
-		listLampe = new ArrayList<Lampadaire>();
-		createMap(ml,robb,robs,listLampe);
 		System.out.println("Number of lamp: " + listLampe.size());
 	}
 /** ---------------- METHODS ----------------- */

@@ -98,9 +98,15 @@ public class Ordonnanceur {
 						this.nbCoups++;
 						return true;
 					}
+				} else {
+					System.out.println("Pas de la bonne couleur, on exe pas");
+					this.nbCoups++;
+					return true;
 				}
+			} else {
+				System.out.println("Pas d'action suivante");
 			}
-			System.out.println("Pas d'action suivante");
+			
 		}
 		return false;
 	}
