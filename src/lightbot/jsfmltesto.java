@@ -72,7 +72,7 @@ public class jsfmltesto {
 /*---------------------------Génération de l'interface des levels------------------------------------*/ 
 
         
-        
+      
         Level level = new Level(game, TILEPATHLEVEL, 4, 4, screenSize);
         level.reload(screenSize);
         level.addXML(LEVELPATH);
@@ -82,18 +82,22 @@ public class jsfmltesto {
     	game.getWindow().display();
         game.getWindow().clear();
         
-        // Boucle principale qui s’exécute tant que la fenêtre est ouverte
-        while (game.getWindow().isOpen()) {
-        	while ((level.getMakeChoice() == false)) {
-        		level.launchLevel();
-        	}
-        	
         
+        while ((level.getMakeChoice() == false)) {
+        		level.launchLevel();
+        }
+        
+        System.out.println("Chargement de l'interface");
         
 
         
         
-//REMOVE BY CORALIE:        game.setMap(LEVELPATH);
+
+/*--------------------Génération de l'interface de jeux et de son controleur-------------------------*/ 
+        
+        
+        
+//        game.setMap(LEVELPATH);
         	
         //Animation animate = new Animation:
         Controler control = new Controler(screenSize,game);
@@ -106,11 +110,12 @@ public class jsfmltesto {
         control.init(robot,robot);*/
 /*----------------------------------------Génération du robot----------------------------------------*/ 
         
-//REMOVE BY CORALIE:        game.getWindow().setFramerateLimit(30);
+//        game.getWindow().setFramerateLimit(30);
         
         // Boucle principale qui s’exécute tant que la fenêtre est ouverte
 
-//REMOVE BY CORALIE:        while (game.getWindow().isOpen()) {
+
+        while (game.getWindow().isOpen()) {
         
         	//fenetre.draw(back_sprite);
 
@@ -123,43 +128,47 @@ public class jsfmltesto {
             // On gère les événements
             control.supervise();
 			
-    			while(game.getStateSimulation()) {
-    				System.out.println("Start Simulation : " + game.getCharacter("BasicBot").getPosition());
-    				
-    				Ordonnanceur ordo = new Ordonnanceur(game);
-    				for(String mapKey : game.getCharacter().keySet()) {
-    					boolean orderExist;
-    					if(game.getCharacter(mapKey).getListOrder().get(0).size() > 0) {
-    						orderExist = true;
-    					} else {
-    						orderExist = false;
-    					}
-						Clock clock = new Clock();
-    					while(orderExist && game.getStateSimulation()) {
-    						clock.restart();
-    						game.getWindow().display();
-    			        	game.getWindow().clear();
-    						
-        					if (!ordo.step()){
-        						orderExist = false;
-        					}
-        					
-    						control.update();
-    						control.supervise();
-    						while(clock.getElapsedTime().asSeconds() < 0.5f){
-    							
-    						}
-    					}
-    				}
-    				System.out.println("End of Simulation");
-    				if(game.levelIsCompleted()){
-    					System.out.println("FELICITATION !!");
-    				}
-    				game.setStateSimulation(false);
-    			}
+            
+            
+            
+	    			while(game.getStateSimulation()) {
+	    				System.out.println("Start Simulation : " + game.getCharacter("BasicBot").getPosition());
+	    				
+	    				Ordonnanceur ordo = new Ordonnanceur(game);
+	    				for(String mapKey : game.getCharacter().keySet()) {
+	    					boolean orderExist;
+	    					if(game.getCharacter(mapKey).getListOrder().get(0).size() > 0) {
+	    						orderExist = true;
+	    					} else {
+	    						orderExist = false;
+	    					}
+							Clock clock = new Clock();
+	    					while(orderExist && game.getStateSimulation()) {
+	    						clock.restart();
+	    						game.getWindow().display();
+	    			        	game.getWindow().clear();
+	    						
+	        					if (!ordo.step()){
+	        						orderExist = false;
+	        					}
+	        					
+	    						control.update();
+	    						control.supervise();
+	    						while(clock.getElapsedTime().asSeconds() < 0.5f){
+	    							
+	    						}
+	    					}
+	    				}
+	    				System.out.println("End of Simulation");
+	    				if(game.levelIsCompleted()){
+	    					System.out.println("FELICITATION !!");
+	    				}
+	    				game.setStateSimulation(false);
+	    			}
+	    			
+    			
     		game.getWindow().display();
         	game.getWindow().clear();
-
-        } 
+        }
     }
 }

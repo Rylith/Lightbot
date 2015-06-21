@@ -24,13 +24,16 @@ public class Level {
 	
 	// BACKGROUND
 	private static String TILEPATHBACKGROUNG = "ressource/Sprite/back.png";
-	private static Sprite m_background;
 	
+	//TITLE
+	private static String TILEPATHTITLE = "ressource/Sprite/Menu.png";
+	private final static float DECALTITLE = 100 ;
+
 	// LEVEL
-	private static Vector2f POSINITLEVEL = new Vector2f(100,100);
+	private static Vector2f POSINITLEVEL = new Vector2f(100,50);
 	private static Vector2f POSINITBACK = new Vector2f(0,0);
 	
-	private final static float DECALEVEL = 10 ;
+	private final static float DECALEVEL = 2 ;
 	private final static float SIZELEVELX = 226;
 	private final static float SIZELEVELY = 133;
 	
@@ -47,6 +50,9 @@ public class Level {
 	private Vector2i m_screenSize;
 	private Vector2f m_decal;
 	private Vector2f m_scale;
+	
+	private static Sprite m_background;
+	private static Sprite m_title;
 	
 	private boolean m_makechoice;
 	
@@ -93,6 +99,21 @@ public class Level {
 		return m_listXML;
 	}
 	
+	/** Getter du nombre de monde
+	 * 
+	 */
+	public int getWorld(){
+		return m_world;
+	}
+	
+	
+	/** Getter du nombre de niveau
+	 * 
+	 */
+	public int getLevel(){
+		return m_level;
+	}
+	
 	
 	/** Permet d'ajouter un fichier XML a la HashMap m_listXML
 	 * @param chemin
@@ -112,6 +133,9 @@ public class Level {
 		
         // On affiche le background
 		m_game.getWindow().draw(m_background);
+		
+		// On affiche le titre
+		m_game.getWindow().draw(m_title);
 		
 		// On affiche les boutons
 		for(Integer mapkey : m_listLevel.keySet()) {
@@ -150,11 +174,26 @@ public class Level {
 		Vector2f position = realInitPosLevel;
 		
 		
+		// Generation du titre
+		Texture title = new Texture();
+		try {
+			title.loadFromFile(Paths.get(TILEPATHTITLE));
+			m_title = new Sprite(title);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_title.setPosition(realInitPosLevel);
+		
+		
+		
 		// Generation des boutons Levels
 		for (int i = 0 ; i < m_world*m_level ; i++){
 			if (i == 0) {
-				Button button = new Button(m_tilePath, realInitPosLevel, ButtonType.Level, false);
+				position = new Vector2f(realInitPosLevel.x , realInitPosLevel.y + DECALTITLE);
+				Button button = new Button(m_tilePath, position, ButtonType.Level, false);
 				button.getSprite().setTextureRect(new IntRect(((i%m_level))*(int)SIZELEVELX, (i/m_level)*(int)SIZELEVELY, (int)SIZELEVELX, (int)SIZELEVELY));
+				button.setScale(realScale);
 				m_listLevel.put(i, button);
 				//System.out.println("Creation bouton Level : " + i);
 			}
@@ -162,6 +201,7 @@ public class Level {
 				position = new Vector2f(realInitPosLevel.x , position.y + SIZELEVELY + DECALEVEL);
 				Button button = new Button(m_tilePath, position, ButtonType.Level, false);
 				button.getSprite().setTextureRect(new IntRect(((i%m_level))*(int)SIZELEVELX, (i/m_level)*(int)SIZELEVELY, (int)SIZELEVELX, (int)SIZELEVELY));
+				button.setScale(realScale);
 				m_listLevel.put(i, button);
 				//System.out.println("Creation bouton Level : " + i);
 				}
@@ -169,6 +209,7 @@ public class Level {
 				position = new Vector2f(position.x + SIZELEVELX + DECALEVEL , position.y);
 				Button button = new Button(m_tilePath, position, ButtonType.Level, false);
 				button.getSprite().setTextureRect(new IntRect(((i%m_level))*(int)SIZELEVELX, (i/m_level)*(int)SIZELEVELY, (int)SIZELEVELX, (int)SIZELEVELY));
+				button.setScale(realScale);
 				m_listLevel.put(i, button);
 				//System.out.println("Creation bouton Level : " + i);
 				}
@@ -204,13 +245,14 @@ public class Level {
             }
             
             // Si l'utilisateur clique on recupere la position et on regarde s'il s'agit d'un niveau
-            if (event.type == Event.Type.MOUSE_BUTTON_PRESSED) {
+            if (event.type == Event.Type.MOUSE_BUTTON_PRESSED && getMakeChoice() == false) {
             	Vector2i mouse_pos = Mouse.getPosition(m_game.getWindow()); 
             	for (int i = 0; i < m_world*m_level; i++) {
                    	if (m_listLevel.get(i).isClicked(mouse_pos)) {  		
     	            		m_game.setMap(m_listXML.get(i));
     	            		System.out.println("Lancement du niveau : " + i);
     	            		setMakeChoice(true);
+    	            		//m_game.getWindow().close();
     	            	}
             	}
             }
