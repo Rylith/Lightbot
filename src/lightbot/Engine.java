@@ -48,6 +48,7 @@ public class Engine {
 		Case [][] mat;
 		mat= monde.get_m_mat();
 		
+		//System.out.println("Position dans isAbleToMove " + p.getPosition());
 		int x = p.getPosition().x;
 		int y =p.getPosition().y;
 			
@@ -230,6 +231,15 @@ public class Engine {
 		else 
 			return false;
 		
+	}
+	
+	
+	public void deleteCharacter(Character character) {
+		getCurrentCase(character).delObject(d_charac);
+	}
+	
+	public void resetCharacter(Character character) {
+		getCurrentCase(character).addObject(d_charac, character);
 	}
 	
 	/**

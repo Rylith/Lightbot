@@ -45,8 +45,8 @@ public class Game {
 	
 	public Game(RenderWindow window){
 		m_window = window;
-		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
-		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "lightbot.png"));
+		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "ressource/Sprite/lightbot.png"));
+		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, "ressource/Sprite/lightbotSmart.png"));
 		//m_map = new Map(m_character.get("BasicBot"),m_character.get("SmartBot"),LEVELPATH);
 		//m_engine = new Engine(m_map);
 		m_map = new Map();
@@ -239,10 +239,17 @@ public class Game {
 	}
 	
 	public void resetGame() {
-		int i = 0;
+		//int i = 0;
 		for(String mapKey : m_character.keySet()) {
-			m_character.get(mapKey).setPosition(m_map.getPosInit().get(i));
-			i++;
+			System.out.println("Reset Pos Char with Map: " + mapKey + " " + m_map.getPosInit());
+			m_engine.deleteCharacter(m_character.get(mapKey));
+			m_character.get(mapKey).setOrientation(m_map.getOrientationInit().get(mapKey));
+			m_character.get(mapKey).setHeight(m_map.getHeightInit().get(mapKey));
+			m_character.get(mapKey).update(m_map.getPosInit().get(mapKey));
+			m_engine.resetCharacter(m_character.get(mapKey));
+			//m_character.get(mapKey).setPosition(m_map.getPosInit().get(mapKey));
+			//System.out.println("Reset Pos Char : " + mapKey + " " + m_character.get(mapKey).getPosition());
+			//i++;
 		}
 			//m_map.getPosInit()
 	}
