@@ -35,7 +35,7 @@ public class Ordonnanceur {
 	}
 	
 	public boolean step() {
-		String b_name = "basic";
+		String b_name = "BasicBot";
 		System.out.println("JE FAIS UNE STEP");
 		boolean action_done = false;
 		for(Stack<Iterator<Order>> wStack : this.pStacks) {
@@ -43,7 +43,7 @@ public class Ordonnanceur {
 			if (stepOne(wStack, c_bot)) {
 				action_done = true;
 			}
-			b_name = "smart";
+			b_name = "SmartBot";
 		}
 		return action_done;
 	}
@@ -70,8 +70,8 @@ public class Ordonnanceur {
 			if (wIt.hasNext()) {
 				Order wAction = wIt.next();
 				if (wAction instanceof Procedure1) {
-					System.out.println("J'appele p1");
-					b_stack.push(pGame.getCharacter("basic").getListOrder().get(1).iterator());
+					System.out.println("J'appele p1 " + c_bot.getListOrder().get(1).size());
+					b_stack.push(c_bot.getListOrder().get(1).iterator());
 					return stepOne(b_stack, c_bot);
 				} else if (wAction instanceof For) {
 					wAction.executer();
