@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
 	<character type ="basic" pos_x="2" pos_y ="1" orientation = "right">
-		<main>8</main>
-		<proc1>6</proc1>
-		<proc2>6</proc2>
+		<main>10</main>
+		<proc1>8</proc1>
+		<proc2>8</proc2>
 		<orders>move turnr light</orders>
 	</character>
 	<character type ="smart" pos_x="1" pos_y ="1" orientation = "right">
-		<main>8</main>
-		<proc1>6</proc1>
-		<proc2>6</proc2>
+		<main>10</main>
+		<proc1>8</proc1>
+		<proc2>8</proc2>
 		<orders>move turnr light</orders>
 	</character>
 
