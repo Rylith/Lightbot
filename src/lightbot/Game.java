@@ -169,8 +169,14 @@ public class Game {
 			return order;
 		}
 		else if (button.getType() == ButtonType.Jump){
-			Order order = new  Jump(car, getEngine(), color);
-			return order;
+			if (car.getName()=="BasicBot"){
+				Order order = new Jump(car, getEngine(), color);
+				return order;
+			}
+			else { // (car.getName()=="SmartBot")
+				Order order = new DoubleJump(car, getEngine(), color);
+				return order;
+			}
 		}
 		else if (button.getType() == ButtonType.Light){
 			Order order = new  Light(car, getEngine(), color);

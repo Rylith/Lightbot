@@ -34,6 +34,7 @@ public class Character extends DrawableObject{
 	private boolean m_death; //indique si le personnage est mort
 	
 	private boolean m_actif;
+	private String m_name;
 	
 	private Vector<Vector<Order>> m_listOrder;
 	private Vector<Integer> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
@@ -361,5 +362,13 @@ public class Character extends DrawableObject{
 	
 	public void setActif(boolean status) {
 		this.m_actif = status;
+	}
+
+	public String getName() {
+		return m_name;
+	}
+
+	public void setName(String m_name) {
+		this.m_name = m_name;
 	}
 }
