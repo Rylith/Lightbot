@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 
 import lightbot.Button.ButtonType;
-import lightbot.Frame.FrameType;
 
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
@@ -25,16 +24,15 @@ public class Level {
 	// BACKGROUND
 	private static String TILEPATHBACKGROUNG = "ressource/Sprite/back.png";
 	
-	//TITLE
-	private static String TILEPATHTITLE = "ressource/Sprite/Menu.png";
-	private static float DECALTITLE = 100;
-	
 	//LOGO
 	private static String TILEPATHLOGO = "ressource/Sprite/Logo.png";
+	private static String TILEPATHLOGOXL = "ressource/Sprite/LogoXL.png";
+	private static String TILEPATHCLICK = "ressource/Sprite/ClickToLaunch.png";
 
 	// LEVEL
 	private static Vector2f POSINITLEVEL = new Vector2f(400,50);
 	private static Vector2f POSINITBACK = new Vector2f(0,0);
+	private static float DECAL = 100;
 	
 	private final static float DECALEVEL = 2 ;
 	private final static float SIZELEVELX = 226;
@@ -51,14 +49,15 @@ public class Level {
 	private String m_tilePath;
 	private Game m_game;
 	private Vector2i m_screenSize;
-	private Vector2f m_decal;
+	//private Vector2f m_decal;
 	private Vector2f m_scale;
 	
 	private static Sprite m_background;
-	private static Sprite m_title;
 	private static Sprite m_logo;
+	private static Sprite m_click;
 	
 	private boolean m_makechoice;
+	private boolean m_launch;
 	
 
 
@@ -79,6 +78,7 @@ public class Level {
 		m_tilePath = tilePath;
 		m_screenSize = screenSize;
 		m_makechoice = false;
+		m_launch = false;
 		
 		
 	}
@@ -102,6 +102,7 @@ public class Level {
 	public HashMap<Integer, String> getListXML(){
 		return m_listXML;
 	}
+	
 	
 	/** Getter du nombre de monde
 	 * 
@@ -130,6 +131,62 @@ public class Level {
 	}
 	
 	
+	/** Dessine l'interface de choix de niveaux 
+	 */
+	public void drawLogo(){
+		
+		// Ajuste le background a la taille de la fenetre
+		Texture background = new Texture();
+		try {
+			background.loadFromFile(Paths.get(TILEPATHBACKGROUNG));
+			m_background = new Sprite(background);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_scale = new Vector2f(m_screenSize.x / ((float)SIZEINITWINDOW.x), m_screenSize.y / ((float)SIZEINITWINDOW.y));
+		m_background.setScale(m_scale);
+		
+		
+		Vector2f realScale = m_background.getScale();
+
+		// Generation du logo
+		Texture logo = new Texture();
+		try {
+			logo.loadFromFile(Paths.get(TILEPATHLOGOXL));
+			m_logo = new Sprite(logo);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_logo.setPosition(new Vector2f(10,0));
+		m_logo.setScale(realScale);
+		
+		
+		// Generation du texte
+		Texture click = new Texture();
+		try {
+			click.loadFromFile(Paths.get(TILEPATHCLICK));
+			m_click = new Sprite(click);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_click.setPosition(new Vector2f(50,500));
+		m_click.setScale(realScale);
+			
+        // On affiche le background
+		m_game.getWindow().draw(m_background);
+		
+		// On affiche le logo
+		m_game.getWindow().draw(m_logo);
+		
+		// On affiche le texte
+		m_game.getWindow().draw(m_click);
+		
+	}
+	
+	
 	
 	/** Dessine l'interface de choix de niveaux 
 	 */
@@ -140,9 +197,6 @@ public class Level {
 		
 		// On affiche le logo
 		m_game.getWindow().draw(m_logo);
-		
-		// On affiche le titre
-		//m_game.getWindow().draw(m_title);
 		
 		// On affiche les boutons
 		for(Integer mapkey : m_listLevel.keySet()) {
@@ -159,8 +213,6 @@ public class Level {
 	public void reload(Vector2i screenSize) {
 		
 		m_screenSize = screenSize;		
-		m_listLevel.clear();
-		m_listXML.clear();
 		
 		// Ajuste le background a la taille de la fenetre
 		Texture background = new Texture();
@@ -171,7 +223,6 @@ public class Level {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		m_decal = new Vector2f(((float)SIZEINITWINDOW.x) - m_screenSize.x,((float)SIZEINITWINDOW.y) - m_screenSize.y);
 		m_scale = new Vector2f(m_screenSize.x / ((float)SIZEINITWINDOW.x), m_screenSize.y / ((float)SIZEINITWINDOW.y));
 		m_background.setScale(m_scale);
 		
@@ -190,26 +241,14 @@ public class Level {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		m_logo.setPosition(new Vector2f(0,0));
+		m_logo.setPosition(new Vector2f(10,0));
 		
 		
-		// Generation du titre
-/*		Texture title = new Texture();
-		try {
-			title.loadFromFile(Paths.get(TILEPATHTITLE));
-			m_title = new Sprite(title);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		m_title.setPosition(realInitPosLevel);
-		
-*/		
 		
 		// Generation des boutons Levels
 		for (int i = 0 ; i < m_world*m_level ; i++){
 			if (i == 0) {
-				position = new Vector2f(realInitPosLevel.x , realInitPosLevel.y + DECALTITLE);
+				position = new Vector2f(realInitPosLevel.x , realInitPosLevel.y + DECAL);
 				Button button = new Button(m_tilePath, position, ButtonType.Level, false);
 				button.getSprite().setTextureRect(new IntRect(((i%m_level))*(int)SIZELEVELX, (i/m_level)*(int)SIZELEVELY, (int)SIZELEVELX, (int)SIZELEVELY));
 				button.setScale(realScale);
@@ -234,6 +273,40 @@ public class Level {
 				}
 			
 	        }
+	}
+	
+	
+	
+	/** Traite tous les evenements qui ont ete emis dans la fenetre depuis la precedente iteration
+	 * @require la fenetre window doit etre ouverte
+	 */
+	public void launchGame(){
+		for (Event event : m_game.getWindow().pollEvents()) {
+			
+			// Si l'utilisateur clique sur la croix rouge : on ferme la fenetre
+            if (event.type == Event.Type.CLOSED) {
+                m_game.getWindow().close();
+            }
+            
+            // Si l'utilisateur modifie la taille de la fenetre : on reload l'interface
+            if (event.type == Event.Type.RESIZED) {
+            	System.out.println("New Size x = " + event.asSizeEvent().size.x + " y = " + event.asSizeEvent().size.y);
+            	m_game.setView(event.asSizeEvent().size);
+            	reload(event.asSizeEvent().size);
+            }
+            
+            // Si l'utilisateur clique sur la touche echape : on ferme la fenetre
+            if (event.type == Event.Type.KEY_PRESSED) {
+            	if (event.asKeyEvent().key == Key.ESCAPE) {
+            		m_game.getWindow().close();
+            	}
+            }
+            
+            // Si l'utilisateur clique on recupere la position et on regarde s'il s'agit d'un niveau
+            if (event.type == Event.Type.MOUSE_BUTTON_PRESSED && getLaunch() == false) {
+            	setLaunch(true);
+            }
+		}
 	}
 	
 	
@@ -285,10 +358,16 @@ public class Level {
 		return m_makechoice;
 	}
 
-
-
 	public void setMakeChoice(boolean m_makechoice) {
 		this.m_makechoice = m_makechoice;
+	}
+	
+	public boolean getLaunch(){
+		return m_launch;
+	}
+	
+	public void setLaunch(boolean launch) {
+		this.m_launch =launch;
 	}
             
 	
