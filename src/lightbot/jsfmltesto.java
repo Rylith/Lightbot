@@ -56,8 +56,8 @@ public class jsfmltesto {
         }*/
         //Sprite back_sprite = new Sprite(back_text);
         //Vector2i screenSize = new Vector2i(900,600);
-        Vector2i screenSize = new Vector2i(1600,900);
-        //Vector2i screenSize = new Vector2i(1280,720);
+        //Vector2i screenSize = new Vector2i(1600,900);
+        Vector2i screenSize = new Vector2i(1280,720);
         //Vector2i screenSize = new Vector2i(1440,900);
         //Vector2i screenSize = new Vector2i(1920,1080);
         fenetre.create(new VideoMode(screenSize.x,screenSize.y), "LightBot"/*,WindowStyle.CLOSE*/); //,WindowStyle.FULLSCREEN);

@@ -16,6 +16,10 @@ public class Ordonnanceur {
 	/** Liste de pile d'itérateur d'Action. Utilisé pour conserver la position des bots dans les fonctions */
 	List<Stack<Iterator<Order>>> pStacks;
 
+	/**
+	 * Crée un ordonnanceur pour le jeu
+	 * @param game Le jeu en cour
+	 */
 	public Ordonnanceur(Game game) {
 		this.nbCoups = 0;
 		this.pGame = game;
@@ -30,6 +34,10 @@ public class Ordonnanceur {
 		}
 	}
 	
+	/**
+	 * Effectue une étape dans la liste d'ordre des bots actifs
+	 * @return si une action a été effectué ou non
+	 */
 	public boolean step() {
 		//Character c_bot;
 		String b_name = "SmartBot";
@@ -44,16 +52,19 @@ public class Ordonnanceur {
 		return action_done;
 	}
 	
+	/**
+	 * Tente d'exécuter l'action suivante d'un bot. Vérifie si le bot à la bonne couleur, s'il est actif etc.
+	 * @param b_stack La pile contenant les iterators sur les procédures du bot courant
+	 * @param c_bot String identifiant le bot courant
+	 * @return Si une action a été exécuté
+	 */
 	public boolean stepOne(Stack<Iterator<Order>> b_stack, String c_bot) {
-		System.out.println("On s'occupe de " + c_bot);
 		/* Recherche du premier élément non null dans la pile */
 		while (!b_stack.isEmpty() && !b_stack.peek().hasNext()) {
-			System.out.println("POP");
 			b_stack.pop();
 		}
 		/* Retourne faux si la pile est vide */
 		if (b_stack.isEmpty()) {
-			System.out.println("ACTION TERMINEES");
 			if (c_bot.equals("SmartBot")) {
 				pGame.getCharacter().get("BasicBot").setActif(true);
 			}
@@ -73,14 +84,12 @@ public class Ordonnanceur {
 				
 				if ((wAction.getColor() == Color.WHITE || wAction.getColor() == pGame.getCharacter(c_bot).getColor())) {
 					if (wAction instanceof Procedure1) {
-						System.out.println("J'appele p1 : name " + c_bot + " = " + pGame.getCharacter(c_bot) + " size " + pGame.getCharacter(c_bot).getListOrder().get(1).size());
 						b_stack.push(pGame.getCharacter(c_bot).getListOrder().get(1).iterator());
 						return stepOne(b_stack, c_bot);
 					} else if (wAction instanceof For) {
 						wAction.executer();
 						wAction = wIt.next();
 						if(wAction != null) {
-							System.out.println("Mon for est: " + pGame.getEngine().get_nb_for());
 							List<Order> for_list = new LinkedList<Order>();
 							for (int i = 0; i < pGame.getEngine().get_nb_for(); i++) {
 								for_list.add(i, wAction);
@@ -89,17 +98,14 @@ public class Ordonnanceur {
 							return stepOne(b_stack, c_bot);
 						}
 					}else if (wAction instanceof Procedure2){
-						System.out.println("J'appele p2");
 						b_stack.push(pGame.getCharacter(c_bot).getListOrder().get(2).iterator());
 						return stepOne(b_stack, c_bot);
-					} else {	
-						System.out.println("L'Ordo execute: " + wAction.toString());
+					} else {
 						wAction.executer();
 						this.nbCoups++;
 						return true;
 					}
 				} else {
-					System.out.println("Pas de la bonne couleur, on exe pas");
 					this.nbCoups++;
 					return true;
 				}
