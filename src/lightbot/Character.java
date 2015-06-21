@@ -47,7 +47,6 @@ public class Character extends DrawableObject{
 	private Vector<Integer> m_limitOrder; //vector contenant la taille limite de chacune des listes dans ListOrder
 	private Vector<Pointeur> m_listPointeur; //vector contenant les objets de types pointeurs
 	private Vector<Boolean> m_currentProc; //vector indiquant la procedure active
-	private Color color;
 	private boolean m_animate = false;
 	
 /** -------------- CONSTRUCTORS -------------- */
@@ -325,6 +324,32 @@ public class Character extends DrawableObject{
 		super.setColor(color);
 		if (color == Color.CYAN) {
 			this.setPath("lightbot-cyan.png");
+			this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+			float tmp_x = 250 + 78/2;
+			float tmp_y = 100 + (48-8)/2;
+			float pos_x = tmp_x - (SIZESPRITEX*0.75f)/2;
+			float pos_y = tmp_y - (SIZESPRITEY*0.75f)+5;
+			float pox = pos_x + (this.getPosition().y - this.getPosition().x) * 78/2;
+			float poy = pos_y + (this.getPosition().x + this.getPosition().y)*(48-8)/2 - (this.getHeight()-1)*8;
+			this.getSprite().setPosition(pox, poy);
+			m_sprite.scale(0.75f,0.75f);
+			this.setOrientation(this.getOrientation());
+		}
+		else if (color == Color.MAGENTA) {
+			this.setPath("lightbot-magenta.png");
+			this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
+			float tmp_x = 250 + 78/2;
+			float tmp_y = 100 + (48-8)/2;
+			float pos_x = tmp_x - (SIZESPRITEX*0.75f)/2;
+			float pos_y = tmp_y - (SIZESPRITEY*0.75f)+5;
+			float pox = pos_x + (this.getPosition().y - this.getPosition().x) * 78/2;
+			float poy = pos_y + (this.getPosition().x + this.getPosition().y)*(48-8)/2 - (this.getHeight()-1)*8;
+			this.getSprite().setPosition(pox, poy);
+			m_sprite.scale(0.75f,0.75f);
+			this.setOrientation(this.getOrientation());
+		}
+		else {
+			this.setPath("lightbot.png");
 			this.getSprite().setTextureRect(new IntRect(0, 0, SIZESPRITEX, SIZESPRITEY));
 			float tmp_x = 250 + 78/2;
 			float tmp_y = 100 + (48-8)/2;

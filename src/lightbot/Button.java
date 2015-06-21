@@ -518,7 +518,6 @@ public class Button extends Component{
 	
 	/** Mise a jours des sprites en fonction de la couleur des pointeurs
 	 * @param colorPointeur : Color.YELLOW , Color.RED , Color.BLUE , Color.GREEN
-	 * @param colorOrder : Color.GREY , Color.MAGENTA , Color.CYAN
 	 */
 	public void setColorPointeur(Color colorPointeur){
 		m_colorPointeur = colorPointeur;
