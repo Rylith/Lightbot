@@ -76,7 +76,6 @@ public class Level {
 		m_screenSize = screenSize;
 		m_makechoice = false;
 		
-		
 	}
 	
 	
@@ -121,7 +120,7 @@ public class Level {
 	public void addXML(String chemin){
 		int i = m_listXML.size();
 		m_listXML.put(i, chemin);
-		System.out.println("Ajout du fichier .xml du Level : " + i);
+		System.out.println("Ajout du fichier "+ chemin +  " pour le Level : " + i);
 		
 	}
 	
@@ -248,7 +247,8 @@ public class Level {
             if (event.type == Event.Type.MOUSE_BUTTON_PRESSED && getMakeChoice() == false) {
             	Vector2i mouse_pos = Mouse.getPosition(m_game.getWindow()); 
             	for (int i = 0; i < m_world*m_level; i++) {
-                   	if (m_listLevel.get(i).isClicked(mouse_pos)) {  		
+                   	if (m_listLevel.get(i).isClicked(mouse_pos)) {
+                   		System.out.println("On tente de lancer le niveau: " + m_listXML.get(i) + ". Size de la list " + m_listXML.size());
     	            		m_game.setMap(m_listXML.get(i));
     	            		System.out.println("Lancement du niveau : " + i);
     	            		setMakeChoice(true);

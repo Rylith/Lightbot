@@ -76,6 +76,7 @@ public class jsfmltesto {
         Level level = new Level(game, TILEPATHLEVEL, 4, 4, screenSize);
         level.reload(screenSize);
         level.addXML(LEVELPATH);
+        level.addXML("use_pointeur_lvl_1.xml");
         
         game.setLevel(level); //On ajoute le level dans game pour pouvoir revenir au choix des niveaux plus tard
         
