@@ -3,7 +3,7 @@
 	<character type ="basic" pos_x="2" pos_y ="3" orientation = "up">
 		<main>8</main>
 		<proc1>5</proc1>
-		<proc2>0</proc2>
+		<proc2></proc2>
 		<orders>move jump turnr turnl telep light p1 </orders>
 	</character>
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<character type ="basic" pos_x="2" pos_y ="0" orientation = "up">
+		<main>3</main>
+		<proc1>4</proc1>
+		<proc2>0</proc2>
+<<<<<<< HEAD
+		<orders>move jump laver p1 paint light turnr turnl</orders>
+=======
+		<orders>move laver light p1 paint turnr turnl</orders>
+>>>>>>> 1e5c56cf86a104feabb938d6a0032402d877bc3a
+	</character>
+
+	<size>
+		<lines>3</lines>
+		<colonnes>2</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="1" pos_y="0">
+			<paint color ="cyan"/>
+		</case>
+		<case height="1" pos_y="1">
+			<lampe/>
+		</case>
+	</line>
+
+	<line num="1">
+		<case height="1" pos_y="0">
+			<lampe/>
+		</case>
+		<case height="1" pos_y="1"/>
+	</line>
+
+	<line num="2">
+		<case height="1" pos_y="0">
+			<character type="basic"/>
+		</case>
+	</line>
+</map>

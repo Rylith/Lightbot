@@ -4,7 +4,7 @@
 		<main>8</main>
 		<proc1>6</proc1>
 		<proc2>0</proc2>
-		<orders>move jump</orders>
+		<orders>move jump telep turnr turnl light p1</orders>
 	</character>
 
 	<size>
