@@ -4,7 +4,7 @@
 		<main>3</main>
 		<proc1>4</proc1>
 		<proc2>0</proc2>
-		<orders>move laver light p1 paint break turnr turnl</orders>
+		<orders>move laver light p1 paint turnr turnl</orders>
 	</character>
 
 	<size>
@@ -14,7 +14,6 @@
 
 	<line num="0">
 		<case height="1" pos_y="0">
-			<character type="basic"/>
 			<paint color ="cyan"/>
 		</case>
 		<case height="1" pos_y="1">
