@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<character type ="basic" pos_x="0" pos_y ="0" orientation = "right">
+		<main>5</main>
+		<proc1>6</proc1>
+		<proc2>0</proc2>
+		<orders>move saut laver allumer p1 paint break turnr turnl</orders>
+	</character>
+
+	<size>
+		<lines>4</lines>
+		<colonnes>4</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="1" pos_y="0">
+			<character type="basic"/>
+			<paint color ="cyan"/>
+		</case>
+		<case height="1" pos_y="1"/>
+		<case height="1" pos_y="2"/>
+		<case height="1" pos_y="3"/>
+	</line>
+
+	<line num="1">
+		<case height="1" pos_y="0">
+			<paint color="Magenta">
+			<lampe/>
+		</case>
+		<case height="1" pos_y="1">
+			<paint color ="cyan"/>
+			<lampe/>
+		<case height="1" pos_y="2"/>
+		<case height="1" pos_y="3"/>
+	</line>
+
+	<line num="1">
+		<case height="1" pos_y="0">
+			<paint color="Magenta">
+			<lampe/>
+		</case>
+		<case height="1" pos_y="1">
+			<paint color ="cyan"/>
+			<lampe/>
+		<case height="1" pos_y="2"/>
+		<case height="1" pos_y="3"/>
+	</line>
+
+	<line num="3">
+		<case height="1" pos_y="0">
+			<lampe/>
+		<case height="1" pos_y="1"/>
+		<case height="1" pos_y="2"/>
+		<case height="1" pos_y="3"/>
+	</line>
+
+
+</map>

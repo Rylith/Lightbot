@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<character type ="basic" pos_x="2" pos_y ="0" orientation = "up">
+		<main>3</main>
+		<proc1>4</proc1>
+		<proc2>0</proc2>
+		<orders>move saut laver allumer p1 paint break turnr turnl</orders>
+	</character>
+
+	<size>
+		<lines>3</lines>
+		<colonnes>2</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="1" pos_y="0">
+			<character type="basic"/>
+			<paint color ="cyan"/>
+		</case>
+		<case height="1" pos_y="1">
+			<lampe/>
+		<case/>
+	</line>
+
+	<line num="1">
+		<case height="1" pos_y="0">
+			<lampe/>
+		</case>
+		<case height="1" pos_y="1"/>
+	</line>
+
+	<line num="1">
+		<case height="1" pos_y="0">
+			<character type="basic"/>
+		</case>
+	</line>
+</map>
