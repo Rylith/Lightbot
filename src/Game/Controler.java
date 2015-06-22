@@ -124,7 +124,7 @@ public class Controler {
 	 */
 	public Controler(Vector2i screenSize, Game game){
 		m_game = game;
-		reloadInterface(screenSize);
+		reloadInterface();
 	}
 	
 	
@@ -174,10 +174,9 @@ public class Controler {
 	/** Reload l'interface
 	 * @param screenSize
 	 */
-	public void reloadInterface(Vector2i screenSize) {
-		
+	public void reloadInterface() {
+		m_screenSize = m_game.getWindow().getSize();
 		m_game.getWindow().clear();
-		m_screenSize = screenSize;
 		Texture background = new Texture();
 		try {
 			background.loadFromFile(Paths.get(TILEPATHBACKGROUND));
@@ -440,9 +439,10 @@ public class Controler {
 		done.setScale(m_scale);
 		done.setOrigin(done.getLocalBounds().width/2,done.getLocalBounds().height/2);
 		//done.setOrigin(m_screenSize.x,m_screenSize.y);
-		Random r = new Random();
+		//Random r = new Random();
 		done.setPosition(m_screenSize.x/2,m_screenSize.y/2);
 		boolean levelCompleted = true;
+		int i = 0;
 		Clock clock = new Clock();
 		int frame = 0;
 		while(levelCompleted) {
@@ -450,27 +450,29 @@ public class Controler {
 			
 			supervise();
 			update();
-			m_game.getWindow().draw(done);
+			if(i%2 == 0) {
+				m_game.getWindow().draw(done);
+			}
 			m_game.getWindow().display();
 			System.out.println("On dessine la victoire !");
-			while(clock.getElapsedTime().asSeconds() < 0.2f){
+			while(clock.getElapsedTime().asSeconds() < 0.5f){
 				
 			}
 			//rot = Random.
-			done.setRotation(r.nextFloat() * 360.0f);
+			//done.setRotation(r.nextFloat() * 360.0f);
 			//done.setPosition(m_screenSize.x/2-done.getGlobalBounds().height,m_screenSize.y/2-done.getGlobalBounds().height);
 			frame++;
-			if (frame > 7) {
+			if (frame > 4) {
 				m_game.getWindow().clear();
 				update();
 				m_game.getWindow().display();
 				levelCompleted = false;
 			}
+			i++;
 			
-
 		}
 		m_game.getLevel().nextLevel();
-		reloadInterface(m_screenSize);
+		reloadInterface();
 	}
 	
 	/** Initialisation des cadres dans les frames et les ordres visible selon le Level
@@ -777,7 +779,7 @@ public class Controler {
 		if(m_game.needToReload()) {
 			//m_game.getWindow().draw(m_background);
 			//m_game.getWindow().display();
-			reloadInterface(m_screenSize);
+			reloadInterface();
 			m_game.reloadDone();
 		}
 		
@@ -795,7 +797,7 @@ public class Controler {
             if (event.type == Event.Type.RESIZED) {
             	//System.out.println("New Size x = " + event.asSizeEvent().size.x + " y = " + event.asSizeEvent().size.y);
             	m_game.setView(event.asSizeEvent().size);
-            	reloadInterface(event.asSizeEvent().size);
+            	reloadInterface();
             }
             
             if (event.type == Event.Type.KEY_PRESSED) {
@@ -825,7 +827,7 @@ public class Controler {
 	            		m_game.getWindow().display();
 	                    m_game.getWindow().clear();
 	            		m_game.getLevel().setMakeChoice(false);
-                        while ((m_game.getLevel().getMakeChoice() == false)) {
+                        while ((m_game.getLevel().getMakeChoice() == false) && m_game.getWindow().isOpen()) {
                         	m_game.getLevel().launchLevel();
                         }
 	            	}

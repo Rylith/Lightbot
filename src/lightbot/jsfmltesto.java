@@ -85,7 +85,7 @@ public class jsfmltesto {
 /*---------------------------Génération de l'interface des levels------------------------------------*/ 
 
         Level level = new Level(game, TILEPATHLEVEL, 4, 4, screenSize);
-        level.reload(screenSize);     
+        //level.reload();     
         level.addXML(LEVELPATH1);
         level.addXML(LEVELPATH2);
         level.addXML(LEVELPATH3);
@@ -95,16 +95,17 @@ public class jsfmltesto {
         
         game.getWindow().setFramerateLimit(30);
         
+        game.getWindow().clear();
         level.drawLogo();
     	game.getWindow().display();
-        game.getWindow().clear();
+        
         
 
-        while ((level.getLaunch() == false)) {
+        while ((level.getLaunch() == false) && game.getWindow().isOpen()) {
     		level.launchGame();
         }
         
-        level.reload(screenSize);
+        level.reload();
         game.getWindow().clear();
         level.draw();
     	game.getWindow().display();

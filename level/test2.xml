@@ -10,7 +10,7 @@
 		<main>8</main>
 		<proc1>2</proc1>
 		<proc2>2</proc2>
-		<orders>move turnr turnl malloc p1 telep</orders>
+		<orders>move turnr turnl jump p1 p2 malloc telep</orders>
 	</character>
 
 	<size>
