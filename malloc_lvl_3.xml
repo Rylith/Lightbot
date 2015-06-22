@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<character type ="basic" pos_x="3" pos_y ="4" orientation = "left">
+		<main>2</main>
+		<proc1>4</proc1>
+		<proc2>3</proc2>
+		<orders>move jump light p1 p2 telep turnr turnl</orders>
+	</character>
+
+	<character type ="smart" pos_x="2" pos_y ="4" orientation = "left">
+		<main>9</main>
+		<proc1>0</proc1>
+		<proc2>0</proc2>
+		<orders>move jump malloc turnr turnl</orders>
+	</character>
+
+	<size>
+		<lines>4</lines>
+		<colonnes>5</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="6" pos_y="0"/>
+		<case height="4" pos_y="1"/>
+		<case height="4" pos_y="2">
+			<lampe/>
+		</case>
+		<case height="4" pos_y="3"/>
+		<case height="1" pos_y="4"/>
+	</line>
+
+	<line num="1">
+		<case height="3" pos_y="1">
+			<lampe/>
+		</case>
+		<case height="4" pos_y="2"/>
+		<case height="4" pos_y="3"/>
+		<case height="1" pos_y="4"/>
+	</line>
+
+	<line num="2">
+		<case height="1" pos_y="1"/>
+		<case height="1" pos_y="2"/>
+		<case height="3" pos_y="3"/>
+		<case height="1" pos_y="4">
+			<character type="smart"/>
+		</case>
+	</line>
+
+	<line num="3">
+		<case height="4" pos_y="0">
+			<character type="basic"/>
+		</case>
+	</line>
+</map>

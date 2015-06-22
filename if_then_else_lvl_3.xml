@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<character type ="basic" pos_x="0" pos_y ="0" orientation = "right">
+		<main>3</main>
+		<proc1>8</proc1>
+		<proc2>0</proc2>
+		<orders>move jump laver paint break turnr turnl light p1</orders>
+	</character>
+
+	<size>
+		<lines>6</lines>
+		<colonnes>6</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="3" pos_y="0">
+			<character type="basic"/>
+		</case>
+		<case height="3" pos_y="1"/>
+		<case height="1" pos_y="2"/>
+	</line>
+
+	<line num="1">
+		<case height="1" pos_y="0"/>
+		<case height="3" pos_y="1"/>
+		<case height="3" pos_y="2"/>
+		<case height="1" pos_y="3"/>
+	</line>
+
+	<line num="2">
+		<case height="1" pos_y="1"/>
+		<case height="3" pos_y="2"/>
+		<case height="3" pos_y="3"/>
+		<case height="1" pos_y="4"/>
+	</line>
+
+	<line num="3">
+		<case height="1" pos_y="2"/>
+		<case height="3" pos_y="3"/>
+		<case height="3" pos_y="4"/>
+		<case height="1" pos_y="5"/>
+	</line>
+
+	<line num="4">
+		<case height="1" pos_y="3"/>
+		<case height="3" pos_y="4">
+			<paint color="cyan"/>
+		</case>
+		<case height="1" pos_y="5"/>
+	</line>
+
+	<line num="5">
+		<case height="2" pos_y="4">
+			<lampe/>
+		</case>
+	</line>
+
+</map>
