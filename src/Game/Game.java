@@ -148,6 +148,7 @@ public class Game {
 		m_character.put("BasicBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, TILEPATHBasicBot));
 		m_character.put("SmartBot", new Character(new Vector2i(0, 0), 1,Color.WHITE, TILEPATHSmartBot));
 		m_map.setLevel(m_character.get("BasicBot"), m_character.get("SmartBot"), mapPath);
+		System.out.println("On a set la map a " + mapPath);
 		m_engine.setMap(m_map);
 	}
 	
