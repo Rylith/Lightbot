@@ -89,7 +89,7 @@ public class MapLoader {
 				String orders = listChar.get(j).getChild("orders").getText();
 				String parts[] = orders.split(" ");
 				for (int i = 0; i < parts.length; i++) {
-					addPossibleOrder(s_possible, parts[i]);
+					addPossibleOrder(b_possible, parts[i]);
 				}
 			} else {
 			String orders = listChar.get(j).getChild("orders").getText();
