@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
 	<character type ="basic" pos_x="0" pos_y ="1" orientation = "right">
-		<main>2</main>
-		<proc1>0</proc1>
+		<main>9</main>
+		<proc1>4</proc1>
 		<proc2>0</proc2>
-		<orders>move telep light jump</orders>
+		<orders>move telep light jump p1</orders>
 	</character>
 
 	<character type ="smart" pos_x="3" pos_y ="0" orientation = "up">
-		<main>4</main>
+		<main>6</main>
 		<proc1>0</proc1>
 		<proc2>0</proc2>
-		<orders>move maloc djump </orders>
+		<orders>move malloc jump </orders>
 	</character>
 
 	<size>

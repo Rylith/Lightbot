@@ -30,6 +30,7 @@
 		<case height="1" pos_y="1">
 			<paint color ="cyan"/>
 			<lampe/>
+		<case/>
 		<case height="1" pos_y="2"/>
 		<case height="1" pos_y="3"/>
 	</line>
