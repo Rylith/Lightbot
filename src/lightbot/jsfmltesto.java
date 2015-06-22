@@ -36,9 +36,25 @@ public class jsfmltesto {
         fenetre.draw(case1.getSprite());
 	}
 	
-	private final static String LEVELPATH1 = "level/test2.xml";
-	private final static String LEVELPATH2 = "level/maloc_lvl_1.xml";
-	private final static String LEVELPATH3 = "level/maloc_lvl_2.xml";
+	private final static String LEVELPATH1 = "level/for_lvl_1.xml";
+	private final static String LEVELPATH2 = "level/for_lvl_2.xml";
+	private final static String LEVELPATH3 = "level/for_lvl_3.xml";
+	private final static String LEVELPATH4 = "level/test2.xml";
+	private final static String LEVELPATH5 = "level/if_then_else_lvl_1.xml";
+	private final static String LEVELPATH6 = "level/if_then_else_lvl_2.xml";
+	private final static String LEVELPATH7 = "level/if_then_else_lvl_3.xml";
+	private final static String LEVELPATH8 = "level/test2.xml";
+	private final static String LEVELPATH9 = "level/use_pointeur_lvl_1.xml";
+	private final static String LEVELPATH10 = "level/use_pointeur_lvl_2.xml";
+	private final static String LEVELPATH11= "level/use_pointeur_lvl_3.xml";
+	private final static String LEVELPATH12 = "level/test2.xml";
+	private final static String LEVELPATH13 = "level/maloc_lvl_1.xml";
+	private final static String LEVELPATH14 = "level/maloc_lvl_2.xml";
+	private final static String LEVELPATH15 = "level/maloc_lvl_3.xml";
+	private final static String LEVELPATH16 = "level/test2.xml";
+
+
+
 	private final static String TILEPATHLEVEL = "ressource/Sprite/Level.png";
 
 
@@ -89,6 +105,20 @@ public class jsfmltesto {
         level.addXML(LEVELPATH1);
         level.addXML(LEVELPATH2);
         level.addXML(LEVELPATH3);
+        level.addXML(LEVELPATH4);
+        level.addXML(LEVELPATH5);
+        level.addXML(LEVELPATH6);
+        level.addXML(LEVELPATH7);
+        level.addXML(LEVELPATH8);
+        level.addXML(LEVELPATH9);
+        level.addXML(LEVELPATH10);
+        level.addXML(LEVELPATH11);
+        level.addXML(LEVELPATH12);
+        level.addXML(LEVELPATH13);
+        level.addXML(LEVELPATH14);
+        level.addXML(LEVELPATH15);
+        level.addXML(LEVELPATH16);
+        
         //System.out.println("Chemin : " + level.getListXML().get(0));
 
         game.setLevel(level); //On ajoute le level dans game pour pouvoir revenir au choix des niveaux plus tard
