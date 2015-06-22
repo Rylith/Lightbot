@@ -18,6 +18,7 @@ import DrawableObject.Character;
 import Game.Button.ButtonType;
 import Map.Map;
 import Orders.AccessPointer;
+import Orders.DoubleJump;
 import Orders.For;
 import Orders.Jump;
 import Orders.Light;
@@ -296,6 +297,9 @@ public class Game {
 				m_character.get(mapKey).update(m_map.getPosInit().get(mapKey));
 				m_character.get(mapKey).setColor(Color.WHITE);
 				m_engine.resetCharacter(m_character.get(mapKey));
+				if (mapKey.equals("BasicBot")) {
+					m_character.get(mapKey).setActif(false);
+				}
 			}
 			//m_character.get(mapKey).setPosition(m_map.getPosInit().get(mapKey));
 			//System.out.println("Reset Pos Char : " + mapKey + " " + m_character.get(mapKey).getPosition());

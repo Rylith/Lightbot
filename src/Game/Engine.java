@@ -241,7 +241,7 @@ public class Engine {
 	
 	
 	public void deleteCharacter(Character character) {
-		if(getCurrentCase(character) != null && getCurrentCase(character).getMapDO().get(d_charac) != null) {
+		if(getCurrentCase(character) != null) { //&& getCurrentCase(character).getMapDO().get(d_charac) != null
 			getCurrentCase(character).delObject(d_charac);
 		}
 		

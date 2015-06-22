@@ -14,7 +14,6 @@ import Orders.Procedure2;
 
 public class Ordonnanceur {
 	
-	private int nbCoups;
 	private Game pGame;
 	
 	/** Liste de pile d'itérateur d'Action. Utilisé pour conserver la position des bots dans les fonctions */
@@ -25,7 +24,6 @@ public class Ordonnanceur {
 	 * @param game Le jeu en cour
 	 */
 	public Ordonnanceur(Game game) {
-		this.nbCoups = 0;
 		this.pGame = game;
 		this.pStacks = new LinkedList<Stack<Iterator<Order>>>();
 		for(String mapKey : pGame.getCharacter().keySet()) {
@@ -103,11 +101,9 @@ public class Ordonnanceur {
 						return stepOne(b_stack, c_bot);
 					} else {
 						wAction.executer();
-						this.nbCoups++;
 						return true;
 					}
 				} else {
-					this.nbCoups++;
 					return true;
 				}
 			} else {
