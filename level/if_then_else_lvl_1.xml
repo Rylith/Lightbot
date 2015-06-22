@@ -4,7 +4,11 @@
 		<main>3</main>
 		<proc1>4</proc1>
 		<proc2>0</proc2>
+<<<<<<< HEAD
 		<orders>move jump laver p1 paint light turnr turnl</orders>
+=======
+		<orders>move laver light p1 paint turnr turnl</orders>
+>>>>>>> 1e5c56cf86a104feabb938d6a0032402d877bc3a
 	</character>
 
 	<size>

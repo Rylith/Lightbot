@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
 	<character type ="basic" pos_x="0" pos_y ="0" orientation = "right">
-		<main>3</main>
+		<main>4</main>
 		<proc1>8</proc1>
 		<proc2>0</proc2>
-		<orders>move jump laver paint break turnr turnl light p1</orders>
+		<orders>move jump laver paint turnr turnl light p1</orders>
 	</character>
 
 	<size>
@@ -15,6 +15,7 @@
 	<line num="0">
 		<case height="3" pos_y="0">
 			<character type="basic"/>
+			<paint color="cyan"/>
 		</case>
 		<case height="3" pos_y="1"/>
 		<case height="1" pos_y="2"/>
