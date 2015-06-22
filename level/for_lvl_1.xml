@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<character type ="basic" pos_x="0" pos_y ="0" orientation = "right">
+		<main>4</main>
+		<proc1>0</proc1>
+		<proc2>0</proc2>
+		<orders>move jump laver light for turnr turnl</orders>
+	</character>
+
+	<size>
+		<lines>1</lines>
+		<colonnes>5</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="1" pos_y="0">
+			<character type="basic"/>
+		<case/>
+		<case height="1" pos_y="1">
+			<for number="3"/>
+		</case>
+		<case height="1" pos_y="2"/>
+		<case height="1" pos_y="3"/>
+		<case height="1" pos_y="4">
+			<lampe/>
+		<case/>
+	</line>
+
+</map>
