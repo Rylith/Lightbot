@@ -4,7 +4,7 @@
 		<main>5</main>
 		<proc1>6</proc1>
 		<proc2>0</proc2>
-		<orders>move saut laver allumer p1 paint break turnr turnl</orders>
+		<orders>move laver light p1 paint turnr turnl</orders>
 	</character>
 
 	<size>
@@ -24,25 +24,26 @@
 
 	<line num="1">
 		<case height="1" pos_y="0">
-			<paint color="Magenta">
+			<paint color="magenta"/>
 			<lampe/>
 		</case>
 		<case height="1" pos_y="1">
 			<paint color ="cyan"/>
 			<lampe/>
-		<case/>
+		</case>
 		<case height="1" pos_y="2"/>
 		<case height="1" pos_y="3"/>
 	</line>
 
-	<line num="1">
+	<line num="2">
 		<case height="1" pos_y="0">
-			<paint color="Magenta">
+			<paint color="magenta"/>
 			<lampe/>
 		</case>
 		<case height="1" pos_y="1">
 			<paint color ="cyan"/>
 			<lampe/>
+		</case>
 		<case height="1" pos_y="2"/>
 		<case height="1" pos_y="3"/>
 	</line>
@@ -50,6 +51,7 @@
 	<line num="3">
 		<case height="1" pos_y="0">
 			<lampe/>
+		</case>
 		<case height="1" pos_y="1"/>
 		<case height="1" pos_y="2"/>
 		<case height="1" pos_y="3"/>
