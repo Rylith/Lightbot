@@ -15,7 +15,7 @@
 	<line num="0">
 		<case height="1" pos_y="0">
 			<character type="basic"/>
-		<case/>
+		</case>
 		<case height="1" pos_y="1">
 			<for number="3"/>
 		</case>
@@ -23,7 +23,7 @@
 		<case height="1" pos_y="3"/>
 		<case height="1" pos_y="4">
 			<lampe/>
-		<case/>
+		</case>
 	</line>
 
 </map>
