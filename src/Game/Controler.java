@@ -434,7 +434,7 @@ public class Controler {
 		try {
 			doneText.loadFromFile(Paths.get(TILEPATHDONE));
 			done.setTexture(doneText);
-			System.out.println("On a charger : " + TILEPATHDONE);
+			//System.out.println("On a charger : " + TILEPATHDONE);
 			//done = new Sprite(doneText);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -458,7 +458,7 @@ public class Controler {
 				m_game.getWindow().draw(done);
 			}
 			m_game.getWindow().display();
-			System.out.println("On dessine la victoire !");
+			//System.out.println("On dessine la victoire !");
 			while(clock.getElapsedTime().asSeconds() < 0.5f){
 				
 			}
@@ -570,7 +570,7 @@ public class Controler {
 		for(ButtonType mapkey : m_listButton.keySet()) {
 			if(mapkey.ordinal() <= ButtonType.P2.ordinal()) {
 				m_listButton.get(mapkey).setVisibility(false);
-				System.out.println("On met invisible : " + mapkey.name());
+				//System.out.println("On met invisible : " + mapkey.name());
 			}
 			
 		}
@@ -578,7 +578,7 @@ public class Controler {
 		List<Button.ButtonType> orderAvailable = m_game.getPossibleOrders(bot);
 		for(int i = 0 ; i < orderAvailable.size(); i++) {
 			m_listButton.get(orderAvailable.get(i)).setVisibility(true);
-			System.out.println("On met visible : " + orderAvailable.get(i).name());
+			//System.out.println("On met visible : " + orderAvailable.get(i).name());
 		}
 	}
 	

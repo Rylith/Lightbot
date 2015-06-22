@@ -173,6 +173,8 @@ public class Map {
 		}
 	}
 	
+	
+	
 	public boolean caseAccess(Vector2i pos , Character.Orientation orient) {
 		int new_x = pos.x;
 		int new_y =pos.y;
@@ -254,6 +256,12 @@ public class Map {
 			}
 		}
 		return finish;
+	}
+	
+	public void resetLamp() {
+		for (int i = 0; i < listLampe.size(); i++) {
+			listLampe.get(i).setActive(false);
+		}
 	}
 	
 	public List<Button.ButtonType> getPossibleOrders(String type) {

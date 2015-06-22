@@ -50,7 +50,7 @@ public class jsfmltesto {
 	private final static String LEVELPATH12 = "level/test2.xml";
 	private final static String LEVELPATH13 = "level/maloc_lvl_1.xml";
 	private final static String LEVELPATH14 = "level/maloc_lvl_2.xml";
-	private final static String LEVELPATH15 = "level/maloc_lvl_3.xml";
+	private final static String LEVELPATH15 = "level/malloc_lvl_3.xml";
 	private final static String LEVELPATH16 = "level/test2.xml";
 
 
@@ -200,12 +200,11 @@ public class jsfmltesto {
 	    					}
 	    				}
 	    				System.out.println("End of Simulation");
-	    				game.setStateSimulation(false);
 	    				if(game.levelIsCompleted()){
 	    					System.out.println("FELICITATION !!");
 	    					control.completedLevel(); // On affiche un WIN
 	    				}
-	    				
+	    				game.setStateSimulation(false);
 	    			}
 	    	game.getWindow().clear();
         }

@@ -305,6 +305,7 @@ public class Game {
 			//System.out.println("Reset Pos Char : " + mapKey + " " + m_character.get(mapKey).getPosition());
 			//i++;
 		}
+		m_map.resetLamp();
 			//m_map.getPosInit()
 	}
 	
