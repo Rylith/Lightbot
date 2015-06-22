@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- Ceci est un commentaire -->
+<map>
+	<character type ="basic" pos_x="4" pos_y ="2" orientation = "up">
+		<main>4</main>
+		<proc1>4</proc1>
+		<proc2>0</proc2>
+		<orders>move jump laver light for p1 turnr turnl</orders>
+	</character>
+
+	<size>
+		<lines>5</lines>
+		<colonnes>3</colonnes>
+	</size>
+
+	<line num="0">
+		<case height="2" pos_y="0"/>
+		<case height="3" pos_y="1">
+			<lampe/>
+		</case>
+		<case height="2" pos_y="2"/>
+	</line>
+	
+	<line num="1">
+		<case height="3" pos_y="0">
+			<lampe/>
+		</case>
+		<case height="3" pos_y="1"/>
+		<case height="3" pos_y="2">
+			<lampe/>
+		</case>
+	</line>
+	
+	<line num="2">
+		<case height="2" pos_y="0"/>
+		<case height="3" pos_y="1">
+			<lampe/>
+		</case>
+		<case height="2" pos_y="2">
+			<for number = "4"/>
+		</case>
+	</line>
+	
+	<line num="3">
+		<case height="1" pos_y="0"/>
+		<case height="1" pos_y="1"/>
+		<case height="1" pos_y="2"/>
+	</line>
+
+	<line num="4">
+		<case height="1" pos_y="0"/>
+		<case height="1" pos_y="1"/>
+		<case height="1" pos_y="2">
+			<character type="basic"/>
+		</case>
+	</line>
+</map>
