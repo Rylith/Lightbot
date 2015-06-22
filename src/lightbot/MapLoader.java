@@ -64,6 +64,7 @@ public class MapLoader {
 				robb.setLimitOrder(1,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
 				robb.setLimitOrder(2,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
 				robb.setActif(false);
+				robb.setName("BasicBot");
 				
 			} else {
 				s_pos_init = new Vector2i(Integer.parseInt(listChar.get(j).getAttributeValue("pos_x")),Integer.parseInt(listChar.get(j).getAttributeValue("pos_y")));
@@ -78,6 +79,7 @@ public class MapLoader {
 				robs.setLimitOrder(1,Integer.parseInt(listChar.get(j).getChild("proc1").getText()));
 				robs.setLimitOrder(2,Integer.parseInt(listChar.get(j).getChild("proc2").getText()));
 				robs.setActif(true);
+				robs.setName("SmartBot");
 			}
 		}
 	}

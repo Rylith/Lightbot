@@ -5,6 +5,7 @@
 		<proc1>10</proc1>
 		<proc2>8</proc2>
 		<orders>move turnr turnl jump light p1 p2 telep</orders>
+
 	</character>
 	<character type ="smart" pos_x="1" pos_y ="1" orientation = "right">
 		<main>3</main>
