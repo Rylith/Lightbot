@@ -101,6 +101,8 @@ public class Controler {
 	private Vector<Button> m_p2SmartBot = new Vector<Button>();
 	private Vector<Button> m_orderBasicBot = new Vector<Button>();
 	private Vector<Button> m_orderSmartBot = new Vector<Button>();
+	private List<Texture> m_listTexture;
+	private List<Sprite> m_listLoad;
 	private Component m_backOrder;
 	private Component m_backMain;
 	private Sprite m_background;
@@ -122,6 +124,32 @@ public class Controler {
 	 */
 	public Controler(Vector2i screenSize, Game game){
 		m_game = game;
+		Texture background = new Texture();
+		try {
+			background.loadFromFile(Paths.get(TILEPATHBACKGROUND));
+			m_background = new Sprite(background);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		m_listTexture = new ArrayList<Texture>();
+		m_listLoad = new ArrayList<Sprite>();
+		for(int i = 0;i < 6; i++) {
+			m_listTexture.add(new Texture());
+			try {
+				m_listTexture.get(i).loadFromFile(Paths.get(TILELOAD+i+".png"));
+				//System.out.println("On charge : " + TILELOAD+i+".png");
+				//sp.setScale(m_scale);
+				m_listLoad.add(new Sprite(m_listTexture.get(i)));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		
+		
+		
 		reloadInterface();
 	}
 	
@@ -175,40 +203,16 @@ public class Controler {
 	public void reloadInterface() {
 		m_screenSize = m_game.getWindow().getSize();
 		m_game.getWindow().clear();
-		Texture background = new Texture();
-		try {
-			background.loadFromFile(Paths.get(TILEPATHBACKGROUND));
-			m_background = new Sprite(background);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		m_decal = new Vector2f(((float)SIZEINITWINDOW.x) - m_screenSize.x,((float)SIZEINITWINDOW.y) - m_screenSize.y);
 		m_scale = new Vector2f(m_screenSize.x / ((float)SIZEINITWINDOW.x), m_screenSize.y / ((float)SIZEINITWINDOW.y));
 		m_background.setScale(m_scale);
 		
-		List<Texture> listTexture = new ArrayList<Texture>();
-		List<Sprite> listLoad = new ArrayList<Sprite>();
-		for(int i = 0;i < 6; i++) {
-			listTexture.add(new Texture());
-			try {
-				listTexture.get(i).loadFromFile(Paths.get(TILELOAD+i+".png"));
-				//System.out.println("On charge : " + TILELOAD+i+".png");
-				//sp.setScale(m_scale);
-				listLoad.add(new Sprite(listTexture.get(i)));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		for(int i = 0; i < m_listLoad.size(); i++) {
+			m_listLoad.get(i).setScale(m_scale);
 		}
 		
-		
-		
-		for(int i = 0; i < listLoad.size(); i++) {
-			listLoad.get(i).setScale(m_scale);
-		}
-		
-		m_game.getWindow().draw(listLoad.get(0));
+		m_game.getWindow().draw(m_listLoad.get(0));
 		m_game.getWindow().display();
 		
 		// BackOrder & BackMain
@@ -247,8 +251,8 @@ public class Controler {
 		}
 
 		m_game.getWindow().clear();
-		m_game.getWindow().draw(listLoad.get(0));
-		m_game.getWindow().draw(listLoad.get(1));
+		m_game.getWindow().draw(m_listLoad.get(0));
+		m_game.getWindow().draw(m_listLoad.get(1));
 		m_game.getWindow().display();
 		// Frames
 		Vector2f realInitFrameMain = Vector2f.add(m_backMain.getSprite().getPosition(), Vector2f.componentwiseMul(Vector2f.sub(POSINITFRAMEMAIN, POSINITBACKMAIN), scaleFrame));
@@ -284,9 +288,9 @@ public class Controler {
 		Button b_for = new Button(TILEPATHACTION, new Vector2f(realInitPosButton.x + ((realSizeButton.x + realDecalButton) * 5),realInitPosButton.y), ButtonType.For, true); //For
 		b_for.setScale(m_scale);
 		m_game.getWindow().clear();
-		m_game.getWindow().draw(listLoad.get(0));
-		m_game.getWindow().draw(listLoad.get(1));
-		m_game.getWindow().draw(listLoad.get(2));
+		m_game.getWindow().draw(m_listLoad.get(0));
+		m_game.getWindow().draw(m_listLoad.get(1));
+		m_game.getWindow().draw(m_listLoad.get(2));
 		m_game.getWindow().display();
 		Button b_putP = new Button(TILEPATHACTION, new Vector2f(realInitPosButton.x + ((realSizeButton.x + realDecalButton) * 6),realInitPosButton.y), ButtonType.PutP, true); //Poser pointeur
 		b_putP.setScale(m_scale);
@@ -310,10 +314,10 @@ public class Controler {
 		b_smartBot.setScale(m_scale);
 		
 		m_game.getWindow().clear();
-		m_game.getWindow().draw(listLoad.get(0));
-		m_game.getWindow().draw(listLoad.get(1));
-		m_game.getWindow().draw(listLoad.get(2));
-		m_game.getWindow().draw(listLoad.get(3));
+		m_game.getWindow().draw(m_listLoad.get(0));
+		m_game.getWindow().draw(m_listLoad.get(1));
+		m_game.getWindow().draw(m_listLoad.get(2));
+		m_game.getWindow().draw(m_listLoad.get(3));
 		m_game.getWindow().display();
 		
 		
@@ -354,11 +358,11 @@ public class Controler {
 		b_menu.setScale(m_scale);
 
 		m_game.getWindow().clear();
-		m_game.getWindow().draw(listLoad.get(0));
-		m_game.getWindow().draw(listLoad.get(1));
-		m_game.getWindow().draw(listLoad.get(2));
-		m_game.getWindow().draw(listLoad.get(3));
-		m_game.getWindow().draw(listLoad.get(4));
+		m_game.getWindow().draw(m_listLoad.get(0));
+		m_game.getWindow().draw(m_listLoad.get(1));
+		m_game.getWindow().draw(m_listLoad.get(2));
+		m_game.getWindow().draw(m_listLoad.get(3));
+		m_game.getWindow().draw(m_listLoad.get(4));
 		m_game.getWindow().display();
 		
 		// Clear des Vector
@@ -395,12 +399,12 @@ public class Controler {
 		m_listButton.put(ButtonType.PushBlue,b_blue);
 		
 		m_game.getWindow().clear();
-		m_game.getWindow().draw(listLoad.get(0));
-		m_game.getWindow().draw(listLoad.get(1));
-		m_game.getWindow().draw(listLoad.get(2));
-		m_game.getWindow().draw(listLoad.get(3));
-		m_game.getWindow().draw(listLoad.get(4));
-		m_game.getWindow().draw(listLoad.get(5));
+		m_game.getWindow().draw(m_listLoad.get(0));
+		m_game.getWindow().draw(m_listLoad.get(1));
+		m_game.getWindow().draw(m_listLoad.get(2));
+		m_game.getWindow().draw(m_listLoad.get(3));
+		m_game.getWindow().draw(m_listLoad.get(4));
+		m_game.getWindow().draw(m_listLoad.get(5));
 		m_game.getWindow().display();
 		
 		m_listButton.put(ButtonType.PushGrey, b_grey); 
